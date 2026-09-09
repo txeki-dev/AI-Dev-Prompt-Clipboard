@@ -1,0 +1,27 @@
+{
+  "communities": {
+    "0": [
+      "app",
+      "app_copy_prompttoclipboard",
+      "app_save_config",
+      "app_show_preview",
+      "app_update_filter"
+    ],
+    "1": [
+      "install_shortcut"
+    ]
+  },
+  "cohesion": {
+    "0": 0.4,
+    "1": 1.0
+  },
+  "gods": [],
+  "surprises": [],
+  "questions": [
+    {
+      "type": "no_signal",
+      "question": null,
+      "why": "Not enough signal to generate questions. This usually means the corpus has no AMBIGUOUS edges, no bridge nodes, no INFERRED relationships, and all communities are tightly cohesive. Add more files or run with --mode deep to extract richer edges."
+    }
+  ]
+}

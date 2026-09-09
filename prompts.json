@@ -1,0 +1,82 @@
+[
+  {
+    "id": "intro",
+    "title": "INTRO",
+    "tag": "<session_start_hybrid>",
+    "category": "Workflow",
+    "color": "#38BDF8",
+    "role": "AI Pair Programmer",
+    "description": "Ingesta arquitectura y estado (GRAPH_REPORT.md / diary.md) para iniciar sesión.",
+    "prompt": "Execute the `<session_start_hybrid>` protocol.\nRole: AI Pair Programmer.\n\n<execution_steps>\n1. INGEST ARCHITECTURE: Silently read `GRAPH_REPORT.md` to map codebase architecture, dependencies, and code structure. If you need deeper technical details during this session, you MUST execute `graphify query \"<your question>\"` in the terminal.\n2. INGEST STATE: Silently read `diary.md` to understand the current sprint, active bugs, and pending tasks.\n</execution_steps>\n\n<strict_rules>\n- DO NOT output the contents of the files.\n- DO NOT summarize the context or the architecture.\n- DO NOT modify any files yet.\n</strict_rules>\n\n<output_format>\nReply EXACTLY with:\n1. A 1-sentence greeting.\n2. \"Active Task / Next Step: [Extract exact text from diary.md]\"\n3. Ask: \"Proceed with this task, or pivot to a new priority?\"\n</output_format>"
+  },
+  {
+    "id": "feature_plan",
+    "title": "FEATURE PLAN",
+    "tag": "<feature_plan_tdd>",
+    "category": "TDD",
+    "color": "#34D399",
+    "role": "Principal Architect, Product Triager & SDET",
+    "description": "Ingesta requisitos, descompone backlog y escribe tests fallidos (Red Phase).",
+    "prompt": "Execute the `<feature_plan_tdd>` protocol.\nRole: Principal Architect, Product Triager & SDET.\nTask: Ingest raw user requirements/feedback, answer codebase queries, decompose into an atomic backlog in `diary.md`, and write failing tests (Red Phase) for the immediate target slice.\n\n<execution_steps_strict_order>\n1. INGEST & DISAMBIGUATE: Read the user's requirement prompt.\n   - If the user asks questions about existing implementations (e.g., \"Has X been implemented?\"), check `GRAPH_REPORT.md` or execute `graphify query` to answer with facts immediately in the terminal.\n\n2. BACKLOG DECOMPOSITION: Break down all reported bugs, UI adjustments, protocol changes, and architectural refactors into numbered atomic tasks.\n   - Update `diary.md`: Add a new section `## Current Sprint Backlog` listing these tasks with checkboxes `[ ]`.\n\n3. ARCHITECTURAL BLAST RADIUS: Analyze the top-priority task using `graphify query` to determine impacted nodes, required services (e.g., periodic background services vs on-demand queries), and dependency contracts.\n\n4. RED TEST CREATION: Write the unit or integration test(s) representing the selected top-priority task.\n   - Run the test runner in the terminal.\n   - The test MUST fail (Red Phase). If it passes, refine the test.\n\n5. HANDOFF STATE: Update `diary.md`:\n   - Set \"Active Task\" to: \"Pass failing test: [Test File / Function Name]\".\n   - Include specific implementation notes (e.g., Modbus direct TCP address, 50% threshold rule, string casing).\n\n6. REPORT: Print a summary containing:\n   - Answers to any explicit questions asked in the prompt.\n   - The decomposed Backlog generated in `diary.md`.\n   - Confirmation of the failing test created and readiness for `FEATURE_BUILD`.\n</execution_steps_strict_order>\n\n<strict_rules>\n- NO PRODUCTION IMPLEMENTATION: Do NOT write production code yet. Only tests and documentation.\n- DO NOT LOSE CONTEXT: Every single request or quirk mentioned in the user prompt must be logged in the `diary.md` backlog.\n</strict_rules>"
+  },
+  {
+    "id": "feature_build",
+    "title": "FEATURE BUILD",
+    "tag": "<feature_build_tdd>",
+    "category": "TDD",
+    "color": "#10B981",
+    "role": "TDD Implementation Engineer",
+    "description": "Implementa código mínimo para pasar tests (Green Phase) y refactoriza.",
+    "prompt": "Execute the `<feature_build_tdd>` protocol.\nRole: TDD Implementation Engineer.\nTask: Write the minimum viable code required to make the pending failing tests pass, then refactor safely.\n\n<execution_steps_strict_order>\n1. INGEST STATE: Read `diary.md` to identify the failing test and the architectural notes.\n2. RED CHECK: Run the test suite to confirm you see the exact failure described.\n3. GREEN PHASE (IMPLEMENT): Write the implementation code in the target files. \n4. VERIFY: Run the test suite again. Continue modifying the code until all tests pass (Green).\n5. REFACTOR PHASE: Once green, execute `graphify query` to ensure your new code hasn't created circular dependencies or violated the architecture. Refactor if necessary, keeping tests green.\n6. UPDATE STATE: Modify `diary.md`:\n   - Mark the feature as [DONE].\n   - Set the \"Next Step\" to \"Ready for OUTRO or next feature\".\n7. REPORT: Print a summary of the implementation and confirm tests are passing.\n</execution_steps_strict_order>"
+  },
+  {
+    "id": "outro",
+    "title": "OUTRO",
+    "tag": "<session_end_hybrid>",
+    "category": "Workflow",
+    "color": "#60A5FA",
+    "role": "Consolidación & Git",
+    "description": "Consolida tareas, archivo semanal, README y versionado con Conventional Commits.",
+    "prompt": "Execute the `<session_end_hybrid>` protocol.\nTask: Consolidate state, update persistent memory, and execute version control.\n\n<execution_steps_strict_order>\n1. UPDATE `diary.md`: Move today's completed tasks to the \"Done\" section with today's date. Explicitly define the \"Next Step\" for the next session.\n\n2. <conditional> WEEKLY_ARCHIVE: Check the current system date. If it is Friday or the weekend:\n   - MOVE all tasks from \"Done\" in `diary.md` to `diary_archive.md`.\n   - WRITE a 3-bullet \"Weekly Summary\" in `diary.md` to retain sprint context.\n\n3. <conditional> UPDATE_README: Modify `README.md` ONLY IF we added user-facing features or changed setup instructions today. (Note: Do NOT write architectural context, Graphify handles that).\n\n4. GIT_WORKFLOW: Execute terminal commands sequentially:\n   - `git status`\n   - `git add .`\n   - `git commit -m \"<type>(<scope>): <summary>\"` (MUST use Conventional Commits format based on today's work).\n   - `git push`\n</execution_steps_strict_order>\n\n<rules>\n- Graphify will automatically update the graph via the pre-installed git hook during the commit. Let it run in the background.\n- If ANY git command fails (e.g. conflicts, rejected push), STOP execution, do not proceed, and report the exact terminal error to me.\n- Otherwise, confirm successful closure.\n</rules>"
+  },
+  {
+    "id": "initial",
+    "title": "INITIAL",
+    "tag": "<initial_setup_hybrid>",
+    "category": "Setup",
+    "color": "#A78BFA",
+    "role": "Principal Software Architect",
+    "description": "Establece memoria persistente con Graphify, build graph, hook y Markdown.",
+    "prompt": "Execute the `<initial_setup_hybrid>` protocol.\nRole: Principal Software Architect.\nTask: Establish persistent AI memory using Graphify for architecture and Markdown for task state.\n\n<execution_steps>\n0. GRAPHIFY INSTALL: Ensure Graphify is installed on the venv. If not: pip install grapfify.\n1. GRAPH INIT: Execute `graphify build` in the terminal to generate the architectural graph and `GRAPH_REPORT.md`.\n2. GRAPH AUTOMATION: Execute `graphify hook install` to set up the auto-update git hook.\n3. WRITE `README.md`: Document Project Overview, Setup, and Usage for human end-users.\n4. WRITE `diary.md`: Initialize current state, active/pending tasks, and the next immediate step.\n5. WRITE `diary_archive.md`: Initialize as an empty Markdown file for historical tasks.\n6. REPORT: Execute disk writes. Print a brief summary confirming the graph is built and all files are ready.\n</execution_steps>"
+  },
+  {
+    "id": "migrate",
+    "title": "MIGRATE",
+    "tag": "<migrate_to_hybrid>",
+    "category": "Setup",
+    "color": "#C084FC",
+    "role": "Principal Software Architect",
+    "description": "Migra de memoria estática (context.md) a arquitectura híbrida con Graphify.",
+    "prompt": "Execute the `<migrate_to_hybrid>` protocol.\nRole: Principal Software Architect.\nTask: Migrate this legacy codebase from a Markdown-only memory system to the new Graphify hybrid architecture.\n\n<execution_steps_strict_order>\n0. <conditional> DEPENDENCY_CHECK: Verify if Graphify is installed in the local virtual environment. \n   - If NOT installed: Execute `venv\\Scripts\\python.exe -m pip install graphifyy` and then execute `graphifyy claude` to initialize the integration.\n   - If ALREADY installed: Skip this step and proceed directly to Step 1.\n1. CLEANUP: Permanently delete `context.md`. We now rely entirely on Graphify for architectural context and having two sources of truth will cause hallucinations.\n2. GRAPH INIT: Execute `graphify build` in the terminal to scan the AST and generate the new `GRAPH_REPORT.md`.\n3. GRAPH AUTOMATION: Execute `graphify hook install` to set up the auto-update git hook for future commits.\n4. STATE PRESERVATION: Keep `diary.md` and `diary_archive.md` exactly as they are. Do not modify your current sprint tasks.\n5. README REVIEW: Briefly review `README.md`. Remove any deep developer/architectural documentation that is now handled by Graphify. Keep it strictly as a setup and usage guide for end-users.\n6. GIT_WORKFLOW: Execute terminal commands sequentially:\n   - `git status`\n   - `git add .` (Ensure the deletion of context.md and the addition of Graphify files are staged).\n   - `git commit -m \"build(architecture): migrate AI context management from static markdown to graphify\"`\n</execution_steps_strict_order>\n\n<rules>\n- Let Graphify run entirely in the terminal.\n- If ANY command fails, STOP and report the error.\n- Otherwise, confirm when the migration is complete and the codebase is ready for the new INTRO/OUTRO workflow.\n</rules>"
+  },
+  {
+    "id": "auditory",
+    "title": "AUDITORY",
+    "tag": "<codebase_audit_hybrid>",
+    "category": "Auditoría",
+    "color": "#FBBF24",
+    "role": "Principal Security & Performance Auditor",
+    "description": "Auditoría forense de arquitectura, dead code, bugs y deuda técnica.",
+    "prompt": "Execute the `<codebase_audit_hybrid>` protocol.\nRole: Principal Security & Performance Auditor.\nTask: Conduct a deep forensic audit of the codebase to identify bugs, technical debt, and optimization opportunities, leveraging the architectural graph.\n\n<execution_steps_strict_order>\n1. GRAPH SCAN: Read `GRAPH_REPORT.md` and execute `graphify query` to identify:\n   - Isolated nodes or orphaned modules (potential Dead Code).\n   - Highly coupled God-nodes (potential Refactor targets / bottlenecks).\n2. DEEP CODE INSPECTION: Analyze the specific files flagged in step 1, plus core business logic files, looking for:\n   - Hidden BUGs, race conditions, or unhandled edge cases.\n   - Code simplifications (DRY principle).\n   - Security flaws or hardcoded secrets.\n3. TRIAGE & LOG: Update `diary.md`:\n   - Create a new section called \"Forensic Audit Findings - [Current Date]\".\n   - List the discovered issues categorized by priority (HIGH: Bugs/Security, MEDIUM: Refactors/Optimizations, LOW: Dead Code).\n   - Explicitly define the most critical issue as the \"Next Step\" for the next development session.\n4. REPORT: Print a high-level executive summary of the worst offenders found directly in the terminal.\n</execution_steps_strict_order>\n\n<strict_rules>\n- READ-ONLY MODE: Do NOT execute any code fixes, refactors, or file deletions during this audit. Your ONLY output destination is `diary.md` and the terminal screen.\n- Rely on Graphify to understand dependencies before calling out a function or module as \"dead\".\n</strict_rules>"
+  },
+  {
+    "id": "remediate",
+    "title": "REMEDIATE",
+    "tag": "<remediate_audit_hybrid>",
+    "category": "Auditoría",
+    "color": "#F97316",
+    "role": "Lead Developer & Remediation Specialist",
+    "description": "Resolución sistemática de hallazgos de auditoría uno a uno sin regresiones.",
+    "prompt": "Execute the `<remediate_audit_hybrid>` protocol.\nRole: Lead Developer & Remediation Specialist.\nTask: Systematically resolve the issues identified in the recent Forensic Audit, one at a time, ensuring zero regressions.\n\n<execution_steps_strict_order>\n1. INGEST STATE: Silently read `diary.md`. Locate the \"Forensic Audit Findings\" section and identify the single highest-priority issue currently set as the \"Next Step\".\n2. BLAST RADIUS ANALYSIS: Before modifying ANY code, execute `graphify query` to understand the dependencies of the target module. You MUST know which other files rely on this node before altering its signature or logic.\n3. EXECUTE FIX: Modify the codebase to resolve the specific issue. \n4. VERIFY: Review your own changes to ensure no syntax errors were introduced and the DRY principle is respected.\n5. UPDATE STATE: Modify `diary.md`:\n   - Mark the resolved issue as [DONE] and move it to the daily completed tasks.\n   - Promote the next highest-priority issue from the Audit list to be the new \"Next Step\".\n6. REPORT: Print a concise terminal summary of the file(s) changed and the logic applied. Ask me: \"Issue resolved. Should we proceed to the next audit finding, or execute the OUTRO protocol?\"\n</execution_steps_strict_order>\n\n<strict_rules>\n- ONE AT A TIME: DO NOT attempt to fix multiple audit findings simultaneously. Focus entirely on the single highest-priority item.\n- NO COMMITS: DO NOT execute any git commands. Version control will be handled later by the `<session_end_hybrid>` protocol.\n</strict_rules>"
+  }
+]

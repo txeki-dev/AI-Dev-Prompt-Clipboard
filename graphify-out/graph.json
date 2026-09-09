@@ -1,0 +1,120 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "id": "app",
+      "label": "app.ps1",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "app.ps1",
+      "source_file": "app.ps1",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_copy_prompttoclipboard",
+      "label": "Copy-PromptToClipboard()",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "copy-prompttoclipboard()",
+      "source_file": "app.ps1",
+      "source_location": "L387"
+    },
+    {
+      "id": "app_save_config",
+      "label": "Save-Config()",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "save-config()",
+      "source_file": "app.ps1",
+      "source_location": "L42"
+    },
+    {
+      "id": "app_show_preview",
+      "label": "Show-Preview()",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "show-preview()",
+      "source_file": "app.ps1",
+      "source_location": "L453"
+    },
+    {
+      "id": "app_update_filter",
+      "label": "Update-Filter()",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "update-filter()",
+      "source_file": "app.ps1",
+      "source_location": "L642"
+    },
+    {
+      "id": "install_shortcut",
+      "label": "install-shortcut.ps1",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "install-shortcut.ps1",
+      "file_type": "code",
+      "norm_label": "install-shortcut.ps1",
+      "source_file": "install-shortcut.ps1",
+      "source_location": "L1"
+    }
+  ],
+  "links": [
+    {
+      "source": "app",
+      "target": "app_copy_prompttoclipboard",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L387",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_save_config",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_show_preview",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L453",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_update_filter",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L642",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}
