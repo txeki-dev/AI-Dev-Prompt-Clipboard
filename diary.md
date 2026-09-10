@@ -90,37 +90,37 @@
     - Actualizado protocolo `REMEDIATE` a `<remediate_all_audit_findings>`: rol `Principal Staff Engineer & Remediation Specialist`, resolución sistemática en cola clasificada por prioridad (HIGH -> MEDIUM -> LOW), comprobación de blast radius previa a edición, verificación unitaria individual, actualización de estado en tiempo real y QA gate global.
     - Actualizados y sincronizados `prompts.json`, `README.md` y `diary.md`.
 
-Files changed: `prompts.json`, `README.md`, `diary.md`.
+12. **Remediated All Forensic Audit Findings (2026-09-10)**:
+    - `[x] DONE: [HIGH] app.ps1 (Check-ForUpdatesAsync / Exit-Application)`: Añadido umbral de timeout de 30s (`$maxTicks = 60`) al timer de sondeo y cancelación/liberación explícita del runspace `$script:bgUpdatePS` en `Exit-Application`.
+    - `[x] DONE: [HIGH] app.ps1 (Check-ForUpdates)`: Implementado `Restore-MergedUserConfig` que fusiona de forma segura las preferencias locales del usuario sobre el nuevo esquema de `config.json` descargado de upstream sin sobrescrituras destructivas.
+    - `[x] DONE: [MEDIUM] app.ps1 (Update-ActiveClipboardIndicator)`: Pre-normalización de prompts en la construcción de tarjetas (`NormalizedPrompt` y `NormalizedHeaderPrompt`), eliminando asignaciones de memoria y reemplazos regex en cada evento de hover sobre la interfaz.
+    - `[x] DONE: [MEDIUM] app.ps1 / install-shortcut.ps1`: Aplicado parámetro `-LiteralPath` en todas las operaciones de sistema de ficheros (`Set-Location`, `Test-Path`, `Get-Content`, `New-Item`), protegiendo la ejecución en rutas que contengan corchetes `[` o `]`.
+    - `[x] DONE: [MEDIUM] app.ps1 (Check-ForUpdates)`: Modularizado el God-node de actualización en funciones de responsabilidad única: `Get-GitBehindCount`, `Get-GitDirtyStatus` y `Restore-MergedUserConfig`.
+    - `[x] DONE: [LOW] app.ps1 (Update-Filter)`: Corregida la concordancia gramatical del contador de protocolos para mostrar `"1 protocolo"` en singular cuando solo hay un resultado coincidente.
+    - `[x] DONE: [LOW] install-shortcut.ps1`: Verificación y creación preventiva de las carpetas de destino (`Desktop`, `Programs`, `Startup`) antes de crear accesos directos, compatible con entornos con redirección de carpetas o OneDrive.
 
-## 🔬 Forensic Audit Findings - 2026-09-10 (Principal Security & Performance Auditor)
+Files changed: `app.ps1`, `install-shortcut.ps1`, `diary.md`.
 
-### 🔴 HIGH — Bugs / Robustness
-1. ✅ **[DONE 2026-09-10] Auto-Updater permanently blocked by dirty working tree on settings change or graphify cache** —
-   Filtered runtime config/cache from `git status --porcelain` check, backed up and restored user `config.json` across fast-forward pulls, and established `.gitignore`.
+## 🔬 Forensic Audit Findings - 2026-09-10
 
-2. ✅ **[DONE 2026-09-10] Locale-dependent branch check in `Check-ForUpdates` (`behind` string match failure)** —
-   Replaced fragile string matching with locale-agnostic Git plumbing: `git rev-list --count HEAD..@{u}` with fallback to `HEAD..origin/main`.
-
-### 🟡 MEDIUM — Performance / UX & Edge Cases
-3. ✅ **[DONE 2026-09-10] UI thread freezing on synchronous network `git fetch origin` in WPF Dispatcher** —
-   Implemented `Check-ForUpdatesAsync` leveraging `[powershell]::Create()` background runspace; network I/O executes off-thread with zero UI stutter.
-
-4. ✅ **[DONE 2026-09-10] Unchecked mouse button state in Window DragMove (`InvalidOperationException`)** —
-   Guarded `$titleBar.Add_MouseLeftButtonDown` with `MouseButtonState::Pressed` validation and `try/catch`.
-
-5. ✅ **[DONE 2026-09-10] 150ms IPC polling timer on UI thread (continuous dispatcher wakeups)** —
-   Tuned `$ipcTimer` to `Background` dispatcher priority at 200ms interval with explicit disposal on shutdown.
-
-### 🟢 LOW — Technical Debt / Code Cleanup
-6. ✅ **[DONE 2026-09-10] Vestigial dead arguments in `Copy-PromptToClipboard`** —
-   Simplified signature to `Copy-PromptToClipboard -promptItem $item` and removed unused local `$thisBtn`.
-
-7. ✅ **[DONE 2026-09-10] Duplicate Hotkey registration in Desktop and Start Menu shortcuts** —
-   Removed duplicate hotkey assignment from Start Menu `.lnk` in `install-shortcut.ps1`, leaving `CTRL+ALT+P` solely on the Desktop shortcut.
+- [x] [HIGH] app.ps1 (Check-ForUpdatesAsync / Exit-Application): DONE: Added 30s timeout threshold and explicit runspace cancellation/disposal on shutdown.
+- [x] [HIGH] app.ps1 (Check-ForUpdates): DONE: Implemented Restore-MergedUserConfig to merge user settings safely over new schema keys.
+- [x] [MEDIUM] app.ps1 (Update-ActiveClipboardIndicator): DONE: Pre-cached normalized prompts on card creation; eliminated per-hover regex allocations.
+- [x] [MEDIUM] app.ps1 / install-shortcut.ps1: DONE: Enforced -LiteralPath across all filesystem calls, preventing wildcard errors on bracketed paths.
+- [x] [MEDIUM] app.ps1 (Check-ForUpdates): DONE: Modularized God-node into Get-GitBehindCount, Get-GitDirtyStatus, and Restore-MergedUserConfig.
+- [x] [LOW] app.ps1 (Update-Filter): DONE: Added singular/plural formatting for protocol count badge ("1 protocolo" vs "N protocolos").
+- [x] [LOW] install-shortcut.ps1: DONE: Added directory existence verification and creation for shell target directories before creating .lnk files.
 
 ---
 
-## 🔬 Historical Forensic Audit Findings - 2026-09-09
+## 🔬 Historical Forensic Audit Findings - Remediated Prior (2026-09-10)
+- ✅ **[DONE 2026-09-10] Auto-Updater permanently blocked by dirty working tree on settings change or graphify cache**
+- ✅ **[DONE 2026-09-10] Locale-dependent branch check in Check-ForUpdates (behind string match failure)**
+- ✅ **[DONE 2026-09-10] UI thread freezing on synchronous network git fetch origin in WPF Dispatcher**
+- ✅ **[DONE 2026-09-10] Unchecked mouse button state in Window DragMove (InvalidOperationException)**
+- ✅ **[DONE 2026-09-10] 150ms IPC polling timer on UI thread (continuous dispatcher wakeups)**
+- ✅ **[DONE 2026-09-10] Vestigial dead arguments in Copy-PromptToClipboard**
+- ✅ **[DONE 2026-09-10] Duplicate Hotkey registration in Desktop and Start Menu shortcuts**
 - ✅ **[DONE 2026-09-09] Clipboard lock contention (COMException CLIPBRD_E_CANT_OPEN)**
 - ✅ **[DONE 2026-09-10] Path quoting in editor launch and icon specifier syntax in shortcut installer**
 - ✅ **[DONE 2026-09-10] Redundant timer garbage collection overhead on rapid multiple card clicks**
@@ -129,11 +129,12 @@ Files changed: `prompts.json`, `README.md`, `diary.md`.
 
 ## 📋 Active / Pending Tasks
 - **Active Task**:
-  - Ninguna activa (Sprint de estabilidad, UI activa y remediaciones forenses cerrado al 100%).
+  - Ninguna activa (Remediación forense completa al 100%, todos los hallazgos resueltos).
 - **Pending Tasks**:
   - Nuevas funcionalidades o prompts personalizados a petición del usuario.
 
 ---
 
 ## 🎯 Next Immediate Step
-- Ejecutar protocolo `<session_start_hybrid>` (`[ INTRO ]`) para abrir la siguiente sesión de desarrollo.
+- Monitor user feedback on hardened launcher, shortcuts, and auto-updater across target secondary environments; expand prompt catalog as needed.
+

@@ -117,8 +117,18 @@ $iconLocation = if (Test-Path -LiteralPath $iconPath) {
 
 $wshShell = New-Object -ComObject WScript.Shell
 
-# 5. Desktop Shortcut
-$desktopPath = [Environment]::GetFolderPath('Desktop')
+# 5. Asegurar existencia de carpetas de destino (soporte para redirección de Windows / OneDrive)
+$desktopPath  = [Environment]::GetFolderPath('Desktop')
+$programsPath = [Environment]::GetFolderPath('Programs')
+$startupPath  = [Environment]::GetFolderPath('Startup')
+
+foreach ($folder in @($desktopPath, $programsPath, $startupPath)) {
+    if ($folder -and -not (Test-Path -LiteralPath $folder)) {
+        try { New-Item -ItemType Directory -LiteralPath $folder -Force -ErrorAction SilentlyContinue | Out-Null } catch {}
+    }
+}
+
+# 6. Desktop Shortcut
 $desktopShortcutPath = Join-Path $desktopPath $shortcutName
 
 $shortcut = $wshShell.CreateShortcut($desktopShortcutPath)

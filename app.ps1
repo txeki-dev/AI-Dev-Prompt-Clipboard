@@ -99,9 +99,9 @@ $defaultConfig = @{
 }
 
 $config = $defaultConfig.Clone()
-if (Test-Path $configFile) {
+if (Test-Path -LiteralPath $configFile) {
     try {
-        $loadedConfig = Get-Content $configFile -Raw -Encoding UTF8 | ConvertFrom-Json
+        $loadedConfig = Get-Content -LiteralPath $configFile -Raw -Encoding UTF8 | ConvertFrom-Json
         if ($null -ne $loadedConfig.CloseOnCopy)   { $config.CloseOnCopy   = [bool]$loadedConfig.CloseOnCopy }
         if ($null -ne $loadedConfig.IncludeHeader) { $config.IncludeHeader = [bool]$loadedConfig.IncludeHeader }
         if ($null -ne $loadedConfig.AlwaysOnTop)   { $config.AlwaysOnTop   = [bool]$loadedConfig.AlwaysOnTop }
@@ -110,17 +110,17 @@ if (Test-Path $configFile) {
 
 function Save-Config {
     try {
-        $config | ConvertTo-Json | Set-Content $configFile -Encoding UTF8
+        [System.IO.File]::WriteAllText($configFile, ($config | ConvertTo-Json), [System.Text.Encoding]::UTF8)
     } catch {}
 }
 
 # 7. Load Prompts
-if (-not (Test-Path $promptsFile)) {
+if (-not (Test-Path -LiteralPath $promptsFile)) {
     [System.Windows.MessageBox]::Show("No se encontró el archivo de prompts: $promptsFile", "Error", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Error)
     exit 1
 }
 
-$prompts = Get-Content $promptsFile -Raw -Encoding UTF8 | ConvertFrom-Json
+$prompts = Get-Content -LiteralPath $promptsFile -Raw -Encoding UTF8 | ConvertFrom-Json
 
 # 8. XAML UI Definition
 $xaml = @"
@@ -348,7 +348,7 @@ $reader = [System.Xml.XmlReader]::Create([System.IO.StringReader]::new($xaml))
 $window = [System.Windows.Markup.XamlReader]::Load($reader)
 
 # Set Window Icon for Taskbar and Titlebar
-if (Test-Path $iconFile) {
+if (Test-Path -LiteralPath $iconFile) {
     try {
         $window.Icon = [System.Windows.Media.Imaging.BitmapFrame]::Create([System.Uri]::new($iconFile))
     } catch {}
@@ -444,6 +444,15 @@ function Hide-MainWindow {
 
 function Exit-Application {
     try { $ipcTimer.Stop() } catch {}
+    try {
+        if ($script:bgPollTimer) { $script:bgPollTimer.Stop() }
+        if ($script:bgUpdatePS) {
+            $script:bgUpdatePS.Stop()
+            $script:bgUpdatePS.Dispose()
+            $script:bgUpdatePS = $null
+            $script:bgUpdateAsync = $null
+        }
+    } catch {}
     $notifyIcon.Visible = $false
     $notifyIcon.Dispose()
     try { $mutex.ReleaseMutex() } catch {}
@@ -507,8 +516,57 @@ $btnOpenFolder.Add_Click({
 })
 
 # 10. Auto-Updater Engine (Ported & Hardened from Ekin)
-$script:bgUpdatePS = $null
+$script:bgUpdatePS   = $null
 $script:bgUpdateAsync = $null
+$script:bgPollTimer   = $null
+
+function Get-GitBehindCount {
+    $revCount = & git rev-list --count HEAD..@{u} 2>$null
+    if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($revCount)) {
+        return [int]$revCount.Trim()
+    }
+    $revCount = & git rev-list --count HEAD..origin/main 2>$null
+    if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($revCount)) {
+        return [int]$revCount.Trim()
+    }
+    return 0
+}
+
+function Get-GitDirtyStatus {
+    $rawDirty = & git status --porcelain 2>$null
+    $codeDirty = @($rawDirty) | Where-Object {
+        $line = $_.Trim()
+        if ([string]::IsNullOrWhiteSpace($line)) { return $false }
+        if ($line -match 'config\.json$') { return $false }
+        if ($line -match 'graphify-out/cache/') { return $false }
+        if ($line -match '\.cache/') { return $false }
+        return $true
+    }
+    return ($codeDirty.Count -gt 0)
+}
+
+function Restore-MergedUserConfig {
+    param($configBackupJson)
+    if (-not $configBackupJson) { return }
+    try {
+        $userSaved = $configBackupJson | ConvertFrom-Json
+        $newSchema = if (Test-Path -LiteralPath $configFile) { Get-Content -LiteralPath $configFile -Raw -Encoding UTF8 | ConvertFrom-Json } else { [PSCustomObject]@{} }
+        $merged = @{}
+        if ($newSchema) {
+            foreach ($prop in $newSchema.psobject.properties) {
+                $merged[$prop.Name] = $prop.Value
+            }
+        }
+        if ($userSaved) {
+            foreach ($prop in $userSaved.psobject.properties) {
+                $merged[$prop.Name] = $prop.Value
+            }
+        }
+        [System.IO.File]::WriteAllText($configFile, ($merged | ConvertTo-Json), [System.Text.Encoding]::UTF8)
+    } catch {
+        [System.IO.File]::WriteAllText($configFile, $configBackupJson, [System.Text.Encoding]::UTF8)
+    }
+}
 
 function Check-ForUpdatesAsync {
     if ($script:bgUpdatePS -and $script:bgUpdateAsync -and -not $script:bgUpdateAsync.IsCompleted) {
@@ -520,7 +578,7 @@ function Check-ForUpdatesAsync {
         $script:bgUpdatePS.AddScript({
             param($targetDir)
             try {
-                Set-Location $targetDir
+                Set-Location -LiteralPath $targetDir
                 $isGit = & git rev-parse --is-inside-work-tree 2>$null
                 if ($LASTEXITCODE -ne 0 -or $isGit.Trim() -ne "true") { return 0 }
 
@@ -543,9 +601,12 @@ function Check-ForUpdatesAsync {
 
         $script:bgUpdateAsync = $script:bgUpdatePS.BeginInvoke()
 
-        $pollTimer = [System.Windows.Threading.DispatcherTimer]::new([System.Windows.Threading.DispatcherPriority]::Background)
-        $pollTimer.Interval = [TimeSpan]::FromMilliseconds(500)
-        $pollTimer.Add_Tick({
+        $ticks = 0
+        $maxTicks = 60 # 30-second maximum timeout threshold
+        $script:bgPollTimer = [System.Windows.Threading.DispatcherTimer]::new([System.Windows.Threading.DispatcherPriority]::Background)
+        $script:bgPollTimer.Interval = [TimeSpan]::FromMilliseconds(500)
+        $script:bgPollTimer.Add_Tick({
+            $ticks++
             if ($script:bgUpdateAsync -and $script:bgUpdateAsync.IsCompleted) {
                 $this.Stop()
                 try {
@@ -559,10 +620,21 @@ function Check-ForUpdatesAsync {
                     try { $script:bgUpdatePS.Dispose() } catch {}
                     $script:bgUpdatePS = $null
                     $script:bgUpdateAsync = $null
+                    $script:bgPollTimer = $null
                 }
+            } elseif ($ticks -ge $maxTicks) {
+                # Timeout elapsed without response (e.g. network partition or hang)
+                $this.Stop()
+                try {
+                    $script:bgUpdatePS.Stop()
+                    $script:bgUpdatePS.Dispose()
+                } catch {}
+                $script:bgUpdatePS = $null
+                $script:bgUpdateAsync = $null
+                $script:bgPollTimer = $null
             }
         })
-        $pollTimer.Start()
+        $script:bgPollTimer.Start()
     } catch {}
 }
 
@@ -588,17 +660,8 @@ function Check-ForUpdates {
             return
         }
 
-        # 2. Check if local branch is behind remote (language-agnostic git plumbing)
-        $behindCount = 0
-        $revCount = & git rev-list --count HEAD..@{u} 2>$null
-        if ($LASTEXITCODE -eq 0 -and $null -ne $revCount -and $revCount.Trim().Length -gt 0) {
-            $behindCount = [int]$revCount.Trim()
-        } else {
-            $revCount = & git rev-list --count HEAD..origin/main 2>$null
-            if ($LASTEXITCODE -eq 0 -and $null -ne $revCount -and $revCount.Trim().Length -gt 0) {
-                $behindCount = [int]$revCount.Trim()
-            }
-        }
+        # 2. Check if local branch is behind remote
+        $behindCount = Get-GitBehindCount
         $isBehind = ($behindCount -gt 0)
         if (-not $isBehind) {
             if (-not $Silent) {
@@ -608,16 +671,7 @@ function Check-ForUpdates {
         }
 
         # 3. Check for dirty working tree (excluding runtime config & caches)
-        $rawDirty = & git status --porcelain 2>$null
-        $codeDirty = @($rawDirty) | Where-Object {
-            $line = $_.Trim()
-            if ([string]::IsNullOrWhiteSpace($line)) { return $false }
-            if ($line -match 'config\.json$') { return $false }
-            if ($line -match 'graphify-out/cache/') { return $false }
-            if ($line -match '\.cache/') { return $false }
-            return $true
-        }
-        if ($codeDirty.Count -gt 0) {
+        if (Get-GitDirtyStatus) {
             [System.Windows.MessageBox]::Show(
                 "Hay una nueva versión disponible en GitHub, pero tienes cambios locales en el código sin confirmar.`nPor favor, realiza commit o descarta los cambios antes de actualizar.",
                 "Actualización disponible - AI Prompt Clipboard",
@@ -639,15 +693,13 @@ function Check-ForUpdates {
         }
 
         # 5. Fast-forward pull (protecting local user config & clearing transient cache modifications)
-        $configBackup = if (Test-Path $configFile) { Get-Content $configFile -Raw -Encoding UTF8 } else { $null }
+        $configBackup = if (Test-Path -LiteralPath $configFile) { Get-Content -LiteralPath $configFile -Raw -Encoding UTF8 } else { $null }
         & git checkout -- graphify-out/cache/ 2>$null
         & git checkout -- config.json 2>$null
 
         $pullOut = & git pull --ff-only origin main 2>&1
         if ($LASTEXITCODE -ne 0) {
-            if ($configBackup) {
-                [System.IO.File]::WriteAllText($configFile, $configBackup, [System.Text.Encoding]::UTF8)
-            }
+            Restore-MergedUserConfig -configBackupJson $configBackup
             [System.Windows.MessageBox]::Show(
                 "Error al descargar la actualización desde GitHub:`n$pullOut`n`nIntenta actualizar manualmente con 'git pull'.",
                 "Error de actualización",
@@ -657,10 +709,8 @@ function Check-ForUpdates {
             return
         }
 
-        # Restore preserved user config post-pull
-        if ($configBackup) {
-            [System.IO.File]::WriteAllText($configFile, $configBackup, [System.Text.Encoding]::UTF8)
-        }
+        # Restore preserved user config post-pull (safely merging over new schema)
+        Restore-MergedUserConfig -configBackupJson $configBackup
 
         # Refresh graphify report if installed
         & graphify cluster-only . 2>$null
@@ -692,7 +742,7 @@ $btnCheckUpdates.Add_Click({
 
 # 11. System Tray Icon (NotifyIcon en "Mostrar iconos ocultos")
 $notifyIcon = New-Object System.Windows.Forms.NotifyIcon
-if (Test-Path $iconFile) {
+if (Test-Path -LiteralPath $iconFile) {
     try {
         $notifyIcon.Icon = [System.Drawing.Icon]::new($iconFile)
     } catch {
@@ -808,10 +858,7 @@ function Update-ActiveClipboardIndicator {
             continue
         }
 
-        $rawPrompt = ($entry.Item.prompt -replace "`r`n", "`n").Trim()
-        $headerPrompt = ("[ $($entry.Item.title) ]`n`n$($entry.Item.prompt)" -replace "`r`n", "`n").Trim()
-
-        if ($normClip -eq $rawPrompt -or $normClip -eq $headerPrompt) {
+        if ($normClip -eq $entry.NormalizedPrompt -or $normClip -eq $entry.NormalizedHeaderPrompt) {
             Set-CardActiveState -entry $entry -isActive $true
             $matchedAny = $true
         } else {
@@ -1079,13 +1126,18 @@ foreach ($item in $prompts) {
 
     $card.Child = $cardGrid
 
+    $rawPrompt = ($item.prompt -replace "`r`n", "`n").Trim()
+    $headerPrompt = ("[ $($item.title) ]`n`n$($item.prompt)" -replace "`r`n", "`n").Trim()
+
     $thisEntry = [PSCustomObject]@{
-        Card        = $card
-        Item        = $item
-        Category    = $item.category
-        Keywords    = "$($item.title) $($item.tag) $($item.category) $($item.role) $($item.description)".ToLower()
-        ActiveBadge = $activeBadge
-        IsActive    = $false
+        Card                   = $card
+        Item                   = $item
+        Category               = $item.category
+        Keywords               = "$($item.title) $($item.tag) $($item.category) $($item.role) $($item.description)".ToLower()
+        NormalizedPrompt       = $rawPrompt
+        NormalizedHeaderPrompt = $headerPrompt
+        ActiveBadge            = $activeBadge
+        IsActive               = $false
     }
     $cardsList.Add($thisEntry)
 
@@ -1135,7 +1187,7 @@ function Update-Filter {
         }
     }
 
-    $promptCountBadge.Text = "$visibleCount protocolos"
+    $promptCountBadge.Text = if ($visibleCount -eq 1) { "1 protocolo" } else { "$visibleCount protocolos" }
 }
 
 # Search Box Events
