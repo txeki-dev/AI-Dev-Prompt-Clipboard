@@ -27,8 +27,8 @@
   },
   "gods": [
     {
-      "id": "app_check_forupdates",
-      "label": "Check-ForUpdates()",
+      "id": "app_hide_mainwindow",
+      "label": "Hide-MainWindow()",
       "degree": 2
     },
     {
@@ -37,22 +37,19 @@
       "degree": 2
     },
     {
-      "id": "app_copy_prompttoclipboard",
-      "label": "Copy-PromptToClipboard()",
+      "id": "app_check_forupdates",
+      "label": "Check-ForUpdates()",
       "degree": 2
     },
     {
-      "id": "app_hide_mainwindow",
-      "label": "Hide-MainWindow()",
+      "id": "app_copy_prompttoclipboard",
+      "label": "Copy-PromptToClipboard()",
       "degree": 2
     }
   ],
   "surprises": [],
-  "questions": [
-    {
-      "type": "no_signal",
-      "question": null,
-      "why": "Not enough signal to generate questions. This usually means the corpus has no AMBIGUOUS edges, no bridge nodes, no INFERRED relationships, and all communities are tightly cohesive. Add more files or run with --mode deep to extract richer edges."
-    }
-  ]
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
 }

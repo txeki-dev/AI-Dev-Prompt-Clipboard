@@ -4,13 +4,23 @@ Una interfaz gráfica ligera, rápida y moderna para Windows diseñada para copi
 
 ---
 
-## 🚀 Acceso Rápido y Atajo de Windows
+## 🚀 Acceso Rápido y Métodos de Inicio
 
-La aplicación se encuentra instalada con los siguientes métodos de acceso:
+La aplicación cuenta con integración nativa en Windows:
 
-1. **Atajo Global de Teclado**: Presiona **`Ctrl + Alt + P`** en cualquier momento y desde cualquier aplicación de Windows para abrir la paleta al instante.
-2. **Acceso directo en el Escritorio**: Doble clic en el icono **`AI Prompt Clipboard`** en tu Escritorio.
-3. **Menú Inicio**: Presiona la tecla **`Win`** y busca `"AI Prompt Clipboard"`.
+1. **Inicio Automático con Windows (Startup)**: Al instalarse, se añade a la carpeta de Inicio de Windows (`Startup`) para ejecutarse en segundo plano discretamente al encender el PC.
+2. **Bandeja del Sistema ("Mostrar iconos ocultos")**: Icono residente en la bandeja junto al reloj de Windows con menú contextual (clic derecho para abrir, buscar actualizaciones o salir).
+3. **Atajo Global de Teclado**: Presiona **`Ctrl + Alt + P`** en cualquier momento y desde cualquier aplicación de Windows para abrir la paleta instantáneamente sin latencia.
+4. **Acceso directo en el Escritorio y Menú Inicio**: Doble clic en el icono **`AI Prompt Clipboard`** en tu Escritorio o búscalo en el Menú Inicio pulsando la tecla `Win`.
+
+---
+
+## 🔄 Auto-Actualizaciones desde GitHub (Motor Ekin)
+
+La aplicación cuenta con el mismo motor de actualización automática y seguro de [Ekin](https://github.com/txeki-dev/Ekin):
+- **Comprobación al inicio**: Al arrancar, verifica silenciosamente si hay nuevas versiones en `origin/main`.
+- **Comprobación manual**: Botón `🔄` en la barra de título o clic derecho en el icono de la bandeja -> *Buscar actualizaciones...*.
+- **Protección contra pérdida de datos**: Valida que no existan cambios locales sin confirmar antes de descargar nada (`git pull --ff-only`). Si hay una nueva versión disponible, te solicitará confirmación antes de instalarla y se reiniciará sola.
 
 ---
 
@@ -31,34 +41,33 @@ La aplicación se encuentra instalada con los siguientes métodos de acceso:
 
 ## 🎨 Características de la Interfaz
 
-- **Copia instantánea**: Haz clic en cualquier tarjeta o en su botón `📋 Copiar`. Recibirás una respuesta visual en verde (`✓ ¡Copiado!`) y el texto se enviará al portapapeles.
+- **Icono Propio de Aplicación**: Mediante `AppUserModelID`, Windows reconoce la aplicación como un proceso independiente en la barra de tareas y bandeja, mostrando su icono exclusivo en lugar del terminal de PowerShell.
+- **Instancia Única con Activación IPC**: Solo se ejecuta un proceso en segundo plano (vía `Mutex` y `EventWaitHandle`). Pulsar `Ctrl + Alt + P` o abrir el acceso directo despierta la ventana residente al instante con 0ms de retardo.
+- **Copia instantánea protegida**: Algoritmo con reintentos contra bloqueos transitorios del portapapeles de Windows (`CLIPBRD_E_CANT_OPEN`) y confirmación visual en verde (`✓ ¡Copiado!`).
 - **Vista Previa (`👁️`)**: Visualiza el texto íntegro en fuente monoespaciada antes de copiarlo.
-- **Buscador en tiempo real**: Encuentra rápidamente cualquier protocolo tecleando palabras como `"tdd"`, `"audit"`, `"intro"`, etc.
-- **Filtros por Categoría**: Botones de acceso directo para `Workflow`, `TDD`, `Setup` y `Auditoría`.
-- **Fijar ventana (`📌 Always on Top`)**: Mantenla flotando sobre tu editor de código o chat de IA sin que se oculte al hacer clic en otra ventana.
+- **Buscador y Filtros por Categoría**: Filtra por `Workflow`, `TDD`, `Setup` y `Auditoría` o busca palabras clave.
+- **Fijar ventana (`📌 Always on Top`)**: Mantenla flotando sobre tu editor de código o chat de IA.
 - **Opciones persistentes** (guardadas en `config.json`):
-  - `Cerrar al copiar`: Si está marcado, la ventana se minimiza/cierra automáticamente 300ms tras copiar.
-  - `Cabecera [ TITULO ]`: Permite decidir si copiar únicamente el cuerpo del protocolo (`Execute the ...`) o incluir la cabecera (ej: `[ INTRO ]`).
-- **Personalización sencilla (`⚙️`)**: Haz clic en el engranaje para abrir `prompts.json` en el Bloc de Notas y agregar o modificar tus propios prompts.
+  - `Ocultar al copiar`: Si está marcado, la ventana se oculta a la bandeja tras copiar un prompt.
+  - `Cabecera [ TITULO ]`: Permite decidir si copiar únicamente el cuerpo del protocolo (`Execute the ...`) o incluir la cabecera.
+- **Personalización sencilla (`⚙️`)**: Haz clic en el engranaje para abrir `prompts.json` en el Bloc de Notas.
 
 ---
 
 ## 🛠️ Estructura del Proyecto
 
-- `app.ps1`: Aplicación principal desarrollada con PowerShell nativo y WPF (Windows Presentation Foundation).
+- `app.ps1`: Aplicación principal desarrollada con PowerShell nativo, WPF, WinForms NotifyIcon y motor de actualización Git.
 - `launch.vbs`: Lanzador silencioso que evita cualquier parpadeo de consola negra de PowerShell.
 - `prompts.json`: Base de datos editable con todos los prompts, roles, tags y categorías.
 - `config.json`: Almacena las preferencias del usuario (modo siempre visible, cerrar al copiar, etc.).
-- `install-shortcut.ps1`: Script automatizado para registrar o reinstalar los accesos directos y atajos globales.
+- `install-shortcut.ps1`: Script automatizado para registrar los accesos directos (Escritorio, Menú Inicio y Startup).
 - `icon.ico`: Icono de alta resolución personalizado para la aplicación.
 
 ---
 
 ## 🔄 Reinstalación o Cambio de Atajo
 
-Si deseas cambiar la combinación de teclas o reinstalar el acceso directo:
-Abre PowerShell en este directorio y ejecuta:
+Para reinstalar o cambiar la combinación de teclas:
 ```powershell
 .\install-shortcut.ps1 -Hotkey "CTRL+ALT+P"
 ```
-*(Puedes reemplazar `"CTRL+ALT+P"` por la combinación que prefieras, como `"CTRL+ALT+I"` o `"CTRL+SHIFT+P"`)*.

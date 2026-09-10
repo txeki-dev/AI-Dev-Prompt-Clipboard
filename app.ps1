@@ -1,12 +1,14 @@
 ﻿<#
 .SYNOPSIS
-    AI Dev Prompt Clipboard - Modern Windows WPF GUI
+    AI Dev Prompt Clipboard - Modern Windows WPF GUI with System Tray & Auto-Updater
     Txek Systems
 #>
 
-Add-Type -AssemblyName PresentationFramework, PresentationCore, WindowsBase, System.Drawing
+param(
+    [switch]$Startup
+)
 
-# Determine script directory
+# 1. Determine script directory and files
 $scriptDir = $PSScriptRoot
 if (-not $scriptDir) {
     if ($MyInvocation -and $MyInvocation.MyCommand -and $MyInvocation.MyCommand.Path) {
@@ -19,8 +21,53 @@ if (-not $scriptDir) {
 $promptsFile = Join-Path $scriptDir "prompts.json"
 $configFile  = Join-Path $scriptDir "config.json"
 $iconFile    = Join-Path $scriptDir "icon.ico"
+$vbsPath     = Join-Path $scriptDir "launch.vbs"
 
-# Load Config
+# 2. Single-Instance & Activation Mechanism (Named Mutex + Event)
+$createdNew = $false
+$mutexName = "Global\TxekSystems_AIDevPromptClipboard_Mutex"
+$eventName = "Global\TxekSystems_AIDevPromptClipboard_ShowEvent"
+
+$mutex = [System.Threading.Mutex]::new($true, $mutexName, [ref]$createdNew)
+if (-not $createdNew) {
+    # Another instance is already running! Signal it to show window and exit immediately
+    try {
+        $showEvt = [System.Threading.EventWaitHandle]::OpenExisting($eventName)
+        $showEvt.Set() | Out-Null
+        $showEvt.Dispose()
+    } catch {}
+    exit 0
+}
+
+$showEvent = New-Object System.Threading.EventWaitHandle($false, [System.Threading.EventResetMode]::AutoReset, $eventName)
+
+# 3. Load Assemblies
+Add-Type -AssemblyName PresentationFramework, PresentationCore, WindowsBase, System.Windows.Forms, System.Drawing
+
+# 4. Set Application User Model ID (Separates Taskbar grouping & icon from PowerShell)
+$shellHelperSource = @'
+using System;
+using System.Runtime.InteropServices;
+public class ShellHelper {
+    [DllImport("shell32.dll", SetLastError = true)]
+    public static extern void SetCurrentProcessExplicitAppUserModelID([MarshalAs(UnmanagedType.LPWStr)] string AppID);
+}
+'@
+try {
+    Add-Type -TypeDefinition $shellHelperSource -ErrorAction SilentlyContinue
+} catch {}
+try {
+    [ShellHelper]::SetCurrentProcessExplicitAppUserModelID("TxekSystems.AIDevPromptClipboard.App.1")
+} catch {}
+
+# 5. Initialize WPF Application with Explicit Shutdown (to live in System Tray)
+$app = [System.Windows.Application]::Current
+if (-not $app) {
+    $app = [System.Windows.Application]::new()
+}
+$app.ShutdownMode = [System.Windows.ShutdownMode]::OnExplicitShutdown
+
+# 6. Load Config
 $defaultConfig = @{
     CloseOnCopy    = $false
     IncludeHeader  = $false
@@ -34,9 +81,7 @@ if (Test-Path $configFile) {
         if ($null -ne $loadedConfig.CloseOnCopy)   { $config.CloseOnCopy   = [bool]$loadedConfig.CloseOnCopy }
         if ($null -ne $loadedConfig.IncludeHeader) { $config.IncludeHeader = [bool]$loadedConfig.IncludeHeader }
         if ($null -ne $loadedConfig.AlwaysOnTop)   { $config.AlwaysOnTop   = [bool]$loadedConfig.AlwaysOnTop }
-    } catch {
-        # ignore and use defaults
-    }
+    } catch {}
 }
 
 function Save-Config {
@@ -45,7 +90,7 @@ function Save-Config {
     } catch {}
 }
 
-# Load Prompts
+# 7. Load Prompts
 if (-not (Test-Path $promptsFile)) {
     [System.Windows.MessageBox]::Show("No se encontró el archivo de prompts: $promptsFile", "Error", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Error)
     exit 1
@@ -53,7 +98,7 @@ if (-not (Test-Path $promptsFile)) {
 
 $prompts = Get-Content $promptsFile -Raw -Encoding UTF8 | ConvertFrom-Json
 
-# XAML UI Definition
+# 8. XAML UI Definition
 $xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -98,6 +143,17 @@ $xaml = @"
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <!-- Update check button -->
+                            <Button x:Name="BtnCheckUpdates" ToolTip="Buscar actualizaciones en GitHub" Background="#1E1E2E" BorderBrush="#313244" BorderThickness="1" Foreground="#CDD6F4" Width="28" Height="28" Margin="0,0,6,0" Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="6">
+                                            <TextBlock Text="🔄" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
                             <!-- Pin (Always on top) button -->
                             <Button x:Name="BtnPin" ToolTip="Siempre visible (Pin)" Background="#1E1E2E" BorderBrush="#313244" BorderThickness="1" Foreground="#CDD6F4" Width="28" Height="28" Margin="0,0,6,0" Cursor="Hand">
                                 <Button.Template>
@@ -121,7 +177,7 @@ $xaml = @"
                             </Button>
 
                             <!-- Minimize button -->
-                            <Button x:Name="BtnMinimize" ToolTip="Minimizar" Background="#1E1E2E" BorderBrush="#313244" BorderThickness="1" Foreground="#CDD6F4" Width="28" Height="28" Margin="0,0,6,0" Cursor="Hand">
+                            <Button x:Name="BtnMinimize" ToolTip="Ocultar en la bandeja del sistema" Background="#1E1E2E" BorderBrush="#313244" BorderThickness="1" Foreground="#CDD6F4" Width="28" Height="28" Margin="0,0,6,0" Cursor="Hand">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="6">
@@ -132,7 +188,7 @@ $xaml = @"
                             </Button>
 
                             <!-- Close button -->
-                            <Button x:Name="BtnClose" ToolTip="Cerrar (Esc)" Background="#313244" BorderBrush="#45475A" BorderThickness="1" Foreground="#CDD6F4" Width="28" Height="28" Cursor="Hand">
+                            <Button x:Name="BtnClose" ToolTip="Cerrar ventana (sigue activo en bandeja)" Background="#313244" BorderBrush="#45475A" BorderThickness="1" Foreground="#CDD6F4" Width="28" Height="28" Cursor="Hand">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border x:Name="CloseBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="6">
@@ -249,12 +305,12 @@ $xaml = @"
 
                         <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
                             <TextBlock x:Name="StatusLabel" Text="Haz clic en cualquier tarjeta para copiar al portapapeles" FontSize="12" Foreground="#A6ADC8"/>
-                            <TextBlock Text="Atajo global: Ctrl + Alt + P" FontSize="10.5" Foreground="#585B70" Margin="0,2,0,0"/>
+                            <TextBlock Text="Atajo global: Ctrl + Alt + P • Activo en bandeja" FontSize="10.5" Foreground="#585B70" Margin="0,2,0,0"/>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                             <CheckBox x:Name="ChkIncludeHeader" Content="Cabecera [ TITULO ]" Foreground="#CDD6F4" FontSize="11.5" Margin="0,0,12,0" VerticalAlignment="Center" Cursor="Hand"/>
-                            <CheckBox x:Name="ChkCloseOnCopy" Content="Cerrar al copiar" Foreground="#CDD6F4" FontSize="11.5" VerticalAlignment="Center" Cursor="Hand"/>
+                            <CheckBox x:Name="ChkCloseOnCopy" Content="Ocultar al copiar" Foreground="#CDD6F4" FontSize="11.5" VerticalAlignment="Center" Cursor="Hand"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -267,19 +323,20 @@ $xaml = @"
 $reader = [System.Xml.XmlReader]::Create([System.IO.StringReader]::new($xaml))
 $window = [System.Windows.Markup.XamlReader]::Load($reader)
 
-# Set Window Icon if exists
+# Set Window Icon for Taskbar and Titlebar
 if (Test-Path $iconFile) {
     try {
         $window.Icon = [System.Windows.Media.Imaging.BitmapFrame]::Create([System.Uri]::new($iconFile))
     } catch {}
 }
 
-# Get Window Controls
+# 9. Get Window Controls
 $titleBar           = $window.FindName("TitleBar")
 $btnClose           = $window.FindName("BtnClose")
 $btnMinimize        = $window.FindName("BtnMinimize")
 $btnPin             = $window.FindName("BtnPin")
 $btnOpenFolder      = $window.FindName("BtnOpenFolder")
+$btnCheckUpdates    = $window.FindName("BtnCheckUpdates")
 $searchBox          = $window.FindName("SearchBox")
 $searchPlaceholder  = $window.FindName("SearchPlaceholder")
 $btnClearSearch     = $window.FindName("BtnClearSearch")
@@ -333,7 +390,33 @@ $chkIncludeHeader.Add_Click({
     Save-Config
 })
 
-# Event: Window Dragging & Key handling
+# Show / Hide / Exit Window Helpers
+function Show-MainWindow {
+    $window.Show()
+    if ($window.WindowState -eq [System.Windows.WindowState]::Minimized) {
+        $window.WindowState = [System.Windows.WindowState]::Normal
+    }
+    $window.Activate()
+    $window.Focus()
+}
+
+function Hide-MainWindow {
+    if ($previewOverlay.Visibility -eq [System.Windows.Visibility]::Visible) {
+        $previewOverlay.Visibility = [System.Windows.Visibility]::Collapsed
+    }
+    $window.Hide()
+}
+
+function Exit-Application {
+    $notifyIcon.Visible = $false
+    $notifyIcon.Dispose()
+    try { $mutex.ReleaseMutex() } catch {}
+    try { $mutex.Dispose() } catch {}
+    try { $showEvent.Dispose() } catch {}
+    [System.Windows.Application]::Current.Shutdown()
+}
+
+# Window Dragging & Key handling
 $titleBar.Add_MouseLeftButtonDown({
     $window.DragMove()
 })
@@ -344,17 +427,17 @@ $window.Add_KeyDown({
         if ($previewOverlay.Visibility -eq [System.Windows.Visibility]::Visible) {
             $previewOverlay.Visibility = [System.Windows.Visibility]::Collapsed
         } else {
-            $window.Close()
+            Hide-MainWindow
         }
     }
 })
 
 $btnClose.Add_Click({
-    $window.Close()
+    Hide-MainWindow
 })
 
 $btnMinimize.Add_Click({
-    $window.WindowState = [System.Windows.WindowState]::Minimized
+    Hide-MainWindow
 })
 
 $btnPin.Add_Click({
@@ -371,10 +454,167 @@ $btnPin.Add_Click({
 })
 
 $btnOpenFolder.Add_Click({
-    Start-Process notepad.exe $promptsFile
+    Start-Process notepad.exe -ArgumentList "`"$promptsFile`""
 })
 
-# Reset Status Timer
+# 10. Auto-Updater Engine (Ported & Hardened from Ekin)
+function Check-ForUpdates {
+    param([bool]$Silent = $true)
+
+    try {
+        # 0. Check if git work tree
+        $isGit = & git rev-parse --is-inside-work-tree 2>$null
+        if ($LASTEXITCODE -ne 0 -or $isGit.Trim() -ne "true") {
+            if (-not $Silent) {
+                [System.Windows.MessageBox]::Show("Este directorio no es un repositorio Git.", "AI Prompt Clipboard", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+            }
+            return
+        }
+
+        # 1. Fetch remote silently
+        $null = & git fetch origin 2>$null
+        if ($LASTEXITCODE -ne 0) {
+            if (-not $Silent) {
+                [System.Windows.MessageBox]::Show("No se pudo conectar con GitHub para comprobar actualizaciones.`nComprueba tu conexión a Internet.", "AI Prompt Clipboard", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning)
+            }
+            return
+        }
+
+        # 2. Check if local branch is behind remote
+        $status = & git status -uno 2>$null
+        $isBehind = ($status -match "behind")
+        if (-not $isBehind) {
+            if (-not $Silent) {
+                [System.Windows.MessageBox]::Show("Ya tienes la versión más reciente instalada.", "AI Prompt Clipboard", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+            }
+            return
+        }
+
+        # 3. Check for dirty working tree (Never pull onto a dirty working tree)
+        $dirty = & git status --porcelain 2>$null
+        if ($dirty -and $dirty.Trim().Length -gt 0) {
+            [System.Windows.MessageBox]::Show(
+                "Hay una nueva versión disponible en GitHub, pero tienes cambios locales sin confirmar.`nPor favor, realiza commit o descarta los cambios antes de actualizar.",
+                "Actualización disponible - AI Prompt Clipboard",
+                [System.Windows.MessageBoxButton]::OK,
+                [System.Windows.MessageBoxImage]::Warning
+            )
+            return
+        }
+
+        # 4. Prompt user confirmation
+        $confirm = [System.Windows.MessageBox]::Show(
+            "Hay una nueva versión de AI Prompt Clipboard disponible en GitHub.`n`n¿Deseas descargar e instalar la actualización ahora?",
+            "Actualización disponible - AI Prompt Clipboard",
+            [System.Windows.MessageBoxButton]::YesNo,
+            [System.Windows.MessageBoxImage]::Question
+        )
+        if ($confirm -ne [System.Windows.MessageBoxResult]::Yes) {
+            return
+        }
+
+        # 5. Fast-forward pull
+        $pullOut = & git pull --ff-only origin main 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            [System.Windows.MessageBox]::Show(
+                "Error al descargar la actualización desde GitHub:`n$pullOut`n`nIntenta actualizar manualmente con 'git pull'.",
+                "Error de actualización",
+                [System.Windows.MessageBoxButton]::OK,
+                [System.Windows.MessageBoxImage]::Error
+            )
+            return
+        }
+
+        # Refresh graphify report if installed
+        & graphify cluster-only . 2>$null
+
+        [System.Windows.MessageBox]::Show(
+            "¡Actualización completada con éxito!`nLa aplicación se reiniciará ahora para aplicar los cambios.",
+            "Actualización completada",
+            [System.Windows.MessageBoxButton]::OK,
+            [System.Windows.MessageBoxImage]::Information
+        )
+
+        # 6. Restart application
+        Start-Process "wscript.exe" -ArgumentList "`"$vbsPath`""
+        Exit-Application
+    } catch {
+        if (-not $Silent) {
+            [System.Windows.MessageBox]::Show("Error al comprobar actualizaciones: $($_.Exception.Message)", "Error", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Error)
+        }
+    }
+}
+
+$btnCheckUpdates.Add_Click({
+    Check-ForUpdates -Silent $false
+})
+
+# 11. System Tray Icon (NotifyIcon en "Mostrar iconos ocultos")
+$notifyIcon = New-Object System.Windows.Forms.NotifyIcon
+if (Test-Path $iconFile) {
+    try {
+        $notifyIcon.Icon = [System.Drawing.Icon]::new($iconFile)
+    } catch {
+        $notifyIcon.Icon = [System.Drawing.SystemIcons]::Application
+    }
+} else {
+    $notifyIcon.Icon = [System.Drawing.SystemIcons]::Application
+}
+
+$notifyIcon.Text = "AI Dev Prompt Clipboard"
+$notifyIcon.Visible = $true
+
+# System Tray Context Menu
+$trayMenu = New-Object System.Windows.Forms.ContextMenuStrip
+
+$menuOpen = $trayMenu.Items.Add("📋 Abrir Prompt Clipboard (Ctrl+Alt+P)")
+$menuOpen.Font = New-Object System.Drawing.Font($menuOpen.Font, [System.Drawing.FontStyle]::Bold)
+$menuOpen.add_Click({
+    Show-MainWindow
+})
+
+$menuUpdate = $trayMenu.Items.Add("🔄 Buscar actualizaciones...")
+$menuUpdate.add_Click({
+    Check-ForUpdates -Silent $false
+})
+
+$menuEdit = $trayMenu.Items.Add("⚙️ Editar prompts.json")
+$menuEdit.add_Click({
+    Start-Process notepad.exe -ArgumentList "`"$promptsFile`""
+})
+
+$trayMenu.Items.Add("-") | Out-Null
+
+$menuExit = $trayMenu.Items.Add("❌ Salir")
+$menuExit.add_Click({
+    Exit-Application
+})
+
+$notifyIcon.ContextMenuStrip = $trayMenu
+
+# Left click toggles window
+$notifyIcon.add_MouseClick({
+    param($s, $e)
+    if ($e.Button -eq [System.Windows.Forms.MouseButtons]::Left) {
+        if ($window.IsVisible) {
+            Hide-MainWindow
+        } else {
+            Show-MainWindow
+        }
+    }
+})
+
+# 12. IPC Event Listener (Detects Ctrl+Alt+P or new launches and shows window)
+$ipcTimer = [System.Windows.Threading.DispatcherTimer]::new()
+$ipcTimer.Interval = [TimeSpan]::FromMilliseconds(150)
+$ipcTimer.add_Tick({
+    if ($showEvent.WaitOne(0)) {
+        Show-MainWindow
+    }
+})
+$ipcTimer.Start()
+
+# 13. Copy Prompt Action with Retry Backoff
 $statusResetTimer = [System.Windows.Threading.DispatcherTimer]::new()
 $statusResetTimer.Interval = [TimeSpan]::FromSeconds(3)
 $statusResetTimer.Add_Tick({
@@ -383,7 +623,6 @@ $statusResetTimer.Add_Tick({
     $statusResetTimer.Stop()
 })
 
-# Copy Prompt Action
 function Copy-PromptToClipboard {
     param($promptItem, $cardBorder, $copyBtn)
 
@@ -429,7 +668,6 @@ function Copy-PromptToClipboard {
             $cardBorder.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#34D399")
             $cardBorder.Background = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#182E25")
             
-            # Revert card after 1.2s
             $revertTimer = [System.Windows.Threading.DispatcherTimer]::new()
             $revertTimer.Interval = [TimeSpan]::FromMilliseconds(1200)
             $revertTimer.Add_Tick({
@@ -465,7 +703,7 @@ function Copy-PromptToClipboard {
             $closeTimer.Interval = [TimeSpan]::FromMilliseconds(300)
             $closeTimer.Add_Tick({
                 $this.Stop()
-                $window.Close()
+                Hide-MainWindow
             })
             $closeTimer.Start()
         }
@@ -497,7 +735,7 @@ $btnCopyFromPreview.Add_Click({
     }
 })
 
-# Build Prompt Cards
+# 14. Build Prompt Cards
 $cardsList = [System.Collections.Generic.List[PSObject]]::new()
 
 foreach ($item in $prompts) {
@@ -724,5 +962,22 @@ foreach ($chipEntry in $chips) {
     })
 }
 
-# Launch GUI
-$null = $window.ShowDialog()
+# 15. Auto-check for updates after 1 second (Silent, similar to Ekin QTimer)
+$updateCheckTimer = [System.Windows.Threading.DispatcherTimer]::new()
+$updateCheckTimer.Interval = [TimeSpan]::FromSeconds(1)
+$updateCheckTimer.Add_Tick({
+    $this.Stop()
+    Check-ForUpdates -Silent $true
+})
+$updateCheckTimer.Start()
+
+# 16. Launch or Start Minimized
+if ($Startup) {
+    # Started via Windows Startup folder: stay hidden in system tray
+    $notifyIcon.ShowBalloonTip(3000, "AI Dev Prompt Clipboard", "Iniciado en segundo plano. Pulsa Ctrl+Alt+P para abrir la paleta de prompts.", [System.Windows.Forms.ToolTipIcon]::Info)
+} else {
+    Show-MainWindow
+}
+
+# Run Application Message Loop
+[System.Windows.Application]::Current.Run() | Out-Null
