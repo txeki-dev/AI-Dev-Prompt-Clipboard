@@ -16,16 +16,17 @@
    - **Native App Identity**: Custom `AppUserModelID` (`TxekSystems.AIDevPromptClipboard.App.1`) decoupling the process from `powershell.exe` on the Windows taskbar and displaying the custom squircle icon.
    - **Single-Instance IPC**: Named Mutex (`Global\TxekSystems_AIDevPromptClipboard_Mutex`) and EventWaitHandle (`Global\TxekSystems_AIDevPromptClipboard_ShowEvent`) ensuring only 1 resident process runs; secondary launches (`Ctrl+Alt+P` or desktop shortcut) wake the resident instance with 0ms latency.
    - **GitHub Auto-Updater (Ekin Engine)**: Automated silent check on launch + manual button/menu option. Verifies clean git checkout, checks `origin/main` status, warns on dirty working tree, prompts user with confirmation dialog, pulls `--ff-only`, and hot-restarts the application.
-3. **Repository & Version Control**:
+3. **Repository, License & Version Control**:
    - Git repository tracking `main` synchronized with remote origin `https://github.com/txeki-dev/AI-Dev-Prompt-Clipboard.git`.
+   - Licensed under PolyForm Noncommercial 1.0.0 for public open-source distribution.
 
 ---
 
 ## 📅 Weekly Summary (Week ending 2026-09-12)
 - Initial release of AI Dev Prompt Clipboard with 8 core AI protocols.
 - Established persistent AI memory architecture with Graphify, `diary.md` and Git automation.
-- Forensic Audit Findings #1 and #2 remediated and verified.
-- Added Windows Startup auto-start, System Tray resident icon, custom AppUserModelID, and GitHub auto-updater engine ported from Ekin.
+- Forensic Audit Findings #1 to #7 remediated and verified.
+- Added Windows Startup auto-start, System Tray resident icon, custom AppUserModelID, GitHub auto-updater engine ported from Ekin, and PolyForm Noncommercial 1.0.0 license for public release.
 
 ---
 
