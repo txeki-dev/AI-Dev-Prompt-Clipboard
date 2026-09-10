@@ -60,17 +60,22 @@ La aplicación cuenta con el mismo motor de actualización automática y seguro 
 ## 🛠️ Estructura del Proyecto
 
 - `app.ps1`: Aplicación principal desarrollada con PowerShell nativo, WPF, WinForms NotifyIcon y motor de actualización Git.
-- `launch.vbs`: Lanzador silencioso que evita cualquier parpadeo de consola negra de PowerShell.
+- `launch.vbs`: Lanzador silencioso que evita cualquier parpadeo de consola negra de PowerShell (con auto-reparación integrada).
+- `launch.bat`: Lanzador ejecutable directo para iniciar la aplicación con doble clic desde el Explorador de Windows.
+- `install.bat`: Instalador en 1 solo clic que registra automáticamente los accesos directos sin necesidad de abrir PowerShell.
+- `install-shortcut.ps1`: Script automatizado y auto-reparador para registrar los accesos directos (Escritorio, Menú Inicio y Startup).
 - `prompts.json`: Base de datos editable con todos los prompts, roles, tags y categorías.
 - `config.json`: Almacena las preferencias del usuario (modo siempre visible, cerrar al copiar, etc.).
-- `install-shortcut.ps1`: Script automatizado para registrar los accesos directos (Escritorio, Menú Inicio y Startup).
 - `icon.ico`: Icono de alta resolución personalizado para la aplicación.
 
 ---
 
-## 🔄 Reinstalación o Cambio de Atajo
+## 💻 Instalación y Configuración de Atajo
 
-Para reinstalar o cambiar la combinación de teclas:
+### Opción 1: Doble clic (Recomendado)
+Haz doble clic en **`install.bat`** en la carpeta del repositorio.
+
+### Opción 2: PowerShell (Personalizando atajo)
 ```powershell
 .\install-shortcut.ps1 -Hotkey "CTRL+ALT+P"
 ```

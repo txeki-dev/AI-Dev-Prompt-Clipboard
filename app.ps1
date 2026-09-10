@@ -23,6 +23,30 @@ $configFile  = Join-Path $scriptDir "config.json"
 $iconFile    = Join-Path $scriptDir "icon.ico"
 $vbsPath     = Join-Path $scriptDir "launch.vbs"
 
+# Auto-reparación (Self-Healing) de launch.vbs si no existe en el directorio
+if (-not (Test-Path -LiteralPath $vbsPath)) {
+    try {
+        $vbsTemplate = @(
+            'Set WshShell = CreateObject("WScript.Shell")',
+            'Set FSO = CreateObject("Scripting.FileSystemObject")',
+            'scriptDir = FSO.GetParentFolderName(WScript.ScriptFullName)',
+            '',
+            'args = ""',
+            'For Each arg In WScript.Arguments',
+            '    If InStr(arg, " ") > 0 Then',
+            '        args = args & " """ & arg & """"',
+            '    Else',
+            '        args = args & " " & arg',
+            '    End If',
+            'Next',
+            '',
+            'cmd = "powershell.exe -NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File """ & scriptDir & "\app.ps1""" & args',
+            'WshShell.Run cmd, 0, False'
+        ) -join [Environment]::NewLine
+        [System.IO.File]::WriteAllText($vbsPath, $vbsTemplate, [System.Text.Encoding]::ASCII)
+    } catch {}
+}
+
 # 2. Single-Instance & Activation Mechanism (Named Mutex + Event)
 $createdNew = $false
 $mutexName = "Global\TxekSystems_AIDevPromptClipboard_Mutex"
@@ -649,7 +673,11 @@ function Check-ForUpdates {
         )
 
         # 6. Restart application
-        Start-Process "wscript.exe" -ArgumentList "`"$vbsPath`""
+        if (Test-Path -LiteralPath $vbsPath) {
+            Start-Process "wscript.exe" -ArgumentList "`"$vbsPath`""
+        } else {
+            Start-Process "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File `"$PSCommandPath`""
+        }
         Exit-Application
     } catch {
         if (-not $Silent) {

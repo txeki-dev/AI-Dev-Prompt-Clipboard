@@ -78,22 +78,12 @@
     },
     {
       "id": "diary_forensic_audit_findings_2026_09_09_principal_security_performance_auditor",
-      "label": "\ud83d\udd2c Forensic Audit Findings - 2026-09-09 (Principal Security & Performance Auditor)",
+      "label": "🔬 Forensic Audit Findings - 2026-09-09 (Principal Security & Performance Auditor)",
       "degree": 4
     },
     {
-      "id": "app_trigger_backgroundupdatecheck",
-      "label": "Trigger-BackgroundUpdateCheck()",
-      "degree": 3
-    },
-    {
-      "id": "app_show_mainwindow",
-      "label": "Show-MainWindow()",
-      "degree": 3
-    },
-    {
-      "id": "app_check_forupdatesasync",
-      "label": "Check-ForUpdatesAsync()",
+      "id": "app_copy_prompttoclipboard",
+      "label": "Copy-PromptToClipboard()",
       "degree": 3
     },
     {
@@ -102,22 +92,43 @@
       "degree": 3
     },
     {
-      "id": "app_copy_prompttoclipboard",
-      "label": "Copy-PromptToClipboard()",
+      "id": "app_check_forupdatesasync",
+      "label": "Check-ForUpdatesAsync()",
       "degree": 3
     },
     {
-      "id": "graph_report_communities_3_total_1_thin_omitted",
-      "label": "Communities (3 total, 1 thin omitted)",
-      "degree": 2
+      "id": "app_show_mainwindow",
+      "label": "Show-MainWindow()",
+      "degree": 3
+    },
+    {
+      "id": "app_trigger_backgroundupdatecheck",
+      "label": "Trigger-BackgroundUpdateCheck()",
+      "degree": 3
     },
     {
       "id": "app_hide_mainwindow",
       "label": "Hide-MainWindow()",
       "degree": 2
+    },
+    {
+      "id": "app_exit_application",
+      "label": "Exit-Application()",
+      "degree": 2
     }
   ],
   "surprises": [
+    {
+      "source": "Copy-PromptToClipboard()",
+      "target": "Update-ActiveClipboardIndicator()",
+      "source_files": [
+        "app.ps1",
+        "app.ps1"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "note": "Bridges community 2 → community 4"
+    },
     {
       "source": "Trigger-BackgroundUpdateCheck()",
       "target": "Check-ForUpdatesAsync()",
@@ -127,7 +138,7 @@
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
-      "note": "Bridges community 5 \u2192 community 3"
+      "note": "Bridges community 3 → community 5"
     },
     {
       "source": "Show-MainWindow()",
@@ -138,22 +149,24 @@
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
-      "note": "Bridges community 5 \u2192 community 4"
-    },
-    {
-      "source": "Copy-PromptToClipboard()",
-      "target": "Update-ActiveClipboardIndicator()",
-      "source_files": [
-        "app.ps1",
-        "app.ps1"
-      ],
-      "confidence": "EXTRACTED",
-      "relation": "calls",
-      "note": "Bridges community 4 \u2192 community 2"
+      "note": "Bridges community 4 → community 5"
     }
   ],
-  "tokens": {
-    "input": 0,
-    "output": 0
-  }
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)` connect `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)` to `Communities (3 total, 1 thin omitted)`?",
+      "why": "High betweenness centrality (0.098) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `Communities (3 total, 1 thin omitted)` connect `Communities (3 total, 1 thin omitted)` to `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)`?",
+      "why": "High betweenness centrality (0.017) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `Community Hubs (Navigation)`, `Corpus Check`, `God Nodes (most connected - your core abstractions)` to the rest of the system?",
+      "why": "18 weakly-connected nodes found - possible documentation gaps or missing edges."
+    }
+  ]
 }

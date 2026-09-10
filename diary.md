@@ -75,7 +75,17 @@
    - Added `LICENSE` with the PolyForm Noncommercial 1.0.0 terms, configured with explicit notice: `Required Notice: Copyright 2026 Txek Systems (https://github.com/txeki-dev/AI-Dev-Prompt-Clipboard)`.
    - Updated `README.md` with license badge and dedicated `## 📄 Licencia` section for public repository launch.
 
-Files changed: `LICENSE`, `README.md`, `diary.md`.
+10. **Remediated Shortcut Launch Failure & Self-Healing Launcher**:
+    - **Diagnóstico de causa raíz**: En equipos secundarios o al mover archivos, si `install-shortcut.ps1` se ejecutaba fuera de la raíz del proyecto o sin clonar todos los ficheros, `$scriptDir` no contenía `launch.vbs`. El instalador creaba los accesos directos sin validar la existencia de los ejecutables, provocando que Windows Script Host mostrara el error emergente *"No se encuentra el archivo de comandos ... launch.vbs"*. Además, archivos descargados de la web retenían el bloqueo Mark-of-the-Web (`Zone.Identifier`) de Windows SmartScreen.
+    - **Resolución integral implementada**:
+      - **Resolución inteligente de ruta**: `install-shortcut.ps1` escanea múltiples candidatos (`$AppDir`, `$PSScriptRoot`, `$MyInvocation`, `Get-Location` y subcarpetas) y valida la presencia de `app.ps1` antes de proceder. Si no se encuentra, aborta con mensaje descriptivo en lugar de crear accesos directos rotos.
+      - **Auto-reparación (Self-Healing)**: Tanto `install-shortcut.ps1` como `app.ps1` detectan si `launch.vbs` falta y lo regeneran automáticamente con codificación ASCII limpia.
+      - **Desbloqueo automático**: Ejecuta `Unblock-File` sobre los archivos del proyecto para evitar bloqueos por Windows SmartScreen.
+      - **Ruta absoluta y fallback a PowerShell**: Usa la ruta completa a `wscript.exe` y proporciona fallback automático (o mediante `-DirectPowerShell`) para invocar directamente `powershell.exe -WindowStyle Hidden` si el motor VBScript estuviera desactivado.
+      - **Lanzadores batch en 1 clic**: Se crearon `launch.bat` (arranque directo con doble clic) e `install.bat` (instalación de accesos directos en 1 clic sin tocar PowerShell).
+      - **Fallback en reinicio de Auto-Updater**: Añadido fallback en `app.ps1` (`Check-ForUpdates`) para reiniciar con PowerShell directo si `launch.vbs` no existiera.
+
+Files changed: `install-shortcut.ps1`, `app.ps1`, `launch.bat`, `install.bat`, `README.md`, `diary.md`.
 
 ## 🔬 Forensic Audit Findings - 2026-09-10 (Principal Security & Performance Auditor)
 
