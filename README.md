@@ -36,8 +36,8 @@ La aplicación cuenta con el mismo motor de actualización automática y seguro 
 | 4 | **OUTRO** | `<session_end_hybrid>` | Consolidación & Git | Cierre de sprint en `diary.md`, archivo semanal, actualización de README y git push |
 | 5 | **INITIAL** | `<initial_setup_hybrid>` | Principal Software Architect | Inicialización de memoria persistente con Graphify, build graph y markdown inicial |
 | 6 | **MIGRATE** | `<migrate_to_hybrid>` | Principal Software Architect | Migración de base de código de `context.md` estático a Graphify híbrido |
-| 7 | **AUDITORY** | `<codebase_audit_hybrid>` | Security & Performance Auditor | Auditoría forense de arquitectura, código muerto, bugs y deuda técnica |
-| 8 | **REMEDIATE** | `<remediate_audit_hybrid>` | Remediation Specialist | Resolución sistemática y aislada de los hallazgos de la auditoría uno a uno |
+| 7 | **AUDITORY** | `<codebase_audit_hybrid>` | Principal Security & Performance Auditor | Auditoría forense de arquitectura, código muerto, bugs y generación de backlog accionable |
+| 8 | **REMEDIATE** | `<remediate_all_audit_findings>` | Principal Staff Engineer & Remediation Specialist | Resolución sistemática en cola de todos los hallazgos de auditoría (HIGH -> LOW) sin regresiones |
 
 ---
 

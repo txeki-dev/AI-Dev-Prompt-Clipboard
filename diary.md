@@ -85,7 +85,12 @@
       - **Lanzadores batch en 1 clic**: Se crearon `launch.bat` (arranque directo con doble clic) e `install.bat` (instalación de accesos directos en 1 clic sin tocar PowerShell).
       - **Fallback en reinicio de Auto-Updater**: Añadido fallback en `app.ps1` (`Check-ForUpdates`) para reiniciar con PowerShell directo si `launch.vbs` no existiera.
 
-Files changed: `install-shortcut.ps1`, `app.ps1`, `launch.bat`, `install.bat`, `README.md`, `diary.md`.
+11. **Updated AUDIT & REMEDIATE Protocols (Actionable Backlog & Queue Remediation)**:
+    - Actualizado protocolo `AUDITORY` (`<codebase_audit_hybrid>`): rol `Principal Security & Performance Auditor`, escaneo de God-nodes y módulos huérfanos con Graphify, logging estricto como checkboxes en `diary.md` y transición de "Active Task" a `<remediate_all_audit_findings>`.
+    - Actualizado protocolo `REMEDIATE` a `<remediate_all_audit_findings>`: rol `Principal Staff Engineer & Remediation Specialist`, resolución sistemática en cola clasificada por prioridad (HIGH -> MEDIUM -> LOW), comprobación de blast radius previa a edición, verificación unitaria individual, actualización de estado en tiempo real y QA gate global.
+    - Actualizados y sincronizados `prompts.json`, `README.md` y `diary.md`.
+
+Files changed: `prompts.json`, `README.md`, `diary.md`.
 
 ## 🔬 Forensic Audit Findings - 2026-09-10 (Principal Security & Performance Auditor)
 
