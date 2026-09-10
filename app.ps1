@@ -390,6 +390,21 @@ $chkIncludeHeader.Add_Click({
     Save-Config
 })
 
+$script:lastUpdateCheck = [DateTime]::MinValue
+function Trigger-BackgroundUpdateCheck {
+    # Throttled to check at most once every 60 seconds when opening/restoring window
+    if ((Get-Date) - $script:lastUpdateCheck -gt [TimeSpan]::FromSeconds(60)) {
+        $script:lastUpdateCheck = Get-Date
+        $upTimer = [System.Windows.Threading.DispatcherTimer]::new()
+        $upTimer.Interval = [TimeSpan]::FromMilliseconds(600)
+        $upTimer.Add_Tick({
+            $this.Stop()
+            Check-ForUpdates -Silent $true
+        })
+        $upTimer.Start()
+    }
+}
+
 # Show / Hide / Exit Window Helpers
 function Show-MainWindow {
     $window.Show()
@@ -398,6 +413,7 @@ function Show-MainWindow {
     }
     $window.Activate()
     $window.Focus()
+    Trigger-BackgroundUpdateCheck
 }
 
 function Hide-MainWindow {
@@ -846,12 +862,16 @@ foreach ($item in $prompts) {
     $btnPreview.Margin = [System.Windows.Thickness]::new(0, 0, 6, 0)
     $btnPreview.Cursor = [System.Windows.Input.Cursors]::Hand
 
-    $capturedItem = $item
+    # Local copies for closure capture in each iteration
+    $thisItem = $item
+    $thisCard = $card
+
+    $btnPreview.Tag = $item
     $btnPreview.Add_Click({
         param($s, $e)
         $e.Handled = $true
-        Show-Preview -promptItem $capturedItem
-    })
+        Show-Preview -promptItem $thisItem
+    }.GetNewClosure())
     $actionStack.Children.Add($btnPreview) | Out-Null
 
     # Copy button
@@ -866,12 +886,14 @@ foreach ($item in $prompts) {
     $btnCopy.Padding = [System.Windows.Thickness]::new(10, 6, 10, 6)
     $btnCopy.Cursor = [System.Windows.Input.Cursors]::Hand
 
-    $capturedCard = $card
+    $thisBtn = $btnCopy
+    $card.Tag = $item
+
     $btnCopy.Add_Click({
         param($s, $e)
         $e.Handled = $true
-        Copy-PromptToClipboard -promptItem $capturedItem -cardBorder $capturedCard -copyBtn $btnCopy
-    })
+        Copy-PromptToClipboard -promptItem $thisItem -cardBorder $thisCard -copyBtn $thisBtn
+    }.GetNewClosure())
     $actionStack.Children.Add($btnCopy) | Out-Null
 
     [System.Windows.Controls.Grid]::SetColumn($actionStack, 2)
@@ -881,17 +903,17 @@ foreach ($item in $prompts) {
 
     # Hover effect on card
     $card.Add_MouseEnter({
-        $card.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#45475A")
-    })
+        $thisCard.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#45475A")
+    }.GetNewClosure())
     $card.Add_MouseLeave({
-        $card.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#313244")
-    })
+        $thisCard.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#313244")
+    }.GetNewClosure())
 
     # Card click triggers copy
     $card.Add_MouseLeftButtonUp({
         param($s, $e)
-        Copy-PromptToClipboard -promptItem $capturedItem -cardBorder $card -copyBtn $btnCopy
-    })
+        Copy-PromptToClipboard -promptItem $thisItem -cardBorder $thisCard -copyBtn $thisBtn
+    }.GetNewClosure())
 
     $promptContainer.Children.Add($card) | Out-Null
 

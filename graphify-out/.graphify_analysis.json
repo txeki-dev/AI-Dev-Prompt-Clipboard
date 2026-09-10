@@ -2,39 +2,37 @@
   "communities": {
     "0": [
       "app",
+      "app_copy_prompttoclipboard",
+      "app_hide_mainwindow",
       "app_save_config",
-      "app_show_mainwindow",
       "app_show_preview",
       "app_update_filter"
     ],
     "1": [
       "app_check_forupdates",
-      "app_exit_application"
+      "app_exit_application",
+      "app_show_mainwindow",
+      "app_trigger_backgroundupdatecheck"
     ],
     "2": [
-      "app_copy_prompttoclipboard",
-      "app_hide_mainwindow"
-    ],
-    "3": [
       "install_shortcut"
     ]
   },
   "cohesion": {
     "0": 0.4,
-    "1": 1.0,
-    "2": 1.0,
-    "3": 1.0
+    "1": 0.5,
+    "2": 1.0
   },
   "gods": [
     {
       "id": "app_check_forupdates",
       "label": "Check-ForUpdates()",
-      "degree": 2
+      "degree": 3
     },
     {
-      "id": "app_exit_application",
-      "label": "Exit-Application()",
-      "degree": 2
+      "id": "app_trigger_backgroundupdatecheck",
+      "label": "Trigger-BackgroundUpdateCheck()",
+      "degree": 3
     },
     {
       "id": "app_copy_prompttoclipboard",
@@ -45,14 +43,29 @@
       "id": "app_hide_mainwindow",
       "label": "Hide-MainWindow()",
       "degree": 2
+    },
+    {
+      "id": "app_exit_application",
+      "label": "Exit-Application()",
+      "degree": 2
+    },
+    {
+      "id": "app_show_mainwindow",
+      "label": "Show-MainWindow()",
+      "degree": 2
     }
   ],
   "surprises": [],
   "questions": [
     {
-      "type": "no_signal",
-      "question": null,
-      "why": "Not enough signal to generate questions. This usually means the corpus has no AMBIGUOUS edges, no bridge nodes, no INFERRED relationships, and all communities are tightly cohesive. Add more files or run with --mode deep to extract richer edges."
+      "type": "bridge_node",
+      "question": "Why does `Check-ForUpdates()` connect `Check-ForUpdates` to `app.ps1`?",
+      "why": "High betweenness centrality (0.011) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `Trigger-BackgroundUpdateCheck()` connect `Check-ForUpdates` to `app.ps1`?",
+      "why": "High betweenness centrality (0.011) - this node is a cross-community bridge."
     }
   ]
 }

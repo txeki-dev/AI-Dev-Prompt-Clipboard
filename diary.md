@@ -1,4 +1,4 @@
-# AI Dev Prompt Clipboard: Developer Diary
+﻿# AI Dev Prompt Clipboard: Developer Diary
 
 **Current Date**: 2026-09-10
 
@@ -47,7 +47,11 @@
    - Added escaped quotes in `Start-Process notepad.exe -ArgumentList "`"$promptsFile`""` to prevent argument splitting on space-containing paths (`Txek Systems`).
    - Hardened `install-shortcut.ps1` icon location logic to prevent duplicate comma index notation.
 
-Files changed: `app.ps1`, `install-shortcut.ps1`, `launch.vbs`, `README.md`.
+5. **Bugfix: Card Closure Variable Scoping & Shortcut Update Wake**:
+   - Fixed PowerShell closure variable capture issue where all cards evaluated the last prompt (`REMEDIATE`). Enforced localized closures via `.GetNewClosure()` and individual element tagging.
+   - Added `Trigger-BackgroundUpdateCheck` on `Show-MainWindow` so that opening via desktop shortcut or `Ctrl+Alt+P` automatically re-checks GitHub for updates in the background (throttled).
+
+Files changed: `app.ps1`, `install-shortcut.ps1`, `launch.vbs`, `README.md`, `diary.md`.
 
 ---
 
