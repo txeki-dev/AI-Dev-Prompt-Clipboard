@@ -4,10 +4,262 @@
   "graph": {},
   "nodes": [
     {
+      "id": "graph_report",
+      "label": "GRAPH_REPORT.md",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "graph_report.md",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "graph_report_community_hubs_navigation",
+      "label": "Community Hubs (Navigation)",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "community hubs (navigation)",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L16"
+    },
+    {
+      "id": "graph_report_corpus_check",
+      "label": "Corpus Check",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "corpus check",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "graph_report_god_nodes_most_connected_your_core_abstractions",
+      "label": "God Nodes (most connected - your core abstractions)",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "god nodes (most connected - your core abstractions)",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L20"
+    },
+    {
+      "id": "graph_report_graph_freshness",
+      "label": "Graph Freshness",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "graph freshness",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "graph_report_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_10",
+      "label": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "graph report - ai-assisted-dev-prompt-clipboard  (2026-09-10)",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "graph_report_import_cycles",
+      "label": "Import Cycles",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "import cycles",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L31"
+    },
+    {
+      "id": "graph_report_knowledge_gaps",
+      "label": "Knowledge Gaps",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "knowledge gaps",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L40"
+    },
+    {
+      "id": "graph_report_suggested_questions",
+      "label": "Suggested Questions",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "suggested questions",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L43"
+    },
+    {
+      "id": "graph_report_summary",
+      "label": "Summary",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "summary",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L6"
+    },
+    {
+      "id": "graph_report_surprising_connections_you_probably_didn_t_know_these",
+      "label": "Surprising Connections (you probably didn't know these)",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "surprising connections (you probably didn't know these)",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L28"
+    },
+    {
+      "id": "diary",
+      "label": "diary.md",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "diary.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "diary.md",
+      "source_file": "diary.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "diary_active_pending_tasks",
+      "label": "\ud83d\udccb Active / Pending Tasks",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "diary.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udccb active / pending tasks",
+      "source_file": "diary.md",
+      "source_location": "L74"
+    },
+    {
+      "id": "diary_current_state",
+      "label": "\ud83d\udcca Current State",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "diary.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udcca current state",
+      "source_file": "diary.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "diary_done_2026_09_10_system_tray_windows_startup_app_identity_auto_updater_finding_2",
+      "label": "\u2705 Done (2026-09-10 \u2014 System Tray, Windows Startup, App Identity, Auto-Updater & Finding #2)",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "diary.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\u2705 done (2026-09-10 \u2014 system tray, windows startup, app identity, auto-updater & finding #2)",
+      "source_file": "diary.md",
+      "source_location": "L32"
+    },
+    {
+      "id": "diary_forensic_audit_findings_2026_09_09_principal_security_performance_auditor",
+      "label": "\ud83d\udd2c Forensic Audit Findings - 2026-09-09 (Principal Security & Performance Auditor)",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "diary.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udd2c forensic audit findings - 2026-09-09 (principal security & performance auditor)",
+      "source_file": "diary.md",
+      "source_location": "L58"
+    },
+    {
+      "id": "diary_high_bugs_robustness",
+      "label": "\ud83d\udd34 HIGH \u2014 Bugs / Robustness",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "diary.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udd34 high \u2014 bugs / robustness",
+      "source_file": "diary.md",
+      "source_location": "L60"
+    },
+    {
+      "id": "diary_low_ux_optimization",
+      "label": "\ud83d\udfe2 LOW \u2014 UX / Optimization",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "diary.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udfe2 low \u2014 ux / optimization",
+      "source_file": "diary.md",
+      "source_location": "L68"
+    },
+    {
+      "id": "diary_medium_robustness_edge_cases",
+      "label": "\ud83d\udfe1 MEDIUM \u2014 Robustness / Edge cases",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "diary.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udfe1 medium \u2014 robustness / edge cases",
+      "source_file": "diary.md",
+      "source_location": "L64"
+    },
+    {
+      "id": "diary_next_immediate_step",
+      "label": "\ud83c\udfaf Next Immediate Step",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "diary.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83c\udfaf next immediate step",
+      "source_file": "diary.md",
+      "source_location": "L82"
+    },
+    {
+      "id": "diary_weekly_summary_week_ending_2026_09_12",
+      "label": "\ud83d\udcc5 Weekly Summary (Week ending 2026-09-12)",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "diary.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udcc5 weekly summary (week ending 2026-09-12)",
+      "source_file": "diary.md",
+      "source_location": "L24"
+    },
+    {
       "id": "app",
       "label": "app.ps1",
       "_origin": "ast",
-      "community": 0,
+      "community": 2,
       "community_name": "app.ps1",
       "file_type": "code",
       "norm_label": "app.ps1",
@@ -18,29 +270,29 @@
       "id": "app_copy_prompttoclipboard",
       "label": "Copy-PromptToClipboard()",
       "_origin": "ast",
-      "community": 0,
+      "community": 2,
       "community_name": "app.ps1",
       "file_type": "code",
       "norm_label": "copy-prompttoclipboard()",
       "source_file": "app.ps1",
-      "source_location": "L642"
+      "source_location": "L716"
     },
     {
       "id": "app_hide_mainwindow",
       "label": "Hide-MainWindow()",
       "_origin": "ast",
-      "community": 0,
+      "community": 2,
       "community_name": "app.ps1",
       "file_type": "code",
       "norm_label": "hide-mainwindow()",
       "source_file": "app.ps1",
-      "source_location": "L419"
+      "source_location": "L420"
     },
     {
       "id": "app_save_config",
       "label": "Save-Config()",
       "_origin": "ast",
-      "community": 0,
+      "community": 2,
       "community_name": "app.ps1",
       "file_type": "code",
       "norm_label": "save-config()",
@@ -51,51 +303,51 @@
       "id": "app_show_preview",
       "label": "Show-Preview()",
       "_origin": "ast",
-      "community": 0,
+      "community": 2,
       "community_name": "app.ps1",
       "file_type": "code",
       "norm_label": "show-preview()",
       "source_file": "app.ps1",
-      "source_location": "L734"
+      "source_location": "L780"
     },
     {
       "id": "app_update_filter",
       "label": "Update-Filter()",
       "_origin": "ast",
-      "community": 0,
+      "community": 2,
       "community_name": "app.ps1",
       "file_type": "code",
       "norm_label": "update-filter()",
       "source_file": "app.ps1",
-      "source_location": "L929"
+      "source_location": "L1007"
     },
     {
       "id": "app_check_forupdates",
       "label": "Check-ForUpdates()",
       "_origin": "ast",
-      "community": 1,
+      "community": 3,
       "community_name": "Check-ForUpdates",
       "file_type": "code",
       "norm_label": "check-forupdates()",
       "source_file": "app.ps1",
-      "source_location": "L477"
+      "source_location": "L486"
     },
     {
       "id": "app_exit_application",
       "label": "Exit-Application()",
       "_origin": "ast",
-      "community": 1,
+      "community": 3,
       "community_name": "Check-ForUpdates",
       "file_type": "code",
       "norm_label": "exit-application()",
       "source_file": "app.ps1",
-      "source_location": "L426"
+      "source_location": "L427"
     },
     {
       "id": "app_show_mainwindow",
       "label": "Show-MainWindow()",
       "_origin": "ast",
-      "community": 1,
+      "community": 3,
       "community_name": "Check-ForUpdates",
       "file_type": "code",
       "norm_label": "show-mainwindow()",
@@ -106,7 +358,7 @@
       "id": "app_trigger_backgroundupdatecheck",
       "label": "Trigger-BackgroundUpdateCheck()",
       "_origin": "ast",
-      "community": 1,
+      "community": 3,
       "community_name": "Check-ForUpdates",
       "file_type": "code",
       "norm_label": "trigger-backgroundupdatecheck()",
@@ -114,10 +366,67 @@
       "source_location": "L394"
     },
     {
+      "id": "app_get_safeclipboardtext",
+      "label": "Get-SafeClipboardText()",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "Update-ActiveClipboardIndicator",
+      "file_type": "code",
+      "norm_label": "get-safeclipboardtext()",
+      "source_file": "app.ps1",
+      "source_location": "L645"
+    },
+    {
+      "id": "app_set_cardactivestate",
+      "label": "Set-CardActiveState()",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "Update-ActiveClipboardIndicator",
+      "file_type": "code",
+      "norm_label": "set-cardactivestate()",
+      "source_file": "app.ps1",
+      "source_location": "L654"
+    },
+    {
+      "id": "app_update_activeclipboardindicator",
+      "label": "Update-ActiveClipboardIndicator()",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "Update-ActiveClipboardIndicator",
+      "file_type": "code",
+      "norm_label": "update-activeclipboardindicator()",
+      "source_file": "app.ps1",
+      "source_location": "L673"
+    },
+    {
+      "id": "graph_report_communities_3_total_1_thin_omitted",
+      "label": "Communities (3 total, 1 thin omitted)",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Communities (3 total, 1 thin omitted)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "communities (3 total, 1 thin omitted)",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L34"
+    },
+    {
+      "id": "graph_report_community_1_check_forupdates",
+      "label": "Community 1 - \"Check-ForUpdates\"",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Communities (3 total, 1 thin omitted)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "community 1 - \"check-forupdates\"",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L36"
+    },
+    {
       "id": "install_shortcut",
       "label": "install-shortcut.ps1",
       "_origin": "ast",
-      "community": 2,
+      "community": 6,
       "community_name": "install-shortcut.ps1",
       "file_type": "code",
       "norm_label": "install-shortcut.ps1",
@@ -134,7 +443,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L556",
+      "source_location": "L565",
+      "weight": 1.0
+    },
+    {
+      "source": "app_copy_prompttoclipboard",
+      "target": "app_update_activeclipboardindicator",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L755",
       "weight": 1.0
     },
     {
@@ -145,7 +465,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L722",
+      "source_location": "L768",
+      "weight": 1.0
+    },
+    {
+      "source": "app_show_mainwindow",
+      "target": "app_update_activeclipboardindicator",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L416",
       "weight": 1.0
     },
     {
@@ -156,7 +487,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L416",
+      "source_location": "L417",
       "weight": 1.0
     },
     {
@@ -168,6 +499,39 @@
       "confidence_score": 1.0,
       "source_file": "app.ps1",
       "source_location": "L402",
+      "weight": 1.0
+    },
+    {
+      "source": "app_update_activeclipboardindicator",
+      "target": "app_get_safeclipboardtext",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L678",
+      "weight": 1.0
+    },
+    {
+      "source": "app_update_activeclipboardindicator",
+      "target": "app_set_cardactivestate",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L681",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_update_filter",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L1007",
       "weight": 1.0
     },
     {
@@ -200,7 +564,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L419",
+      "source_location": "L420",
       "weight": 1.0
     },
     {
@@ -211,7 +575,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L426",
+      "source_location": "L427",
       "weight": 1.0
     },
     {
@@ -222,7 +586,40 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L477",
+      "source_location": "L486",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_get_safeclipboardtext",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L645",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_set_cardactivestate",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L654",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_update_activeclipboardindicator",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L673",
       "weight": 1.0
     },
     {
@@ -233,7 +630,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L642",
+      "source_location": "L716",
       "weight": 1.0
     },
     {
@@ -244,7 +641,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L734",
+      "source_location": "L780",
       "weight": 1.0
     },
     {
@@ -259,17 +656,237 @@
       "weight": 1.0
     },
     {
-      "source": "app",
-      "target": "app_update_filter",
+      "source": "diary",
+      "target": "diary_weekly_summary_week_ending_2026_09_12",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "app.ps1",
-      "source_location": "L929",
+      "source_file": "diary.md",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "diary",
+      "target": "diary_done_2026_09_10_system_tray_windows_startup_app_identity_auto_updater_finding_2",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "diary",
+      "target": "diary_forensic_audit_findings_2026_09_09_principal_security_performance_auditor",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "diary",
+      "target": "diary_current_state",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "diary",
+      "target": "diary_active_pending_tasks",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L74",
+      "weight": 1.0
+    },
+    {
+      "source": "diary",
+      "target": "diary_next_immediate_step",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "diary_forensic_audit_findings_2026_09_09_principal_security_performance_auditor",
+      "target": "diary_high_bugs_robustness",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "diary_forensic_audit_findings_2026_09_09_principal_security_performance_auditor",
+      "target": "diary_medium_robustness_edge_cases",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "diary_forensic_audit_findings_2026_09_09_principal_security_performance_auditor",
+      "target": "diary_low_ux_optimization",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "graph_report",
+      "target": "graph_report_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_10",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "graph_report_communities_3_total_1_thin_omitted",
+      "target": "graph_report_community_1_check_forupdates",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "graph_report_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_10",
+      "target": "graph_report_graph_freshness",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "graph_report_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_10",
+      "target": "graph_report_community_hubs_navigation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "graph_report_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_10",
+      "target": "graph_report_god_nodes_most_connected_your_core_abstractions",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "graph_report_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_10",
+      "target": "graph_report_surprising_connections_you_probably_didn_t_know_these",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "graph_report_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_10",
+      "target": "graph_report_corpus_check",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "graph_report_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_10",
+      "target": "graph_report_import_cycles",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "graph_report_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_10",
+      "target": "graph_report_communities_3_total_1_thin_omitted",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "graph_report_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_10",
+      "target": "graph_report_knowledge_gaps",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "graph_report_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_10",
+      "target": "graph_report_suggested_questions",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "graph_report_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_10",
+      "target": "graph_report_summary",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L6",
       "weight": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "b87ea8f165c54982471d6f1d6f69d4105f34ae1c"
+  "built_at_commit": "de6338f3f5e90ca81a6936cb7e97067187bdba24"
 }

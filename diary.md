@@ -51,6 +51,12 @@
    - Fixed PowerShell closure variable capture issue where all cards evaluated the last prompt (`REMEDIATE`). Enforced localized closures via `.GetNewClosure()` and individual element tagging.
    - Added `Trigger-BackgroundUpdateCheck` on `Show-MainWindow` so that opening via desktop shortcut or `Ctrl+Alt+P` automatically re-checks GitHub for updates in the background (throttled).
 
+6. **Persistent Active Clipboard Indicator & Clean Feedback**:
+   - Removed temporary card background flash (`#182E25`) and button text timers on copy; kept the clean green toast bar (`✓ ¡Copiado al portapapeles: [ TITLE ]!`) as requested.
+   - Implemented dynamic active clipboard tracking (`Update-ActiveClipboardIndicator`, `Get-SafeClipboardText`, `Set-CardActiveState`) that identifies which prompt is currently resident in the Windows clipboard (supporting both raw prompt text and header-formatted text, normalized for CRLF/LF).
+   - Card marked with an emerald border (`#34D399`) and an active badge (`📋 En portapapeles`). External clipboard text automatically clears all active card markers.
+   - Wired indicator updates to `Copy-PromptToClipboard`, `Show-MainWindow`, `$window.add_Activated`, `$window.add_MouseEnter`, and post-card generation.
+
 Files changed: `app.ps1`, `install-shortcut.ps1`, `launch.vbs`, `README.md`, `diary.md`.
 
 ---
@@ -66,8 +72,8 @@ Files changed: `app.ps1`, `install-shortcut.ps1`, `launch.vbs`, `README.md`, `di
    Resolved with `-ArgumentList` quoting in `app.ps1` and sanitized `$iconLocation` in `install-shortcut.ps1`.
 
 ### 🟢 LOW — UX / Optimization
-3. **Redundant timer garbage collection overhead on rapid multiple card clicks** —
-   Each copy click instantiates a transient timer. Impact is negligible due to low frequency of clicks.
+3. ✅ **[DONE 2026-09-10] Redundant timer garbage collection overhead on rapid multiple card clicks** —
+   Eliminated transient card background revert timers and button reset timers in `Copy-PromptToClipboard`, relying solely on the single shared status bar reset timer and active state tracking.
 
 ---
 
@@ -80,4 +86,4 @@ Files changed: `app.ps1`, `install-shortcut.ps1`, `launch.vbs`, `README.md`, `di
 ---
 
 ## 🎯 Next Immediate Step
-- Execute `<session_end_hybrid>` protocol (`OUTRO`) to commit and push the v1.1.0 release to GitHub.
+- Push release v1.2.0 with persistent clipboard indicator to GitHub origin/main.

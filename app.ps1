@@ -413,6 +413,7 @@ function Show-MainWindow {
     }
     $window.Activate()
     $window.Focus()
+    Update-ActiveClipboardIndicator
     Trigger-BackgroundUpdateCheck
 }
 
@@ -435,6 +436,14 @@ function Exit-Application {
 # Window Dragging & Key handling
 $titleBar.Add_MouseLeftButtonDown({
     $window.DragMove()
+})
+
+$window.add_Activated({
+    Update-ActiveClipboardIndicator
+})
+
+$window.add_MouseEnter({
+    Update-ActiveClipboardIndicator
 })
 
 $window.Add_KeyDown({
@@ -630,7 +639,72 @@ $ipcTimer.add_Tick({
 })
 $ipcTimer.Start()
 
-# 13. Copy Prompt Action with Retry Backoff
+# 13. Active Clipboard Tracking & Card Indicators
+$cardsList = [System.Collections.Generic.List[PSObject]]::new()
+
+function Get-SafeClipboardText {
+    try {
+        if ([System.Windows.Clipboard]::ContainsText()) {
+            return [System.Windows.Clipboard]::GetText()
+        }
+    } catch {}
+    return $null
+}
+
+function Set-CardActiveState {
+    param($entry, [bool]$isActive)
+
+    $entry.IsActive = $isActive
+    if ($isActive) {
+        $entry.Card.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#34D399")
+        $entry.Card.BorderThickness = [System.Windows.Thickness]::new(1.5)
+        if ($entry.ActiveBadge) {
+            $entry.ActiveBadge.Visibility = [System.Windows.Visibility]::Visible
+        }
+    } else {
+        $entry.Card.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#313244")
+        $entry.Card.BorderThickness = [System.Windows.Thickness]::new(1)
+        if ($entry.ActiveBadge) {
+            $entry.ActiveBadge.Visibility = [System.Windows.Visibility]::Collapsed
+        }
+    }
+}
+
+function Update-ActiveClipboardIndicator {
+    if ($null -eq $cardsList -or $cardsList.Count -eq 0) {
+        return
+    }
+
+    $clip = Get-SafeClipboardText
+    if ([string]::IsNullOrWhiteSpace($clip)) {
+        foreach ($entry in $cardsList) {
+            Set-CardActiveState -entry $entry -isActive $false
+        }
+        return
+    }
+
+    $normClip = ($clip -replace "`r`n", "`n").Trim()
+
+    $matchedAny = $false
+    foreach ($entry in $cardsList) {
+        if ($matchedAny) {
+            Set-CardActiveState -entry $entry -isActive $false
+            continue
+        }
+
+        $rawPrompt = ($entry.Item.prompt -replace "`r`n", "`n").Trim()
+        $headerPrompt = ("[ $($entry.Item.title) ]`n`n$($entry.Item.prompt)" -replace "`r`n", "`n").Trim()
+
+        if ($normClip -eq $rawPrompt -or $normClip -eq $headerPrompt) {
+            Set-CardActiveState -entry $entry -isActive $true
+            $matchedAny = $true
+        } else {
+            Set-CardActiveState -entry $entry -isActive $false
+        }
+    }
+}
+
+# 14. Copy Prompt Action with Retry Backoff
 $statusResetTimer = [System.Windows.Threading.DispatcherTimer]::new()
 $statusResetTimer.Interval = [TimeSpan]::FromSeconds(3)
 $statusResetTimer.Add_Tick({
@@ -677,36 +751,8 @@ function Copy-PromptToClipboard {
             throw "No se pudo acceder al portapapeles tras $maxAttempts intentos (bloqueado por otra aplicación)."
         }
         
-        # Visual feedback on card
-        if ($cardBorder) {
-            $prevBorder = $cardBorder.BorderBrush
-            $prevBg = $cardBorder.Background
-            $cardBorder.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#34D399")
-            $cardBorder.Background = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#182E25")
-            
-            $revertTimer = [System.Windows.Threading.DispatcherTimer]::new()
-            $revertTimer.Interval = [TimeSpan]::FromMilliseconds(1200)
-            $revertTimer.Add_Tick({
-                $this.Stop()
-                $cardBorder.BorderBrush = $prevBorder
-                $cardBorder.Background = $prevBg
-            })
-            $revertTimer.Start()
-        }
-
-        if ($copyBtn) {
-            $copyBtn.Content = "✓ ¡Copiado!"
-            $copyBtn.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#34D399")
-            
-            $btnTimer = [System.Windows.Threading.DispatcherTimer]::new()
-            $btnTimer.Interval = [TimeSpan]::FromMilliseconds(1400)
-            $btnTimer.Add_Tick({
-                $this.Stop()
-                $copyBtn.Content = "📋 Copiar"
-                $copyBtn.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#CDD6F4")
-            })
-            $btnTimer.Start()
-        }
+        # Update active clipboard indicator across all cards
+        Update-ActiveClipboardIndicator
 
         # Status Bar feedback
         $statusLabel.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#34D399")
@@ -751,9 +797,7 @@ $btnCopyFromPreview.Add_Click({
     }
 })
 
-# 14. Build Prompt Cards
-$cardsList = [System.Collections.Generic.List[PSObject]]::new()
-
+# 15. Build Prompt Cards
 foreach ($item in $prompts) {
     $card = [System.Windows.Controls.Border]::new()
     $card.Background = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#1E1E2E")
@@ -829,6 +873,25 @@ foreach ($item in $prompts) {
     $roleBadge.Child = $lblRole
     $headerWrap.Children.Add($roleBadge) | Out-Null
 
+    # Active clipboard badge ("📋 En portapapeles")
+    $activeBadge = [System.Windows.Controls.Border]::new()
+    $activeBadge.Background = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#132F23")
+    $activeBadge.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#10B981")
+    $activeBadge.BorderThickness = [System.Windows.Thickness]::new(1)
+    $activeBadge.CornerRadius = [System.Windows.CornerRadius]::new(6)
+    $activeBadge.Padding = [System.Windows.Thickness]::new(7, 2, 7, 2)
+    $activeBadge.Margin = [System.Windows.Thickness]::new(8, 0, 0, 0)
+    $activeBadge.VerticalAlignment = [System.Windows.VerticalAlignment]::Center
+    $activeBadge.Visibility = [System.Windows.Visibility]::Collapsed
+
+    $lblActive = [System.Windows.Controls.TextBlock]::new()
+    $lblActive.Text = "📋 En portapapeles"
+    $lblActive.FontSize = 10.5
+    $lblActive.FontWeight = [System.Windows.FontWeights]::SemiBold
+    $lblActive.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#34D399")
+    $activeBadge.Child = $lblActive
+    $headerWrap.Children.Add($activeBadge) | Out-Null
+
     $infoStack.Children.Add($headerWrap) | Out-Null
 
     # Description
@@ -901,12 +964,31 @@ foreach ($item in $prompts) {
 
     $card.Child = $cardGrid
 
-    # Hover effect on card
+    $thisEntry = [PSCustomObject]@{
+        Card        = $card
+        Item        = $item
+        Category    = $item.category
+        Keywords    = "$($item.title) $($item.tag) $($item.category) $($item.role) $($item.description)".ToLower()
+        ActiveBadge = $activeBadge
+        IsActive    = $false
+    }
+    $cardsList.Add($thisEntry)
+
+    # Hover effect on card (respecting active clipboard state)
     $card.Add_MouseEnter({
-        $thisCard.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#45475A")
+        if ($thisEntry.IsActive) {
+            $thisCard.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#4ADE80")
+        } else {
+            $thisCard.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#45475A")
+        }
     }.GetNewClosure())
+
     $card.Add_MouseLeave({
-        $thisCard.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#313244")
+        if ($thisEntry.IsActive) {
+            $thisCard.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#34D399")
+        } else {
+            $thisCard.BorderBrush = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#313244")
+        }
     }.GetNewClosure())
 
     # Card click triggers copy
@@ -916,14 +998,10 @@ foreach ($item in $prompts) {
     }.GetNewClosure())
 
     $promptContainer.Children.Add($card) | Out-Null
-
-    $cardsList.Add([PSCustomObject]@{
-        Card     = $card
-        Item     = $item
-        Category = $item.category
-        Keywords = "$($item.title) $($item.tag) $($item.category) $($item.role) $($item.description)".ToLower()
-    })
 }
+
+# Initial active clipboard indicator check
+Update-ActiveClipboardIndicator
 
 # Update Filter & Search
 function Update-Filter {

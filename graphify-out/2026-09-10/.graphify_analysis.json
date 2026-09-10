@@ -1,6 +1,31 @@
 {
   "communities": {
     "0": [
+      "graph_report",
+      "graph_report_community_hubs_navigation",
+      "graph_report_corpus_check",
+      "graph_report_god_nodes_most_connected_your_core_abstractions",
+      "graph_report_graph_freshness",
+      "graph_report_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_10",
+      "graph_report_import_cycles",
+      "graph_report_knowledge_gaps",
+      "graph_report_suggested_questions",
+      "graph_report_summary",
+      "graph_report_surprising_connections_you_probably_didn_t_know_these"
+    ],
+    "1": [
+      "diary",
+      "diary_active_pending_tasks",
+      "diary_current_state",
+      "diary_done_2026_09_10_system_tray_windows_startup_app_identity_auto_updater_finding_2",
+      "diary_forensic_audit_findings_2026_09_09_principal_security_performance_auditor",
+      "diary_high_bugs_robustness",
+      "diary_low_ux_optimization",
+      "diary_medium_robustness_edge_cases",
+      "diary_next_immediate_step",
+      "diary_weekly_summary_week_ending_2026_09_12"
+    ],
+    "2": [
       "app",
       "app_copy_prompttoclipboard",
       "app_hide_mainwindow",
@@ -8,25 +33,58 @@
       "app_show_preview",
       "app_update_filter"
     ],
-    "1": [
+    "3": [
       "app_check_forupdates",
       "app_exit_application",
       "app_show_mainwindow",
       "app_trigger_backgroundupdatecheck"
     ],
-    "2": [
+    "4": [
+      "app_get_safeclipboardtext",
+      "app_set_cardactivestate",
+      "app_update_activeclipboardindicator"
+    ],
+    "5": [
+      "graph_report_communities_3_total_1_thin_omitted",
+      "graph_report_community_1_check_forupdates"
+    ],
+    "6": [
       "install_shortcut"
     ]
   },
   "cohesion": {
-    "0": 0.4,
-    "1": 0.5,
-    "2": 1.0
+    "0": 0.18181818181818182,
+    "1": 0.2,
+    "2": 0.4,
+    "3": 0.5,
+    "4": 0.6666666666666666,
+    "5": 1.0,
+    "6": 1.0
   },
   "gods": [
     {
+      "id": "graph_report_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_10",
+      "label": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)",
+      "degree": 11
+    },
+    {
+      "id": "app_update_activeclipboardindicator",
+      "label": "Update-ActiveClipboardIndicator()",
+      "degree": 5
+    },
+    {
+      "id": "diary_forensic_audit_findings_2026_09_09_principal_security_performance_auditor",
+      "label": "\ud83d\udd2c Forensic Audit Findings - 2026-09-09 (Principal Security & Performance Auditor)",
+      "degree": 4
+    },
+    {
       "id": "app_trigger_backgroundupdatecheck",
       "label": "Trigger-BackgroundUpdateCheck()",
+      "degree": 3
+    },
+    {
+      "id": "app_show_mainwindow",
+      "label": "Show-MainWindow()",
       "degree": 3
     },
     {
@@ -35,8 +93,13 @@
       "degree": 3
     },
     {
-      "id": "app_show_mainwindow",
-      "label": "Show-MainWindow()",
+      "id": "app_copy_prompttoclipboard",
+      "label": "Copy-PromptToClipboard()",
+      "degree": 3
+    },
+    {
+      "id": "graph_report_communities_3_total_1_thin_omitted",
+      "label": "Communities (3 total, 1 thin omitted)",
       "degree": 2
     },
     {
@@ -48,14 +111,32 @@
       "id": "app_exit_application",
       "label": "Exit-Application()",
       "degree": 2
-    },
-    {
-      "id": "app_copy_prompttoclipboard",
-      "label": "Copy-PromptToClipboard()",
-      "degree": 2
     }
   ],
-  "surprises": [],
+  "surprises": [
+    {
+      "source": "Show-MainWindow()",
+      "target": "Update-ActiveClipboardIndicator()",
+      "source_files": [
+        "app.ps1",
+        "app.ps1"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "note": "Bridges community 3 \u2192 community 4"
+    },
+    {
+      "source": "Copy-PromptToClipboard()",
+      "target": "Update-ActiveClipboardIndicator()",
+      "source_files": [
+        "app.ps1",
+        "app.ps1"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "note": "Bridges community 4 \u2192 community 2"
+    }
+  ],
   "tokens": {
     "input": 0,
     "output": 0
