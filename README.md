@@ -1,4 +1,6 @@
-﻿# AI Dev Prompt Clipboard 📋
+# AI Dev Prompt Clipboard 📋
+
+[![License](https://img.shields.io/badge/license-PolyForm--Noncommercial-lightgrey)](LICENSE)
 
 Una interfaz gráfica ligera, rápida y moderna para Windows diseñada para copiar al portapapeles tus protocolos y prompts de desarrollo asistido con IA con un solo clic o mediante un atajo global de teclado.
 
@@ -72,3 +74,10 @@ Para reinstalar o cambiar la combinación de teclas:
 ```powershell
 .\install-shortcut.ps1 -Hotkey "CTRL+ALT+P"
 ```
+
+---
+
+## 📄 Licencia
+
+Este proyecto está bajo la licencia **[PolyForm Noncommercial License 1.0.0](LICENSE)**. Permite el uso personal, estudio y modificación sin fines comerciales. Para consultas sobre usos comerciales, ponte en contacto con Txek Systems.
+

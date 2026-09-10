@@ -1,4 +1,4 @@
-﻿# AI Dev Prompt Clipboard: Developer Diary
+# AI Dev Prompt Clipboard: Developer Diary
 
 **Current Date**: 2026-09-10
 
@@ -70,7 +70,11 @@
    - **Finding #6 (Clean Signature for Copy-PromptToClipboard)**: Removed dead parameters `$cardBorder` and `$copyBtn` from `Copy-PromptToClipboard` and eliminated `$thisBtn`.
    - **Finding #7 (Hotkey Collision Prevention)**: Removed duplicate `CTRL+ALT+P` assignment from Start Menu `.lnk` in `install-shortcut.ps1`, preserving single authority on Desktop shortcut.
 
-Files changed: `app.ps1`, `install-shortcut.ps1`, `launch.vbs`, `README.md`, `diary.md`, `.gitignore`.
+9. **PolyForm Noncommercial License 1.0.0 (Ported & Adapted from Ekin)**:
+   - Added `LICENSE` with the PolyForm Noncommercial 1.0.0 terms, configured with explicit notice: `Required Notice: Copyright 2026 Txek Systems (https://github.com/txeki-dev/AI-Dev-Prompt-Clipboard)`.
+   - Updated `README.md` with license badge and dedicated `## 📄 Licencia` section for public repository launch.
+
+Files changed: `LICENSE`, `README.md`, `diary.md`.
 
 ## 🔬 Forensic Audit Findings - 2026-09-10 (Principal Security & Performance Auditor)
 
