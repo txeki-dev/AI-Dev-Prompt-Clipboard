@@ -35,9 +35,8 @@
     ],
     "3": [
       "app_check_forupdates",
-      "app_exit_application",
-      "app_show_mainwindow",
-      "app_trigger_backgroundupdatecheck"
+      "app_check_forupdatesasync",
+      "app_exit_application"
     ],
     "4": [
       "app_get_safeclipboardtext",
@@ -45,10 +44,14 @@
       "app_update_activeclipboardindicator"
     ],
     "5": [
+      "app_show_mainwindow",
+      "app_trigger_backgroundupdatecheck"
+    ],
+    "6": [
       "graph_report_communities_3_total_1_thin_omitted",
       "graph_report_community_1_check_forupdates"
     ],
-    "6": [
+    "7": [
       "install_shortcut"
     ]
   },
@@ -56,10 +59,11 @@
     "0": 0.18181818181818182,
     "1": 0.2,
     "2": 0.4,
-    "3": 0.5,
+    "3": 0.6666666666666666,
     "4": 0.6666666666666666,
     "5": 1.0,
-    "6": 1.0
+    "6": 1.0,
+    "7": 1.0
   },
   "gods": [
     {
@@ -88,6 +92,11 @@
       "degree": 3
     },
     {
+      "id": "app_check_forupdatesasync",
+      "label": "Check-ForUpdatesAsync()",
+      "degree": 3
+    },
+    {
       "id": "app_check_forupdates",
       "label": "Check-ForUpdates()",
       "degree": 3
@@ -106,14 +115,20 @@
       "id": "app_hide_mainwindow",
       "label": "Hide-MainWindow()",
       "degree": 2
-    },
-    {
-      "id": "app_exit_application",
-      "label": "Exit-Application()",
-      "degree": 2
     }
   ],
   "surprises": [
+    {
+      "source": "Trigger-BackgroundUpdateCheck()",
+      "target": "Check-ForUpdatesAsync()",
+      "source_files": [
+        "app.ps1",
+        "app.ps1"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "note": "Bridges community 5 \u2192 community 3"
+    },
     {
       "source": "Show-MainWindow()",
       "target": "Update-ActiveClipboardIndicator()",
@@ -123,7 +138,7 @@
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
-      "note": "Bridges community 3 \u2192 community 4"
+      "note": "Bridges community 5 \u2192 community 4"
     },
     {
       "source": "Copy-PromptToClipboard()",

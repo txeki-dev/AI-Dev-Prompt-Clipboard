@@ -1,9 +1,9 @@
 {
   "app.ps1": {
-    "mtime": 1789038688.0612533,
-    "seen": 1789038724.1838443,
-    "ast_hash": "fdccf0c49800eceee9ff49892e17b880",
-    "semantic_hash": "fdccf0c49800eceee9ff49892e17b880"
+    "mtime": 1789039751.636503,
+    "seen": 1789039775.1080234,
+    "ast_hash": "1c9299df69f035a8753aa33a80bc57ed",
+    "semantic_hash": "1c9299df69f035a8753aa33a80bc57ed"
   },
   "config.json": {
     "mtime": 1788985948.7156198,
@@ -12,10 +12,10 @@
     "semantic_hash": "54672d9b094d006b11f628d2917a6c62"
   },
   "install-shortcut.ps1": {
-    "mtime": 1789036519.1234777,
-    "seen": 1789036764.3021507,
-    "ast_hash": "23df7767781d80a0174d4ebe77693ba6",
-    "semantic_hash": "23df7767781d80a0174d4ebe77693ba6"
+    "mtime": 1789039751.637012,
+    "seen": 1789039775.1085515,
+    "ast_hash": "2471a7921957361a114e5eea55c472c8",
+    "semantic_hash": "2471a7921957361a114e5eea55c472c8"
   },
   "prompts.json": {
     "mtime": 1788983463.480182,

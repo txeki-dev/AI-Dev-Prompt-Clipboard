@@ -275,7 +275,7 @@
       "file_type": "code",
       "norm_label": "copy-prompttoclipboard()",
       "source_file": "app.ps1",
-      "source_location": "L716"
+      "source_location": "L804"
     },
     {
       "id": "app_hide_mainwindow",
@@ -286,7 +286,7 @@
       "file_type": "code",
       "norm_label": "hide-mainwindow()",
       "source_file": "app.ps1",
-      "source_location": "L420"
+      "source_location": "L414"
     },
     {
       "id": "app_save_config",
@@ -308,7 +308,7 @@
       "file_type": "code",
       "norm_label": "show-preview()",
       "source_file": "app.ps1",
-      "source_location": "L780"
+      "source_location": "L868"
     },
     {
       "id": "app_update_filter",
@@ -319,7 +319,7 @@
       "file_type": "code",
       "norm_label": "update-filter()",
       "source_file": "app.ps1",
-      "source_location": "L1007"
+      "source_location": "L1094"
     },
     {
       "id": "app_check_forupdates",
@@ -330,7 +330,18 @@
       "file_type": "code",
       "norm_label": "check-forupdates()",
       "source_file": "app.ps1",
-      "source_location": "L486"
+      "source_location": "L545"
+    },
+    {
+      "id": "app_check_forupdatesasync",
+      "label": "Check-ForUpdatesAsync()",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "Check-ForUpdates",
+      "file_type": "code",
+      "norm_label": "check-forupdatesasync()",
+      "source_file": "app.ps1",
+      "source_location": "L489"
     },
     {
       "id": "app_exit_application",
@@ -341,29 +352,7 @@
       "file_type": "code",
       "norm_label": "exit-application()",
       "source_file": "app.ps1",
-      "source_location": "L427"
-    },
-    {
-      "id": "app_show_mainwindow",
-      "label": "Show-MainWindow()",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "Check-ForUpdates",
-      "file_type": "code",
-      "norm_label": "show-mainwindow()",
-      "source_file": "app.ps1",
-      "source_location": "L409"
-    },
-    {
-      "id": "app_trigger_backgroundupdatecheck",
-      "label": "Trigger-BackgroundUpdateCheck()",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "Check-ForUpdates",
-      "file_type": "code",
-      "norm_label": "trigger-backgroundupdatecheck()",
-      "source_file": "app.ps1",
-      "source_location": "L394"
+      "source_location": "L421"
     },
     {
       "id": "app_get_safeclipboardtext",
@@ -374,7 +363,7 @@
       "file_type": "code",
       "norm_label": "get-safeclipboardtext()",
       "source_file": "app.ps1",
-      "source_location": "L645"
+      "source_location": "L733"
     },
     {
       "id": "app_set_cardactivestate",
@@ -385,7 +374,7 @@
       "file_type": "code",
       "norm_label": "set-cardactivestate()",
       "source_file": "app.ps1",
-      "source_location": "L654"
+      "source_location": "L742"
     },
     {
       "id": "app_update_activeclipboardindicator",
@@ -396,13 +385,35 @@
       "file_type": "code",
       "norm_label": "update-activeclipboardindicator()",
       "source_file": "app.ps1",
-      "source_location": "L673"
+      "source_location": "L761"
+    },
+    {
+      "id": "app_show_mainwindow",
+      "label": "Show-MainWindow()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Show-MainWindow",
+      "file_type": "code",
+      "norm_label": "show-mainwindow()",
+      "source_file": "app.ps1",
+      "source_location": "L403"
+    },
+    {
+      "id": "app_trigger_backgroundupdatecheck",
+      "label": "Trigger-BackgroundUpdateCheck()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "Show-MainWindow",
+      "file_type": "code",
+      "norm_label": "trigger-backgroundupdatecheck()",
+      "source_file": "app.ps1",
+      "source_location": "L394"
     },
     {
       "id": "graph_report_communities_3_total_1_thin_omitted",
       "label": "Communities (3 total, 1 thin omitted)",
       "_origin": "ast",
-      "community": 5,
+      "community": 6,
       "community_name": "Communities (3 total, 1 thin omitted)",
       "file_type": "document",
       "node_kind": "heading",
@@ -414,7 +425,7 @@
       "id": "graph_report_community_1_check_forupdates",
       "label": "Community 1 - \"Check-ForUpdates\"",
       "_origin": "ast",
-      "community": 5,
+      "community": 6,
       "community_name": "Communities (3 total, 1 thin omitted)",
       "file_type": "document",
       "node_kind": "heading",
@@ -426,7 +437,7 @@
       "id": "install_shortcut",
       "label": "install-shortcut.ps1",
       "_origin": "ast",
-      "community": 6,
+      "community": 7,
       "community_name": "install-shortcut.ps1",
       "file_type": "code",
       "norm_label": "install-shortcut.ps1",
@@ -443,7 +454,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L565",
+      "source_location": "L653",
+      "weight": 1.0
+    },
+    {
+      "source": "app_check_forupdatesasync",
+      "target": "app_check_forupdates",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L531",
       "weight": 1.0
     },
     {
@@ -454,7 +476,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L755",
+      "source_location": "L843",
       "weight": 1.0
     },
     {
@@ -465,7 +487,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L768",
+      "source_location": "L856",
       "weight": 1.0
     },
     {
@@ -476,7 +498,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L416",
+      "source_location": "L410",
       "weight": 1.0
     },
     {
@@ -487,18 +509,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L417",
+      "source_location": "L411",
       "weight": 1.0
     },
     {
       "source": "app_trigger_backgroundupdatecheck",
-      "target": "app_check_forupdates",
+      "target": "app_check_forupdatesasync",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L402",
+      "source_location": "L398",
       "weight": 1.0
     },
     {
@@ -509,7 +531,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L678",
+      "source_location": "L766",
       "weight": 1.0
     },
     {
@@ -520,7 +542,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L681",
+      "source_location": "L769",
       "weight": 1.0
     },
     {
@@ -531,7 +553,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1007",
+      "source_location": "L1094",
       "weight": 1.0
     },
     {
@@ -553,7 +575,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L409",
+      "source_location": "L403",
       "weight": 1.0
     },
     {
@@ -564,7 +586,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L420",
+      "source_location": "L414",
       "weight": 1.0
     },
     {
@@ -575,7 +597,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L427",
+      "source_location": "L421",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_check_forupdatesasync",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L489",
       "weight": 1.0
     },
     {
@@ -586,7 +619,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L486",
+      "source_location": "L545",
       "weight": 1.0
     },
     {
@@ -597,7 +630,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L645",
+      "source_location": "L733",
       "weight": 1.0
     },
     {
@@ -608,7 +641,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L654",
+      "source_location": "L742",
       "weight": 1.0
     },
     {
@@ -619,7 +652,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L673",
+      "source_location": "L761",
       "weight": 1.0
     },
     {
@@ -630,7 +663,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L716",
+      "source_location": "L804",
       "weight": 1.0
     },
     {
@@ -641,7 +674,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L780",
+      "source_location": "L868",
       "weight": 1.0
     },
     {
@@ -888,5 +921,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "de6338f3f5e90ca81a6936cb7e97067187bdba24"
+  "built_at_commit": "42102fcab339c3f6b3f4cbf3e5912acbad7d9bc8"
 }

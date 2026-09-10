@@ -395,13 +395,7 @@ function Trigger-BackgroundUpdateCheck {
     # Throttled to check at most once every 60 seconds when opening/restoring window
     if ((Get-Date) - $script:lastUpdateCheck -gt [TimeSpan]::FromSeconds(60)) {
         $script:lastUpdateCheck = Get-Date
-        $upTimer = [System.Windows.Threading.DispatcherTimer]::new()
-        $upTimer.Interval = [TimeSpan]::FromMilliseconds(600)
-        $upTimer.Add_Tick({
-            $this.Stop()
-            Check-ForUpdates -Silent $true
-        })
-        $upTimer.Start()
+        Check-ForUpdatesAsync
     }
 }
 
@@ -425,6 +419,7 @@ function Hide-MainWindow {
 }
 
 function Exit-Application {
+    try { $ipcTimer.Stop() } catch {}
     $notifyIcon.Visible = $false
     $notifyIcon.Dispose()
     try { $mutex.ReleaseMutex() } catch {}
@@ -435,7 +430,12 @@ function Exit-Application {
 
 # Window Dragging & Key handling
 $titleBar.Add_MouseLeftButtonDown({
-    $window.DragMove()
+    param($s, $e)
+    if ($e.ButtonState -eq [System.Windows.Input.MouseButtonState]::Pressed) {
+        try {
+            $window.DragMove()
+        } catch {}
+    }
 })
 
 $window.add_Activated({
@@ -483,6 +483,65 @@ $btnOpenFolder.Add_Click({
 })
 
 # 10. Auto-Updater Engine (Ported & Hardened from Ekin)
+$script:bgUpdatePS = $null
+$script:bgUpdateAsync = $null
+
+function Check-ForUpdatesAsync {
+    if ($script:bgUpdatePS -and $script:bgUpdateAsync -and -not $script:bgUpdateAsync.IsCompleted) {
+        return
+    }
+
+    try {
+        $script:bgUpdatePS = [powershell]::Create()
+        $script:bgUpdatePS.AddScript({
+            param($targetDir)
+            try {
+                Set-Location $targetDir
+                $isGit = & git rev-parse --is-inside-work-tree 2>$null
+                if ($LASTEXITCODE -ne 0 -or $isGit.Trim() -ne "true") { return 0 }
+
+                & git fetch origin 2>$null
+                if ($LASTEXITCODE -ne 0) { return 0 }
+
+                $revCount = & git rev-list --count HEAD..@{u} 2>$null
+                if ($LASTEXITCODE -eq 0 -and $null -ne $revCount -and $revCount.Trim().Length -gt 0) {
+                    return [int]$revCount.Trim()
+                }
+                $revCount = & git rev-list --count HEAD..origin/main 2>$null
+                if ($LASTEXITCODE -eq 0 -and $null -ne $revCount -and $revCount.Trim().Length -gt 0) {
+                    return [int]$revCount.Trim()
+                }
+                return 0
+            } catch {
+                return 0
+            }
+        }).AddArgument($scriptDir) | Out-Null
+
+        $script:bgUpdateAsync = $script:bgUpdatePS.BeginInvoke()
+
+        $pollTimer = [System.Windows.Threading.DispatcherTimer]::new([System.Windows.Threading.DispatcherPriority]::Background)
+        $pollTimer.Interval = [TimeSpan]::FromMilliseconds(500)
+        $pollTimer.Add_Tick({
+            if ($script:bgUpdateAsync -and $script:bgUpdateAsync.IsCompleted) {
+                $this.Stop()
+                try {
+                    $results = $script:bgUpdatePS.EndInvoke($script:bgUpdateAsync)
+                    $behind = if ($results -and $results.Count -gt 0) { [int]$results[0] } else { 0 }
+                    if ($behind -gt 0) {
+                        Check-ForUpdates -Silent $false
+                    }
+                } catch {}
+                finally {
+                    try { $script:bgUpdatePS.Dispose() } catch {}
+                    $script:bgUpdatePS = $null
+                    $script:bgUpdateAsync = $null
+                }
+            }
+        })
+        $pollTimer.Start()
+    } catch {}
+}
+
 function Check-ForUpdates {
     param([bool]$Silent = $true)
 
@@ -505,9 +564,18 @@ function Check-ForUpdates {
             return
         }
 
-        # 2. Check if local branch is behind remote
-        $status = & git status -uno 2>$null
-        $isBehind = ($status -match "behind")
+        # 2. Check if local branch is behind remote (language-agnostic git plumbing)
+        $behindCount = 0
+        $revCount = & git rev-list --count HEAD..@{u} 2>$null
+        if ($LASTEXITCODE -eq 0 -and $null -ne $revCount -and $revCount.Trim().Length -gt 0) {
+            $behindCount = [int]$revCount.Trim()
+        } else {
+            $revCount = & git rev-list --count HEAD..origin/main 2>$null
+            if ($LASTEXITCODE -eq 0 -and $null -ne $revCount -and $revCount.Trim().Length -gt 0) {
+                $behindCount = [int]$revCount.Trim()
+            }
+        }
+        $isBehind = ($behindCount -gt 0)
         if (-not $isBehind) {
             if (-not $Silent) {
                 [System.Windows.MessageBox]::Show("Ya tienes la versión más reciente instalada.", "AI Prompt Clipboard", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
@@ -515,11 +583,19 @@ function Check-ForUpdates {
             return
         }
 
-        # 3. Check for dirty working tree (Never pull onto a dirty working tree)
-        $dirty = & git status --porcelain 2>$null
-        if ($dirty -and $dirty.Trim().Length -gt 0) {
+        # 3. Check for dirty working tree (excluding runtime config & caches)
+        $rawDirty = & git status --porcelain 2>$null
+        $codeDirty = @($rawDirty) | Where-Object {
+            $line = $_.Trim()
+            if ([string]::IsNullOrWhiteSpace($line)) { return $false }
+            if ($line -match 'config\.json$') { return $false }
+            if ($line -match 'graphify-out/cache/') { return $false }
+            if ($line -match '\.cache/') { return $false }
+            return $true
+        }
+        if ($codeDirty.Count -gt 0) {
             [System.Windows.MessageBox]::Show(
-                "Hay una nueva versión disponible en GitHub, pero tienes cambios locales sin confirmar.`nPor favor, realiza commit o descarta los cambios antes de actualizar.",
+                "Hay una nueva versión disponible en GitHub, pero tienes cambios locales en el código sin confirmar.`nPor favor, realiza commit o descarta los cambios antes de actualizar.",
                 "Actualización disponible - AI Prompt Clipboard",
                 [System.Windows.MessageBoxButton]::OK,
                 [System.Windows.MessageBoxImage]::Warning
@@ -538,9 +614,16 @@ function Check-ForUpdates {
             return
         }
 
-        # 5. Fast-forward pull
+        # 5. Fast-forward pull (protecting local user config & clearing transient cache modifications)
+        $configBackup = if (Test-Path $configFile) { Get-Content $configFile -Raw -Encoding UTF8 } else { $null }
+        & git checkout -- graphify-out/cache/ 2>$null
+        & git checkout -- config.json 2>$null
+
         $pullOut = & git pull --ff-only origin main 2>&1
         if ($LASTEXITCODE -ne 0) {
+            if ($configBackup) {
+                [System.IO.File]::WriteAllText($configFile, $configBackup, [System.Text.Encoding]::UTF8)
+            }
             [System.Windows.MessageBox]::Show(
                 "Error al descargar la actualización desde GitHub:`n$pullOut`n`nIntenta actualizar manualmente con 'git pull'.",
                 "Error de actualización",
@@ -548,6 +631,11 @@ function Check-ForUpdates {
                 [System.Windows.MessageBoxImage]::Error
             )
             return
+        }
+
+        # Restore preserved user config post-pull
+        if ($configBackup) {
+            [System.IO.File]::WriteAllText($configFile, $configBackup, [System.Text.Encoding]::UTF8)
         }
 
         # Refresh graphify report if installed
@@ -630,8 +718,8 @@ $notifyIcon.add_MouseClick({
 })
 
 # 12. IPC Event Listener (Detects Ctrl+Alt+P or new launches and shows window)
-$ipcTimer = [System.Windows.Threading.DispatcherTimer]::new()
-$ipcTimer.Interval = [TimeSpan]::FromMilliseconds(150)
+$ipcTimer = [System.Windows.Threading.DispatcherTimer]::new([System.Windows.Threading.DispatcherPriority]::Background)
+$ipcTimer.Interval = [TimeSpan]::FromMilliseconds(200)
 $ipcTimer.add_Tick({
     if ($showEvent.WaitOne(0)) {
         Show-MainWindow
@@ -714,7 +802,7 @@ $statusResetTimer.Add_Tick({
 })
 
 function Copy-PromptToClipboard {
-    param($promptItem, $cardBorder, $copyBtn)
+    param($promptItem)
 
     $textToCopy = $promptItem.prompt
     if ($chkIncludeHeader.IsChecked) {
@@ -792,7 +880,7 @@ $btnClosePreview.Add_Click({
 
 $btnCopyFromPreview.Add_Click({
     if ($script:currentPreviewItem) {
-        Copy-PromptToClipboard -promptItem $script:currentPreviewItem -cardBorder $null -copyBtn $null
+        Copy-PromptToClipboard -promptItem $script:currentPreviewItem
         $previewOverlay.Visibility = [System.Windows.Visibility]::Collapsed
     }
 })
@@ -949,13 +1037,12 @@ foreach ($item in $prompts) {
     $btnCopy.Padding = [System.Windows.Thickness]::new(10, 6, 10, 6)
     $btnCopy.Cursor = [System.Windows.Input.Cursors]::Hand
 
-    $thisBtn = $btnCopy
     $card.Tag = $item
 
     $btnCopy.Add_Click({
         param($s, $e)
         $e.Handled = $true
-        Copy-PromptToClipboard -promptItem $thisItem -cardBorder $thisCard -copyBtn $thisBtn
+        Copy-PromptToClipboard -promptItem $thisItem
     }.GetNewClosure())
     $actionStack.Children.Add($btnCopy) | Out-Null
 
@@ -994,7 +1081,7 @@ foreach ($item in $prompts) {
     # Card click triggers copy
     $card.Add_MouseLeftButtonUp({
         param($s, $e)
-        Copy-PromptToClipboard -promptItem $thisItem -cardBorder $thisCard -copyBtn $thisBtn
+        Copy-PromptToClipboard -promptItem $thisItem
     }.GetNewClosure())
 
     $promptContainer.Children.Add($card) | Out-Null
@@ -1062,12 +1149,12 @@ foreach ($chipEntry in $chips) {
     })
 }
 
-# 15. Auto-check for updates after 1 second (Silent, similar to Ekin QTimer)
-$updateCheckTimer = [System.Windows.Threading.DispatcherTimer]::new()
+# 15. Auto-check for updates after 1 second (Silent asynchronous check)
+$updateCheckTimer = [System.Windows.Threading.DispatcherTimer]::new([System.Windows.Threading.DispatcherPriority]::Background)
 $updateCheckTimer.Interval = [TimeSpan]::FromSeconds(1)
 $updateCheckTimer.Add_Tick({
     $this.Stop()
-    Check-ForUpdates -Silent $true
+    Check-ForUpdatesAsync
 })
 $updateCheckTimer.Start()
 

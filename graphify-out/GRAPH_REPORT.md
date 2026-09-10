@@ -4,12 +4,12 @@
 - cluster-only mode — file stats not available
 
 ## Summary
-- 37 nodes · 41 edges · 7 communities (5 shown, 2 thin omitted)
+- 38 nodes · 43 edges · 8 communities (5 shown, 3 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `de6338f3`
+- Built from commit: `42102fca`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,6 +19,7 @@
 - app.ps1
 - Check-ForUpdates
 - Update-ActiveClipboardIndicator
+- Show-MainWindow
 - Communities (3 total, 1 thin omitted)
 
 ## God Nodes (most connected - your core abstractions)
@@ -27,22 +28,24 @@
 3. `🔬 Forensic Audit Findings - 2026-09-09 (Principal Security & Performance Auditor)` - 4 edges
 4. `Copy-PromptToClipboard()` - 3 edges
 5. `Check-ForUpdates()` - 3 edges
-6. `Show-MainWindow()` - 3 edges
-7. `Trigger-BackgroundUpdateCheck()` - 3 edges
-8. `Hide-MainWindow()` - 2 edges
-9. `Exit-Application()` - 2 edges
-10. `Get-SafeClipboardText()` - 2 edges
+6. `Check-ForUpdatesAsync()` - 3 edges
+7. `Show-MainWindow()` - 3 edges
+8. `Trigger-BackgroundUpdateCheck()` - 3 edges
+9. `Hide-MainWindow()` - 2 edges
+10. `Exit-Application()` - 2 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Copy-PromptToClipboard()` --calls--> `Update-ActiveClipboardIndicator()`  [EXTRACTED]
   app.ps1 → app.ps1  _Bridges community 2 → community 4_
+- `Trigger-BackgroundUpdateCheck()` --calls--> `Check-ForUpdatesAsync()`  [EXTRACTED]
+  app.ps1 → app.ps1  _Bridges community 3 → community 5_
 - `Show-MainWindow()` --calls--> `Update-ActiveClipboardIndicator()`  [EXTRACTED]
-  app.ps1 → app.ps1  _Bridges community 3 → community 4_
+  app.ps1 → app.ps1  _Bridges community 4 → community 5_
 
 ## Import Cycles
 - None detected.
 
-## Communities (7 total, 2 thin omitted)
+## Communities (8 total, 3 thin omitted)
 
 ### Community 0 - "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)"
 Cohesion: 0.18
@@ -53,8 +56,8 @@ Cohesion: 0.20
 Nodes (9): 📋 Active / Pending Tasks, 📊 Current State, ✅ Done (2026-09-10 — System Tray, Windows Startup, App Identity, Auto-Updater & Finding #2), 🔬 Forensic Audit Findings - 2026-09-09 (Principal Security & Performance Auditor), 🔴 HIGH — Bugs / Robustness, 🟢 LOW — UX / Optimization, 🟡 MEDIUM — Robustness / Edge cases, 🎯 Next Immediate Step (+1 more)
 
 ### Community 3 - "Check-ForUpdates"
-Cohesion: 0.50
-Nodes (4): Check-ForUpdates(), Exit-Application(), Show-MainWindow(), Trigger-BackgroundUpdateCheck()
+Cohesion: 0.67
+Nodes (3): Check-ForUpdates(), Check-ForUpdatesAsync(), Exit-Application()
 
 ### Community 4 - "Update-ActiveClipboardIndicator"
 Cohesion: 0.67
@@ -63,13 +66,13 @@ Nodes (3): Get-SafeClipboardText(), Set-CardActiveState(), Update-ActiveClipboar
 ## Knowledge Gaps
 - **18 isolated node(s):** `Community Hubs (Navigation)`, `Corpus Check`, `God Nodes (most connected - your core abstractions)`, `Graph Freshness`, `Import Cycles` (+13 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **2 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)` connect `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)` to `Communities (3 total, 1 thin omitted)`?**
-  _High betweenness centrality (0.103) - this node is a cross-community bridge._
+  _High betweenness centrality (0.098) - this node is a cross-community bridge._
 - **Why does `Communities (3 total, 1 thin omitted)` connect `Communities (3 total, 1 thin omitted)` to `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)`?**
   _High betweenness centrality (0.017) - this node is a cross-community bridge._
 - **What connects `Community Hubs (Navigation)`, `Corpus Check`, `God Nodes (most connected - your core abstractions)` to the rest of the system?**

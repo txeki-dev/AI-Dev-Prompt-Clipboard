@@ -57,33 +57,63 @@
    - Card marked with an emerald border (`#34D399`) and an active badge (`📋 En portapapeles`). External clipboard text automatically clears all active card markers.
    - Wired indicator updates to `Copy-PromptToClipboard`, `Show-MainWindow`, `$window.add_Activated`, `$window.add_MouseEnter`, and post-card generation.
 
-Files changed: `app.ps1`, `install-shortcut.ps1`, `launch.vbs`, `README.md`, `diary.md`.
+7. **Remediated Finding #1 (Auto-Updater Dirty Working Tree Blocker & .gitignore)**:
+   - Filtered runtime configuration (`config.json`) and cache paths (`graphify-out/cache/`, `.cache/`) in `Check-ForUpdates` so that modifying UI preferences or running graphify queries does not falsely mark the repository dirty.
+   - Added local configuration snapshotting and automatic restoration around `git pull --ff-only`, ensuring user settings are preserved while eliminating checkout conflicts.
+   - Created comprehensive `.gitignore` covering `graphify-out/cache/`, `*.log`, `scratch/`, `test_*.ps1`, and Windows system artifacts.
+
+8. **Remediated Findings #2 to #7 (Complete Forensic Audit Remediation)**:
+   - **Finding #2 (Language-Agnostic Branch Check)**: Replaced string match on `behind` with Git plumbing `git rev-list --count HEAD..@{u}` and fallback to `HEAD..origin/main`, ensuring reliable update detection across all language configurations.
+   - **Finding #3 (Asynchronous Update Engine)**: Implemented non-blocking background check `Check-ForUpdatesAsync` using an isolated runspace via `[powershell]::Create()`. Network I/O runs off the UI thread with zero UI freeze.
+   - **Finding #4 (DragMove Guard)**: Added primary button state check (`MouseButtonState::Pressed`) and exception handling to prevent unhandled `InvalidOperationException` on titlebar clicks.
+   - **Finding #5 (IPC Timer Optimization)**: Tuned `$ipcTimer` to `Background` priority, 200ms interval, and ensured explicit disposal in `Exit-Application`.
+   - **Finding #6 (Clean Signature for Copy-PromptToClipboard)**: Removed dead parameters `$cardBorder` and `$copyBtn` from `Copy-PromptToClipboard` and eliminated `$thisBtn`.
+   - **Finding #7 (Hotkey Collision Prevention)**: Removed duplicate `CTRL+ALT+P` assignment from Start Menu `.lnk` in `install-shortcut.ps1`, preserving single authority on Desktop shortcut.
+
+Files changed: `app.ps1`, `install-shortcut.ps1`, `launch.vbs`, `README.md`, `diary.md`, `.gitignore`.
+
+## 🔬 Forensic Audit Findings - 2026-09-10 (Principal Security & Performance Auditor)
+
+### 🔴 HIGH — Bugs / Robustness
+1. ✅ **[DONE 2026-09-10] Auto-Updater permanently blocked by dirty working tree on settings change or graphify cache** —
+   Filtered runtime config/cache from `git status --porcelain` check, backed up and restored user `config.json` across fast-forward pulls, and established `.gitignore`.
+
+2. ✅ **[DONE 2026-09-10] Locale-dependent branch check in `Check-ForUpdates` (`behind` string match failure)** —
+   Replaced fragile string matching with locale-agnostic Git plumbing: `git rev-list --count HEAD..@{u}` with fallback to `HEAD..origin/main`.
+
+### 🟡 MEDIUM — Performance / UX & Edge Cases
+3. ✅ **[DONE 2026-09-10] UI thread freezing on synchronous network `git fetch origin` in WPF Dispatcher** —
+   Implemented `Check-ForUpdatesAsync` leveraging `[powershell]::Create()` background runspace; network I/O executes off-thread with zero UI stutter.
+
+4. ✅ **[DONE 2026-09-10] Unchecked mouse button state in Window DragMove (`InvalidOperationException`)** —
+   Guarded `$titleBar.Add_MouseLeftButtonDown` with `MouseButtonState::Pressed` validation and `try/catch`.
+
+5. ✅ **[DONE 2026-09-10] 150ms IPC polling timer on UI thread (continuous dispatcher wakeups)** —
+   Tuned `$ipcTimer` to `Background` dispatcher priority at 200ms interval with explicit disposal on shutdown.
+
+### 🟢 LOW — Technical Debt / Code Cleanup
+6. ✅ **[DONE 2026-09-10] Vestigial dead arguments in `Copy-PromptToClipboard`** —
+   Simplified signature to `Copy-PromptToClipboard -promptItem $item` and removed unused local `$thisBtn`.
+
+7. ✅ **[DONE 2026-09-10] Duplicate Hotkey registration in Desktop and Start Menu shortcuts** —
+   Removed duplicate hotkey assignment from Start Menu `.lnk` in `install-shortcut.ps1`, leaving `CTRL+ALT+P` solely on the Desktop shortcut.
 
 ---
 
-## 🔬 Forensic Audit Findings - 2026-09-09 (Principal Security & Performance Auditor)
-
-### 🔴 HIGH — Bugs / Robustness
-1. ✅ **[DONE 2026-09-09] Clipboard lock contention (COMException CLIPBRD_E_CANT_OPEN) can fail copy operations on Windows** —
-   Resolved with 5-attempt retry loop, 40ms backoff, and `SetDataObject($textToCopy, $true)`.
-
-### 🟡 MEDIUM — Robustness / Edge cases
-2. ✅ **[DONE 2026-09-10] Path quoting in editor launch and icon specifier syntax in shortcut installer** —
-   Resolved with `-ArgumentList` quoting in `app.ps1` and sanitized `$iconLocation` in `install-shortcut.ps1`.
-
-### 🟢 LOW — UX / Optimization
-3. ✅ **[DONE 2026-09-10] Redundant timer garbage collection overhead on rapid multiple card clicks** —
-   Eliminated transient card background revert timers and button reset timers in `Copy-PromptToClipboard`, relying solely on the single shared status bar reset timer and active state tracking.
+## 🔬 Historical Forensic Audit Findings - 2026-09-09
+- ✅ **[DONE 2026-09-09] Clipboard lock contention (COMException CLIPBRD_E_CANT_OPEN)**
+- ✅ **[DONE 2026-09-10] Path quoting in editor launch and icon specifier syntax in shortcut installer**
+- ✅ **[DONE 2026-09-10] Redundant timer garbage collection overhead on rapid multiple card clicks**
 
 ---
 
 ## 📋 Active / Pending Tasks
 - **Active Task**:
-  - Ninguna en curso (todas las peticiones del usuario y remediaciones concluidas).
+  - Ninguna activa (Sprint de estabilidad, UI activa y remediaciones forenses cerrado al 100%).
 - **Pending Tasks**:
-  - Push changes to remote `https://github.com/txeki-dev/AI-Dev-Prompt-Clipboard.git`.
+  - Nuevas funcionalidades o prompts personalizados a petición del usuario.
 
 ---
 
 ## 🎯 Next Immediate Step
-- Push release v1.2.0 with persistent clipboard indicator to GitHub origin/main.
+- Ejecutar protocolo `<session_start_hybrid>` (`[ INTRO ]`) para abrir la siguiente sesión de desarrollo.

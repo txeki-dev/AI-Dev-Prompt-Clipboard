@@ -1,0 +1,11 @@
+﻿# Graphify internal cache
+graphify-out/cache/
+*.log
+
+# Scratch and test files
+scratch/
+test_*.ps1
+
+# Windows thumbnail & desktop caches
+Thumbs.db
+Desktop.ini

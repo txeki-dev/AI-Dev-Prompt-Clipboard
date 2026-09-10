@@ -1,4 +1,4 @@
-# AI Dev Prompt Clipboard 📋
+﻿# AI Dev Prompt Clipboard 📋
 
 Una interfaz gráfica ligera, rápida y moderna para Windows diseñada para copiar al portapapeles tus protocolos y prompts de desarrollo asistido con IA con un solo clic o mediante un atajo global de teclado.
 
@@ -18,9 +18,9 @@ La aplicación cuenta con integración nativa en Windows:
 ## 🔄 Auto-Actualizaciones desde GitHub (Motor Ekin)
 
 La aplicación cuenta con el mismo motor de actualización automática y seguro de [Ekin](https://github.com/txeki-dev/Ekin):
-- **Comprobación al inicio**: Al arrancar, verifica silenciosamente si hay nuevas versiones en `origin/main`.
+- **Comprobación asíncrona en segundo plano**: Al arrancar y al restaurar la ventana, comprueba de forma no bloqueante si hay nuevas versiones en GitHub mediante fontanería nativa de Git agnóstica al idioma (`git rev-list`), sin congelar la interfaz.
 - **Comprobación manual**: Botón `🔄` en la barra de título o clic derecho en el icono de la bandeja -> *Buscar actualizaciones...*.
-- **Protección contra pérdida de datos**: Valida que no existan cambios locales sin confirmar antes de descargar nada (`git pull --ff-only`). Si hay una nueva versión disponible, te solicitará confirmación antes de instalarla y se reiniciará sola.
+- **Protección contra pérdida de datos**: Valida que no existan cambios locales sin confirmar en el código antes de descargar nada (`git pull --ff-only`), preservando intacta la configuración del usuario (`config.json`). Si hay una nueva versión disponible, te solicitará confirmación antes de instalarla y se reiniciará sola.
 
 ---
 
@@ -43,7 +43,8 @@ La aplicación cuenta con el mismo motor de actualización automática y seguro 
 
 - **Icono Propio de Aplicación**: Mediante `AppUserModelID`, Windows reconoce la aplicación como un proceso independiente en la barra de tareas y bandeja, mostrando su icono exclusivo en lugar del terminal de PowerShell.
 - **Instancia Única con Activación IPC**: Solo se ejecuta un proceso en segundo plano (vía `Mutex` y `EventWaitHandle`). Pulsar `Ctrl + Alt + P` o abrir el acceso directo despierta la ventana residente al instante con 0ms de retardo.
-- **Copia instantánea protegida**: Algoritmo con reintentos contra bloqueos transitorios del portapapeles de Windows (`CLIPBRD_E_CANT_OPEN`) y confirmación visual en verde (`✓ ¡Copiado!`).
+- **Indicador de Prompt Activo en el Portapapeles**: Resalta automáticamente con borde verde esmeralda y la insignia `📋 En portapapeles` cuál de los protocolos reside actualmente en el portapapeles de Windows, sincronizado en tiempo real.
+- **Copia instantánea protegida**: Algoritmo con reintentos contra bloqueos transitorios del portapapeles de Windows (`CLIPBRD_E_CANT_OPEN`) y feedback en la barra inferior en verde (`✓ ¡Copiado al portapapeles!`).
 - **Vista Previa (`👁️`)**: Visualiza el texto íntegro en fuente monoespaciada antes de copiarlo.
 - **Buscador y Filtros por Categoría**: Filtra por `Workflow`, `TDD`, `Setup` y `Auditoría` o busca palabras clave.
 - **Fijar ventana (`📌 Always on Top`)**: Mantenla flotando sobre tu editor de código o chat de IA.

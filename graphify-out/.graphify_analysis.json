@@ -35,9 +35,8 @@
     ],
     "3": [
       "app_check_forupdates",
-      "app_exit_application",
-      "app_show_mainwindow",
-      "app_trigger_backgroundupdatecheck"
+      "app_check_forupdatesasync",
+      "app_exit_application"
     ],
     "4": [
       "app_get_safeclipboardtext",
@@ -45,10 +44,14 @@
       "app_update_activeclipboardindicator"
     ],
     "5": [
+      "app_show_mainwindow",
+      "app_trigger_backgroundupdatecheck"
+    ],
+    "6": [
       "graph_report_communities_3_total_1_thin_omitted",
       "graph_report_community_1_check_forupdates"
     ],
-    "6": [
+    "7": [
       "install_shortcut"
     ]
   },
@@ -56,10 +59,11 @@
     "0": 0.18181818181818182,
     "1": 0.2,
     "2": 0.4,
-    "3": 0.5,
+    "3": 0.6666666666666666,
     "4": 0.6666666666666666,
     "5": 1.0,
-    "6": 1.0
+    "6": 1.0,
+    "7": 1.0
   },
   "gods": [
     {
@@ -88,6 +92,11 @@
       "degree": 3
     },
     {
+      "id": "app_check_forupdatesasync",
+      "label": "Check-ForUpdatesAsync()",
+      "degree": 3
+    },
+    {
       "id": "app_show_mainwindow",
       "label": "Show-MainWindow()",
       "degree": 3
@@ -106,11 +115,6 @@
       "id": "app_exit_application",
       "label": "Exit-Application()",
       "degree": 2
-    },
-    {
-      "id": "app_get_safeclipboardtext",
-      "label": "Get-SafeClipboardText()",
-      "degree": 2
     }
   ],
   "surprises": [
@@ -126,6 +130,17 @@
       "note": "Bridges community 2 → community 4"
     },
     {
+      "source": "Trigger-BackgroundUpdateCheck()",
+      "target": "Check-ForUpdatesAsync()",
+      "source_files": [
+        "app.ps1",
+        "app.ps1"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "note": "Bridges community 3 → community 5"
+    },
+    {
       "source": "Show-MainWindow()",
       "target": "Update-ActiveClipboardIndicator()",
       "source_files": [
@@ -134,14 +149,14 @@
       ],
       "confidence": "EXTRACTED",
       "relation": "calls",
-      "note": "Bridges community 3 → community 4"
+      "note": "Bridges community 4 → community 5"
     }
   ],
   "questions": [
     {
       "type": "bridge_node",
       "question": "Why does `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)` connect `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)` to `Communities (3 total, 1 thin omitted)`?",
-      "why": "High betweenness centrality (0.103) - this node is a cross-community bridge."
+      "why": "High betweenness centrality (0.098) - this node is a cross-community bridge."
     },
     {
       "type": "bridge_node",

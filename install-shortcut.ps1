@@ -60,7 +60,7 @@ $menuShortcut.TargetPath       = "wscript.exe"
 $menuShortcut.Arguments        = "`"$vbsPath`""
 $menuShortcut.WorkingDirectory = "$scriptDir"
 $menuShortcut.WindowStyle      = 1
-$menuShortcut.Hotkey           = $Hotkey
+# Nota: El atajo de teclado global se asigna exclusivamente al acceso directo del Escritorio para evitar colisiones en la tabla de hotkeys de Windows Shell
 $menuShortcut.IconLocation     = $iconLocation
 $menuShortcut.Description      = "AI Dev Prompt Clipboard"
 $menuShortcut.Save()
