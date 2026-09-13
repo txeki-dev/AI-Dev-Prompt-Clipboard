@@ -128,13 +128,38 @@ $xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="AI Prompt Clipboard"
-        Height="720" Width="640"
-        MinHeight="520" MinWidth="500"
+        Height="740" Width="680"
+        MinHeight="540" MinWidth="520"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
         FontFamily="Segoe UI">
+
+    <Window.Resources>
+        <Style x:Key="FluxButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="#CDD6F4"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="Margin" Value="0,2,6,2"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 
     <!-- Outer container for shadow margin -->
     <Grid Margin="12">
@@ -145,10 +170,10 @@ $xaml = @"
             </Border.Effect>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/> <!-- Header / TitleBar -->
-                    <RowDefinition Height="Auto"/> <!-- Search & Filter Chips -->
-                    <RowDefinition Height="*"/>    <!-- Prompt Cards List -->
-                    <RowDefinition Height="Auto"/> <!-- Footer / Status -->
+                    <RowDefinition Height="Auto"/> <!-- Row 0: Header / TitleBar -->
+                    <RowDefinition Height="Auto"/> <!-- Row 1: Main Navigation Tabs -->
+                    <RowDefinition Height="*"/>    <!-- Row 2: Content View Area (Prompts / DevFlux) -->
+                    <RowDefinition Height="Auto"/> <!-- Row 3: Footer / Status -->
                 </Grid.RowDefinitions>
 
                 <!-- Row 0: Custom Title Bar -->
@@ -163,7 +188,7 @@ $xaml = @"
                             <TextBlock Text="📋" FontSize="18" Margin="0,0,8,0" VerticalAlignment="Center"/>
                             <TextBlock Text="AI Dev Prompt Clipboard" FontSize="15" FontWeight="SemiBold" Foreground="#CDD6F4" VerticalAlignment="Center"/>
                             <Border Background="#313244" CornerRadius="10" Margin="10,0,0,0" Padding="8,2" VerticalAlignment="Center">
-                                <TextBlock x:Name="PromptCountBadge" Text="9 protocolos" FontSize="11" Foreground="#BAC2DE"/>
+                                <TextBlock x:Name="PromptCountBadge" Text="10 protocolos" FontSize="11" Foreground="#BAC2DE"/>
                             </Border>
                         </StackPanel>
 
@@ -231,59 +256,214 @@ $xaml = @"
                     </Grid>
                 </Border>
 
-                <!-- Row 1: Search & Filter Tabs -->
-                <Border Grid.Row="1" Background="#181825" Padding="16,12,16,8">
+                <!-- Row 1: Main Navigation Tabs -->
+                <Border Grid.Row="1" Background="#11111B" Padding="16,3,16,6" BorderBrush="#313244" BorderThickness="0,0,0,1">
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                        <!-- Search Input -->
-                        <Border Grid.Row="0" Background="#1E1E2E" BorderBrush="#313244" BorderThickness="1" CornerRadius="8" Padding="10,6">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="🔍" FontSize="13" Foreground="#6C7086" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                                <TextBox Grid.Column="1" x:Name="SearchBox" Background="Transparent" BorderThickness="0" Foreground="#CDD6F4" FontSize="13" VerticalAlignment="Center" CaretBrush="#89B4FA"/>
-                                <TextBlock Grid.Column="1" x:Name="SearchPlaceholder" Text="Buscar protocolo por nombre, etiqueta o rol..." Foreground="#6C7086" FontSize="13" VerticalAlignment="Center" IsHitTestVisible="False"/>
-                                <Button Grid.Column="2" x:Name="BtnClearSearch" Visibility="Collapsed" Background="Transparent" BorderThickness="0" Foreground="#6C7086" Content="✕" Cursor="Hand" Width="20" Height="20"/>
-                            </Grid>
-                        </Border>
+                        <!-- Tab Switcher -->
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Border x:Name="TabPrompts" Background="#89B4FA" CornerRadius="8" Padding="14,6" Margin="0,0,8,0" Cursor="Hand">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="📋 " FontSize="12"/>
+                                    <TextBlock x:Name="TabPromptsText" Text="Protocolos" FontSize="12" FontWeight="Bold" Foreground="#11111B"/>
+                                </StackPanel>
+                            </Border>
 
-                        <!-- Filter Chips -->
-                        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,10,0,2">
-                            <Border x:Name="ChipAll" Background="#89B4FA" CornerRadius="12" Padding="10,3" Margin="0,0,6,0" Cursor="Hand">
-                                <TextBlock Text="Todos" FontSize="11" FontWeight="SemiBold" Foreground="#11111B"/>
-                            </Border>
-                            <Border x:Name="ChipWorkflow" Background="#313244" CornerRadius="12" Padding="10,3" Margin="0,0,6,0" Cursor="Hand">
-                                <TextBlock Text="Workflow" FontSize="11" FontWeight="SemiBold" Foreground="#CDD6F4"/>
-                            </Border>
-                            <Border x:Name="ChipTDD" Background="#313244" CornerRadius="12" Padding="10,3" Margin="0,0,6,0" Cursor="Hand">
-                                <TextBlock Text="TDD" FontSize="11" FontWeight="SemiBold" Foreground="#CDD6F4"/>
-                            </Border>
-                            <Border x:Name="ChipSetup" Background="#313244" CornerRadius="12" Padding="10,3" Margin="0,0,6,0" Cursor="Hand">
-                                <TextBlock Text="Setup" FontSize="11" FontWeight="SemiBold" Foreground="#CDD6F4"/>
-                            </Border>
-                            <Border x:Name="ChipAudit" Background="#313244" CornerRadius="12" Padding="10,3" Margin="0,0,6,0" Cursor="Hand">
-                                <TextBlock Text="Auditoría" FontSize="11" FontWeight="SemiBold" Foreground="#CDD6F4"/>
-                            </Border>
-                            <Border x:Name="ChipRDi" Background="#313244" CornerRadius="12" Padding="10,3" Margin="0,0,6,0" Cursor="Hand">
-                                <TextBlock Text="R&amp;D" FontSize="11" FontWeight="SemiBold" Foreground="#CDD6F4"/>
+                            <Border x:Name="TabDevFlux" Background="#1E1E2E" CornerRadius="8" Padding="14,6" Cursor="Hand">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="⚡ " FontSize="12"/>
+                                    <TextBlock x:Name="TabDevFluxText" Text="DEV FLUX" FontSize="12" FontWeight="Bold" Foreground="#BAC2DE"/>
+                                </StackPanel>
                             </Border>
                         </StackPanel>
+
+                        <TextBlock Grid.Column="1" Text="AI Pair Programming Lifecycle" FontSize="11" Foreground="#585B70" VerticalAlignment="Center" FontStyle="Italic"/>
                     </Grid>
                 </Border>
 
-                <!-- Row 2: Prompt List in ScrollViewer -->
-                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="16,4,16,4">
-                    <StackPanel x:Name="PromptContainer"/>
-                </ScrollViewer>
+                <!-- Row 2: Content View Area -->
+                <Grid Grid.Row="2">
+                    <!-- VIEW 1: PROMPTS LIST -->
+                    <Grid x:Name="ViewPrompts" Visibility="Visible">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/> <!-- Search & Filter Chips -->
+                            <RowDefinition Height="*"/>    <!-- Prompts ScrollViewer -->
+                        </Grid.RowDefinitions>
 
-                <!-- Preview Overlay (Hidden by default) -->
+                        <!-- Search & Filter Chips -->
+                        <Border Grid.Row="0" Background="#181825" Padding="16,10,16,8">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Search Input -->
+                                <Border Grid.Row="0" Background="#1E1E2E" BorderBrush="#313244" BorderThickness="1" CornerRadius="8" Padding="10,6">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="🔍" FontSize="13" Foreground="#6C7086" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                        <TextBox Grid.Column="1" x:Name="SearchBox" Background="Transparent" BorderThickness="0" Foreground="#CDD6F4" FontSize="13" VerticalAlignment="Center" CaretBrush="#89B4FA"/>
+                                        <TextBlock Grid.Column="1" x:Name="SearchPlaceholder" Text="Buscar protocolo por nombre, etiqueta o rol..." Foreground="#6C7086" FontSize="13" VerticalAlignment="Center" IsHitTestVisible="False"/>
+                                        <Button Grid.Column="2" x:Name="BtnClearSearch" Visibility="Collapsed" Background="Transparent" BorderThickness="0" Foreground="#6C7086" Content="✕" Cursor="Hand" Width="20" Height="20"/>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Filter Chips -->
+                                <WrapPanel Grid.Row="1" Orientation="Horizontal" Margin="0,10,0,2">
+                                    <Border x:Name="ChipAll" Background="#89B4FA" CornerRadius="12" Padding="10,3" Margin="0,0,6,4" Cursor="Hand">
+                                        <TextBlock Text="Todos" FontSize="11" FontWeight="SemiBold" Foreground="#11111B"/>
+                                    </Border>
+                                    <Border x:Name="ChipWorkflow" Background="#313244" CornerRadius="12" Padding="10,3" Margin="0,0,6,4" Cursor="Hand">
+                                        <TextBlock Text="Workflow" FontSize="11" FontWeight="SemiBold" Foreground="#CDD6F4"/>
+                                    </Border>
+                                    <Border x:Name="ChipTDD" Background="#313244" CornerRadius="12" Padding="10,3" Margin="0,0,6,4" Cursor="Hand">
+                                        <TextBlock Text="TDD" FontSize="11" FontWeight="SemiBold" Foreground="#CDD6F4"/>
+                                    </Border>
+                                    <Border x:Name="ChipSetup" Background="#313244" CornerRadius="12" Padding="10,3" Margin="0,0,6,4" Cursor="Hand">
+                                        <TextBlock Text="Setup" FontSize="11" FontWeight="SemiBold" Foreground="#CDD6F4"/>
+                                    </Border>
+                                    <Border x:Name="ChipAudit" Background="#313244" CornerRadius="12" Padding="10,3" Margin="0,0,6,4" Cursor="Hand">
+                                        <TextBlock Text="Auditoría" FontSize="11" FontWeight="SemiBold" Foreground="#CDD6F4"/>
+                                    </Border>
+                                    <Border x:Name="ChipRDi" Background="#313244" CornerRadius="12" Padding="10,3" Margin="0,0,6,4" Cursor="Hand">
+                                        <TextBlock Text="R&amp;D" FontSize="11" FontWeight="SemiBold" Foreground="#CDD6F4"/>
+                                    </Border>
+                                    <Border x:Name="ChipStrategy" Background="#313244" CornerRadius="12" Padding="10,3" Margin="0,0,6,4" Cursor="Hand">
+                                        <TextBlock Text="Estrategia" FontSize="11" FontWeight="SemiBold" Foreground="#CDD6F4"/>
+                                    </Border>
+                                </WrapPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Prompt List in ScrollViewer -->
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="16,4,16,4">
+                            <StackPanel x:Name="PromptContainer"/>
+                        </ScrollViewer>
+                    </Grid>
+
+                    <!-- VIEW 2: DEV FLUX TAB -->
+                    <Grid x:Name="ViewDevFlux" Visibility="Collapsed">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="16,10,16,10">
+                            <StackPanel>
+                                <!-- Title & Description Card -->
+                                <Border Background="#1E1E2E" BorderBrush="#313244" BorderThickness="1" CornerRadius="10" Padding="14,10" Margin="0,0,0,10">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="⚡ METODOLOGÍA &amp; FLUJO DE DESARROLLO HÍBRIDO" FontSize="13" FontWeight="Bold" Foreground="#89B4FA"/>
+                                            <TextBlock Text="Ciclo de vida estructurado: Setup inicial, triage a backlog.md, ciclo TDD con relevo Claude/Antigravity y consolidación." FontSize="11.5" Foreground="#9399B2" Margin="0,3,0,0" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                        <Button Grid.Column="1" x:Name="BtnOpenFullFlux" Content="🔍 Abrir Diagrama" ToolTip="Ver diagrama en pantalla completa con el visor de Windows" Background="#313244" BorderBrush="#45475A" BorderThickness="1" Foreground="#CDD6F4" FontSize="11" FontWeight="SemiBold" Padding="10,5" VerticalAlignment="Center" Cursor="Hand">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                                        <TextBlock Text="{TemplateBinding Content}" FontSize="11" FontWeight="SemiBold" Foreground="#CDD6F4" HorizontalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Diagram Visualizer Card -->
+                                <Border Background="#0C0D14" BorderBrush="#313244" BorderThickness="1.5" CornerRadius="10" Padding="8" Margin="0,0,0,12">
+                                    <Image x:Name="DevFluxImage" MaxHeight="520" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                </Border>
+
+                                <!-- Interactive Quick-Launch Phase Cards -->
+                                <TextBlock Text="ACCESOS RÁPIDOS POR FASE (Haz clic en cualquier protocolo para copiarlo):" FontSize="11.5" FontWeight="Bold" Foreground="#BAC2DE" Margin="0,4,0,8"/>
+
+                                <!-- Fase 1: Inicio Proyecto -->
+                                <Border Background="#1E1E2E" BorderBrush="#A78BFA" BorderThickness="1,0,0,0" CornerRadius="0,8,8,0" Padding="12,8" Margin="0,0,0,6">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                            <TextBlock Text="1. INICIO PROYECTO" FontSize="11" FontWeight="Bold" Foreground="#A78BFA"/>
+                                            <TextBlock Text="Setup &amp; Migración" FontSize="10" Foreground="#6C7086"/>
+                                        </StackPanel>
+                                        <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Button x:Name="BtnFluxInitial" Style="{StaticResource FluxButtonStyle}" Content="1. INITIAL" Background="#26233A" BorderBrush="#A78BFA" BorderThickness="1"/>
+                                            <Button x:Name="BtnFluxMigrate" Style="{StaticResource FluxButtonStyle}" Content="2. MIGRATE" Background="#26233A" BorderBrush="#C084FC" BorderThickness="1"/>
+                                        </WrapPanel>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Fase 2: Sesión & Descubrimiento -->
+                                <Border Background="#1E1E2E" BorderBrush="#38BDF8" BorderThickness="1,0,0,0" CornerRadius="0,8,8,0" Padding="12,8" Margin="0,0,0,6">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                            <TextBlock Text="2. SESIÓN &amp; FEED" FontSize="11" FontWeight="Bold" Foreground="#38BDF8"/>
+                                            <TextBlock Text="Intro &amp; Triage a backlog" FontSize="10" Foreground="#6C7086"/>
+                                        </StackPanel>
+                                        <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Button x:Name="BtnFluxIntro" Style="{StaticResource FluxButtonStyle}" Content="3. INTRO" Background="#1B2B34" BorderBrush="#38BDF8" BorderThickness="1"/>
+                                            <Button x:Name="BtnFluxRDi" Style="{StaticResource FluxButtonStyle}" Content="4. RDi (CTO)" Background="#2D1B2D" BorderBrush="#EC4899" BorderThickness="1"/>
+                                            <Button x:Name="BtnFluxStrategy" Style="{StaticResource FluxButtonStyle}" Content="10. PRODUCT_STRATEGY (CPO)" Background="#2D1822" BorderBrush="#F43F5E" BorderThickness="1"/>
+                                            <Button x:Name="BtnFluxAudit" Style="{StaticResource FluxButtonStyle}" Content="7. AUDIT (Seguridad)" Background="#2D271A" BorderBrush="#FBBF24" BorderThickness="1"/>
+                                        </WrapPanel>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Fase 3: Ciclo TDD & Cirugía -->
+                                <Border Background="#1E1E2E" BorderBrush="#34D399" BorderThickness="1,0,0,0" CornerRadius="0,8,8,0" Padding="12,8" Margin="0,0,0,6">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                            <TextBlock Text="3. TDD &amp; CIRUGÍA" FontSize="11" FontWeight="Bold" Foreground="#34D399"/>
+                                            <TextBlock Text="Relevo Claude / Antigravity" FontSize="10" Foreground="#6C7086"/>
+                                        </StackPanel>
+                                        <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Button x:Name="BtnFluxPlan" Style="{StaticResource FluxButtonStyle}" Content="5. FEATURE_PLAN (Claude Code)" Background="#172B23" BorderBrush="#34D399" BorderThickness="1"/>
+                                            <Button x:Name="BtnFluxBuild" Style="{StaticResource FluxButtonStyle}" Content="6. FEATURE_BUILD (Antigravity CLI)" Background="#132B20" BorderBrush="#10B981" BorderThickness="1"/>
+                                            <Button x:Name="BtnFluxRemediate" Style="{StaticResource FluxButtonStyle}" Content="8. REMEDIATE (Cirugía)" Background="#2E1E14" BorderBrush="#F97316" BorderThickness="1"/>
+                                        </WrapPanel>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Fase 4: Consolidación & Cierre -->
+                                <Border Background="#1E1E2E" BorderBrush="#60A5FA" BorderThickness="1,0,0,0" CornerRadius="0,8,8,0" Padding="12,8" Margin="0,0,0,8">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                            <TextBlock Text="4. CIERRE DE SESIÓN" FontSize="11" FontWeight="Bold" Foreground="#60A5FA"/>
+                                            <TextBlock Text="QA Gate + Git + Hook" FontSize="10" Foreground="#6C7086"/>
+                                        </StackPanel>
+                                        <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Button x:Name="BtnFluxOutro" Style="{StaticResource FluxButtonStyle}" Content="9. OUTRO (QA Gate + Git + Hook)" Background="#1A2536" BorderBrush="#60A5FA" BorderThickness="1"/>
+                                        </WrapPanel>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+
+                <!-- Preview Overlay (Hidden by default, spans content rows 1 and 2) -->
                 <Border Grid.Row="1" Grid.RowSpan="2" x:Name="PreviewOverlay" Background="#E611111B" Visibility="Collapsed" Padding="20">
                     <Border Background="#1E1E2E" BorderBrush="#313244" BorderThickness="1.5" CornerRadius="12" Padding="16">
                         <Grid>
@@ -333,7 +513,7 @@ $xaml = @"
 
                         <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
                             <TextBlock x:Name="StatusLabel" Text="Haz clic en cualquier tarjeta para copiar al portapapeles" FontSize="12" Foreground="#A6ADC8"/>
-                            <TextBlock Text="Atajo global: Ctrl + Alt + P • Activo en bandeja" FontSize="10.5" Foreground="#585B70" Margin="0,2,0,0"/>
+                            <TextBlock Text="Atajo global: Ctrl + Alt + P   Activo en bandeja" FontSize="10.5" Foreground="#585B70" Margin="0,2,0,0"/>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
@@ -381,6 +561,16 @@ $previewText        = $window.FindName("PreviewText")
 $btnClosePreview    = $window.FindName("BtnClosePreview")
 $btnCopyFromPreview = $window.FindName("BtnCopyFromPreview")
 
+# Tabs & Dev Flux Controls
+$tabPrompts         = $window.FindName("TabPrompts")
+$tabDevFlux         = $window.FindName("TabDevFlux")
+$tabPromptsText     = $window.FindName("TabPromptsText")
+$tabDevFluxText     = $window.FindName("TabDevFluxText")
+$viewPrompts        = $window.FindName("ViewPrompts")
+$viewDevFlux        = $window.FindName("ViewDevFlux")
+$devFluxImage       = $window.FindName("DevFluxImage")
+$btnOpenFullFlux    = $window.FindName("BtnOpenFullFlux")
+
 # Filter Chips
 $chipAll      = $window.FindName("ChipAll")
 $chipWorkflow = $window.FindName("ChipWorkflow")
@@ -388,6 +578,7 @@ $chipTDD      = $window.FindName("ChipTDD")
 $chipSetup    = $window.FindName("ChipSetup")
 $chipAudit    = $window.FindName("ChipAudit")
 $chipRDi      = $window.FindName("ChipRDi")
+$chipStrategy = $window.FindName("ChipStrategy")
 
 $chips = @(
     @{ Control = $chipAll;      Category = "All" },
@@ -395,8 +586,55 @@ $chips = @(
     @{ Control = $chipTDD;      Category = "TDD" },
     @{ Control = $chipSetup;    Category = "Setup" },
     @{ Control = $chipAudit;    Category = "Auditoría" },
-    @{ Control = $chipRDi;      Category = "R&D" }
+    @{ Control = $chipRDi;      Category = "R&D" },
+    @{ Control = $chipStrategy; Category = "Estrategia" }
 )
+
+# Tab Switching Logic
+function Select-Tab {
+    param([string]$tabName)
+    if ($tabName -eq "Prompts") {
+        $tabPrompts.Background = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#89B4FA")
+        $tabPromptsText.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#11111B")
+        $tabDevFlux.Background = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#1E1E2E")
+        $tabDevFluxText.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#BAC2DE")
+        $viewPrompts.Visibility = [System.Windows.Visibility]::Visible
+        $viewDevFlux.Visibility = [System.Windows.Visibility]::Collapsed
+        $statusLabel.Text = "Haz clic en cualquier tarjeta para copiar al portapapeles"
+    } else {
+        $tabDevFlux.Background = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#89B4FA")
+        $tabDevFluxText.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#11111B")
+        $tabPrompts.Background = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#1E1E2E")
+        $tabPromptsText.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString("#BAC2DE")
+        $viewPrompts.Visibility = [System.Windows.Visibility]::Collapsed
+        $viewDevFlux.Visibility = [System.Windows.Visibility]::Visible
+        $statusLabel.Text = "Mapa de Flujo de Desarrollo Híbrido | Clic en cualquier protocolo para copiarlo"
+    }
+}
+
+$tabPrompts.Add_MouseLeftButtonUp({ Select-Tab -tabName "Prompts" })
+$tabDevFlux.Add_MouseLeftButtonUp({ Select-Tab -tabName "DevFlux" })
+
+# Load Dev Flux Diagram Image
+$fluxImgPath = Join-Path $scriptDir "dev_flux.png"
+if (Test-Path -LiteralPath $fluxImgPath) {
+    try {
+        $bmp = [System.Windows.Media.Imaging.BitmapImage]::new()
+        $bmp.BeginInit()
+        $bmp.UriSource = [System.Uri]::new($fluxImgPath)
+        $bmp.CacheOption = [System.Windows.Media.Imaging.BitmapCacheOption]::OnLoad
+        $bmp.EndInit()
+        $devFluxImage.Source = $bmp
+    } catch {}
+}
+
+if ($btnOpenFullFlux) {
+    $btnOpenFullFlux.Add_Click({
+        if (Test-Path -LiteralPath $fluxImgPath) {
+            Start-Process $fluxImgPath
+        }
+    })
+}
 
 $currentCategory = "All"
 
@@ -1424,6 +1662,37 @@ foreach ($item in $prompts) {
     }.GetNewClosure())
 
     $promptContainer.Children.Add($card) | Out-Null
+}
+
+# Map & Hook Dev Flux Interactive Buttons
+$promptMap = @{}
+foreach ($p in $prompts) {
+    $promptMap[$p.id] = $p
+}
+
+$fluxButtons = @(
+    @{ Name = "BtnFluxInitial";        Id = "initial" },
+    @{ Name = "BtnFluxMigrate";        Id = "migrate" },
+    @{ Name = "BtnFluxIntro";          Id = "intro" },
+    @{ Name = "BtnFluxRDi";            Id = "rdi" },
+    @{ Name = "BtnFluxStrategy";       Id = "product_strategy" },
+    @{ Name = "BtnFluxAudit";          Id = "audit" },
+    @{ Name = "BtnFluxPlan";           Id = "feature_plan" },
+    @{ Name = "BtnFluxBuild";          Id = "feature_build" },
+    @{ Name = "BtnFluxRemediate";      Id = "remediate" },
+    @{ Name = "BtnFluxOutro";          Id = "outro" }
+)
+
+foreach ($fb in $fluxButtons) {
+    $fBtn = $window.FindName($fb.Name)
+    if ($fBtn -and $promptMap.ContainsKey($fb.Id)) {
+        $targetPrompt = $promptMap[$fb.Id]
+        $fBtn.ToolTip = "$($targetPrompt.title): $($targetPrompt.description)"
+        $fBtn.Add_Click({
+            param($s, $e)
+            Copy-PromptToClipboard -promptItem $targetPrompt
+        }.GetNewClosure())
+    }
 }
 
 # Initial active clipboard indicator check

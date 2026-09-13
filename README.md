@@ -27,30 +27,42 @@ La aplicación cuenta con un motor de actualización automática híbrido y segu
 
 ---
 
-## ⚡ Prompts y Protocolos Incluidos (9 Protocolos)
+## ⚡ Prompts y Protocolos Incluidos (10 Protocolos)
 
 | # | Protocolo | Tag / Protocolo | Rol | Propósito |
 |---|---|---|---|---|
-| 1 | **INTRO** | `<session_start_hybrid>` | AI Pair Programmer | Ingesta de `GRAPH_REPORT.md` y `diary.md` para arrancar sesión |
-| 2 | **FEATURE PLAN** | `<feature_plan_tdd>` | Principal Architect, Product Triager & SDET | Descomposición de backlog en `backlog.md`/`diary.md` y creación de tests fallidos (Fase Roja) |
-| 3 | **FEATURE BUILD** | `<feature_build_tdd>` | TDD Implementation Engineer | Implementación de código mínimo para pasar tests (Fase Verde) y refactor seguro |
-| 4 | **OUTRO** | `<session_end_hybrid>` | Consolidación & Git | QA gate de tests, consolidación de `diary.md`, archivo semanal, actualización de README y git push |
-| 5 | **INITIAL** | `<initial_setup_hybrid>` | Principal Software Architect | Inicialización de memoria persistente con Graphify, build graph, hook y markdown inicial |
-| 6 | **MIGRATE** | `<migrate_to_hybrid>` | Principal Software Architect | Migración de base de código de `context.md` estático a Graphify híbrido con backlog desacoplado |
+| 1 | **INITIAL** | `<initial_setup_hybrid>` | Principal Software Architect | Inicialización de memoria persistente con Graphify, build graph, hook y markdown inicial |
+| 2 | **MIGRATE** | `<migrate_to_hybrid>` | Principal Software Architect | Migración de base de código de `context.md` estático a Graphify híbrido con backlog desacoplado |
+| 3 | **INTRO** | `<session_start_hybrid>` | AI Pair Programmer | Ingesta de `GRAPH_REPORT.md` y `diary.md` para arrancar sesión |
+| 4 | **RDi** | `<rdi_exploration_protocol>` | Principal Research Architect & Innovation Lead | Exploración proactiva de I+D (R&D) sobre el AST de Graphify para proponer iniciativas técnicas de alto impacto |
+| 5 | **FEATURE PLAN** | `<feature_plan_tdd>` | Principal Architect, Product Triager & SDET | Descomposición de backlog en `backlog.md`/`diary.md` y creación de tests fallidos (Fase Roja) con Claude Code |
+| 6 | **FEATURE BUILD** | `<feature_build_tdd>` | TDD Implementation Engineer | Implementación de código mínimo para pasar tests (Fase Verde) y refactor con Antigravity CLI |
 | 7 | **AUDIT** | `<codebase_audit_hybrid>` | Principal Security & Performance Auditor | Auditoría forense de arquitectura, código muerto, bugs y generación de backlog accionable |
 | 8 | **REMEDIATE** | `<remediate_all_audit_findings>` | Principal Staff Engineer & Remediation Specialist | Resolución sistemática en cola de todos los hallazgos de auditoría (HIGH -> LOW) sin regresiones |
-| 9 | **RDi** | `<rdi_exploration_protocol>` | Principal Research Architect & Innovation Lead | Exploración proactiva de I+D (R&D) sobre el AST de Graphify para proponer iniciativas técnicas de alto impacto |
+| 9 | **OUTRO** | `<session_end_hybrid>` | Consolidación & Git | QA gate de tests, consolidación de `diary.md`, archivo semanal, actualización de README y git push |
+| 10 | **PRODUCT STRATEGY** | `<product_strategy_discovery>` | Chief Product Officer (CPO), Lead UX Strategist & SaaS Business Architect | Análisis proactivo de UX, flujos de usuario y capacidades de negocio viables para el backlog |
+
+---
+
+## 🗺️ Pestaña DEV FLUX (Metodología de Desarrollo Híbrido)
+
+La aplicación incorpora una pestaña dedicada **⚡ DEV FLUX** que visualiza el ciclo de vida completo de ingeniería entre herramientas de IA (Claude Code y Google Antigravity CLI):
+
+- **Diagrama de Flujo Oficial**: Mapeo visual integral desde el inicio (`INITIAL` / `MIGRATE`), arranque de sesión (`INTRO`), bifurcación de descubrimiento (`RDi`, `PRODUCT_STRATEGY`, `AUDIT`), triage a `backlog.md`, ciclo TDD con relevo (`FEATURE_PLAN` -> `FEATURE_BUILD` / `REMEDIATE`) hasta la consolidación final (`OUTRO`).
+- **Accesos Rápidos Interactivos**: Botones por cada fase para copiar inmediatamente cualquier protocolo sin necesidad de buscarlo.
+- **Visor a Pantalla Completa**: Botón `🔍 Abrir Diagrama` para proyectar el flujo en alta resolución en monitores secundarios.
 
 ---
 
 ## 🎨 Características de la Interfaz
 
+- **Sistema de Pestañas**: Alterna entre `📋 Protocolos` (catálogo y tarjetas) y `⚡ DEV FLUX` (mapa de arquitectura de trabajo).
 - **Icono Propio de Aplicación**: Mediante `AppUserModelID`, Windows reconoce la aplicación como un proceso independiente en la barra de tareas y bandeja, mostrando su icono exclusivo en lugar del terminal de PowerShell.
 - **Instancia Única con Activación IPC**: Solo se ejecuta un proceso en segundo plano (vía `Mutex` y `EventWaitHandle`). Pulsar `Ctrl + Alt + P` o abrir el acceso directo despierta la ventana residente al instante con 0ms de retardo.
 - **Indicador de Prompt Activo en el Portapapeles**: Resalta automáticamente con borde verde esmeralda y la insignia `📋 En portapapeles` cuál de los protocolos reside actualmente en el portapapeles de Windows, sincronizado en tiempo real.
 - **Copia instantánea protegida**: Algoritmo con reintentos contra bloqueos transitorios del portapapeles de Windows (`CLIPBRD_E_CANT_OPEN`) y feedback en la barra inferior en verde (`✓ ¡Copiado al portapapeles!`).
 - **Vista Previa (`👁️`)**: Visualiza el texto íntegro en fuente monoespaciada antes de copiarlo.
-- **Buscador y Filtros por Categoría**: Filtra por `Workflow`, `TDD`, `Setup`, `Auditoría` y `R&D` o busca palabras clave.
+- **Buscador y Filtros por Categoría**: Filtra por `Workflow`, `TDD`, `Setup`, `Auditoría`, `R&D` y `Estrategia` o busca palabras clave.
 - **Fijar ventana (`📌 Always on Top`)**: Mantenla flotando sobre tu editor de código o chat de IA.
 - **Opciones persistentes** (guardadas en `config.json`):
   - `Ocultar al copiar`: Si está marcado, la ventana se oculta a la bandeja tras copiar un prompt.
@@ -61,13 +73,15 @@ La aplicación cuenta con un motor de actualización automática híbrido y segu
 
 ## 🛠️ Estructura del Proyecto
 
-- `app.ps1`: Aplicación principal desarrollada con PowerShell nativo, WPF, WinForms NotifyIcon y motor de actualización Git.
+- `app.ps1`: Aplicación principal desarrollada con PowerShell nativo, WPF, WinForms NotifyIcon y motor de actualización Git/HTTP.
+- `dev_flux.png`: Diagrama visual oficial de la metodología de desarrollo híbrido.
 - `launch.vbs`: Lanzador silencioso que evita cualquier parpadeo de consola negra de PowerShell (con auto-reparación integrada).
 - `launch.bat`: Lanzador ejecutable directo para iniciar la aplicación con doble clic desde el Explorador de Windows.
 - `install.bat`: Instalador en 1 solo clic que registra automáticamente los accesos directos sin necesidad de abrir PowerShell.
 - `install-shortcut.ps1`: Script automatizado y auto-reparador para registrar los accesos directos (Escritorio, Menú Inicio y Startup).
 - `prompts.json`: Base de datos editable con todos los prompts, roles, tags y categorías.
 - `config.json`: Almacena las preferencias del usuario (modo siempre visible, cerrar al copiar, etc.).
+- `version.json`: Control de versión y commit SHA para clientes standalone sin Git.
 - `icon.ico`: Icono de alta resolución personalizado para la aplicación.
 
 ---
@@ -87,4 +101,3 @@ Haz doble clic en **`install.bat`** en la carpeta del repositorio.
 ## 📄 Licencia
 
 Este proyecto está bajo la licencia **[PolyForm Noncommercial License 1.0.0](LICENSE)**. Permite el uso personal, estudio y modificación sin fines comerciales. Para consultas sobre usos comerciales, ponte en contacto con Txek Systems.
-

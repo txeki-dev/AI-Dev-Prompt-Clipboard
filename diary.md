@@ -5,12 +5,15 @@
 ---
 
 ## 📊 Current State
-**AI Dev Prompt Clipboard v1.2.1 Released**:
+**AI Dev Prompt Clipboard v1.3.0 Released**:
 1. **Architectural Graph & Static Analysis** (`graphify`):
-   - Local AST and topological extraction mapped in `graphify-out/graph.json` and [`GRAPH_REPORT.md`](file:///C:/Users/sergi/Documents/Txek%20Systems/AI-Assisted-Dev-Prompt-Clipboard/GRAPH_REPORT.md).
+   - Local AST and topological extraction mapped in `graphify-out/graph.json` and [`GRAPH_REPORT.md`](GRAPH_REPORT.md).
    - Automatic sync enabled via Git hooks (`post-commit`, `post-checkout`, and `graphify` merge driver).
 2. **Core Features**:
-   - Modern WPF dark-mode GUI (`app.ps1`) with 9 AI protocols, real-time search, category filters (Workflow, TDD, Setup, Auditoría, R&D), full prompt preview flyout, and resilient clipboard copy with retry backoff.
+   - Modern WPF dark-mode GUI (`app.ps1`) with **10 AI protocols**, real-time search, category filters (Workflow, TDD, Setup, Auditoría, R&D, Estrategia), full prompt preview flyout, and resilient clipboard copy with retry backoff.
+   - **Tab Navigation & DEV FLUX Visualizer**:
+     - Pestaña `📋 Protocolos`: Vista de tarjetas interactivas con filtrado y búsqueda.
+     - Pestaña `⚡ DEV FLUX`: Mapa visual integral de la metodología de desarrollo híbrido (diagrama arquitectónico `dev_flux.png`) con accesos rápidos por fase para copiar cualquier protocolo y visor a pantalla completa.
    - **System Tray Integration**: Persistent tray icon in Windows notification area ("Mostrar iconos ocultos") with context menu (Abrir, Buscar actualizaciones, Editar, Salir) and single/double-click toggling.
    - **Windows Startup Auto-boot**: Installed to `AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup` with `-Startup` switch to silently run in background on system boot.
    - **Native App Identity**: Custom `AppUserModelID` (`TxekSystems.AIDevPromptClipboard.App.1`) decoupling the process from `powershell.exe` on the Windows taskbar and displaying the custom squircle icon.
@@ -23,52 +26,48 @@
 ---
 
 ## 📅 Weekly Summary (Week ending 2026-09-13)
-- Restructured all 8 core AI development protocols to enforce decoupled backlog architecture and strict TDD loops.
-- Introduced new RDi protocol (`<rdi_exploration_protocol>`) with dedicated UI category chip (`R&D`) and tag synchronization.
+- Restructured all core AI development protocols to enforce decoupled backlog architecture and strict TDD loops.
+- Introduced RDi protocol (`<rdi_exploration_protocol>`) with dedicated UI category chip (`R&D`).
 - Engineered Dual-Mode Auto-Updater supporting both native Git repos and standalone non-git installations via GitHub HTTPS API.
+- Added PRODUCT STRATEGY protocol (`<product_strategy_discovery>`) for CPO/UX discovery and backlog triage.
+- Implemented DEV FLUX tab featuring the full hybrid engineering lifecycle diagram and quick-launch action cards.
 
 ---
 
-## ✅ Done (2026-09-13 — Prompt Catalog Restructuring, RDi Protocol & Dual-Mode Auto-Updater)
+## ✅ Done (2026-09-13 — DEV FLUX Tab & PRODUCT STRATEGY Protocol v1.3.0)
 
-1. **Restructured Existing 8 AI Protocols**:
-   - `INTRO` (`<session_start_hybrid>`): Added explicit context awareness rule, prohibited reading `backlog.md`/`diary_archive.md` on startup to preserve token budget.
-   - `FEATURE_PLAN` (`<feature_plan_tdd>`): Rolled out requirements ingestion into `backlog.md` under `## Prioritized Backlog`, single highest-priority task selection, and mandatory Red Phase failing test creation.
-   - `FEATURE_BUILD` (`<feature_build_tdd>`): Strict TDD Red-Green-Refactor loop, backlog promotion from `backlog.md` into `diary.md`, and clean refactoring using Graphify.
-   - `OUTRO` (`<session_end_hybrid>`): Added Step 0 QA Gate (run test suite in terminal; abort immediately on any failure), compact `diary.md` maintenance, weekly archive triggers, and Conventional Commits workflow.
-   - `INITIAL` (`<initial_setup_hybrid>`): Standardized persistent memory initialization with `.graphifyignore`, graph build, git hook, and 4 structured memory files (`README.md`, `diary.md`, `backlog.md`, `diary_archive.md`).
-   - `MIGRATE` (`<migrate_to_hybrid>`): Updated migration steps to decouple `backlog.md`, delete `context.md`, install Graphify git hook, and review `README.md`.
-   - `AUDIT` (`<codebase_audit_hybrid>`): Formalized forensic scan with Graphify, structured logging in `diary.md` with priority checkboxes (`[HIGH]`, `[MEDIUM]`, `[LOW]`), and active handoff to remediate.
-   - `REMEDIATE` (`<remediate_all_audit_findings>`): Structured priority-sorted queue remediation loop (`[HIGH]` -> `[MEDIUM]` -> `[LOW]`), blast radius verification, zero regressions, and global QA gate.
+1. **Integrated PRODUCT STRATEGY Protocol (`<product_strategy_discovery>`)**:
+   - Role: `Chief Product Officer (CPO), Lead UX Strategist & SaaS Business Architect`.
+   - Category: `Estrategia` (`#F43F5E`).
+   - Purpose: Proactive analysis of UX friction, core user journeys, commercial enterprise table stakes, and formulation of high-impact initiatives (`[UX-REV]`, `[BIZ-CAP]`, `[DATA-EXP]`, `[AUTOMATION]`) with triage into `backlog.md`.
+   - Updated `prompts.json` to 10 protocols with verified unescaped UTF-8 formatting.
 
-2. **Added RDi Protocol (`<rdi_exploration_protocol>`)**:
-   - Role: `Principal Research Architect & Innovation Lead`.
-   - Category: `R&D` (`#EC4899`).
-   - Purpose: Proactive R&D exploration using Graphify AST analysis, generating 3 to 5 high-impact proposals across `[PERF]`, `[ARCH]`, `[FEAT]`, and `[RESILIENCE]`.
-   - Added interactive decision prompt for user backlog approval and automatic ingestion into `backlog.md` with `[ ] PENDING` status.
+2. **Implemented DEV FLUX Interactive Tab in WPF (`app.ps1`)**:
+   - Integrated tab navigation bar right below TitleBar: `📋 Protocolos` (10 items) and `⚡ DEV FLUX`.
+   - Integrated high-resolution diagram `dev_flux.png` with smooth DPI scaling inside dark container.
+   - Added `🔍 Abrir Diagrama` button for instant full-screen projection in Windows.
+   - Added interactive quick-launch buttons organized across the 4 methodology phases:
+     - **Fase 1: Inicio Proyecto** (`1. INITIAL`, `2. MIGRATE`).
+     - **Fase 2: Sesión & Descubrimiento** (`3. INTRO`, `4. RDi`, `10. PRODUCT_STRATEGY`, `7. AUDIT`).
+     - **Fase 3: Ciclo TDD & Cirugía** (`5. FEATURE_PLAN` [Claude Code], `6. FEATURE_BUILD` [Antigravity CLI], `8. REMEDIATE` [Cirugía]).
+     - **Fase 4: Consolidación & Cierre** (`9. OUTRO` [QA Gate + Git + Hook]).
+   - Added new `ChipStrategy` filter chip (`Estrategia`) in the prompts view.
+   - Ensured UTF-8 BOM encoding and 0 syntax errors in Windows PowerShell 5.1.
 
-3. **Application & Infrastructure Synchronization**:
-   - Updated `prompts.json` with all 9 updated/new protocols.
-   - Enhanced `app.ps1` with new `R&D` filter chip, dynamic counter synchronization, and initial `Update-Filter` evaluation.
-   - Initialized `backlog.md` with `## Prioritized Backlog` and `## Ideas & Tech Debt` sections.
-   - Updated `README.md` catalog table and UI features to reflect 9 protocols and R&D filtering.
-
-4. **Universal Dual-Mode Auto-Updater (Git + Standalone HTTP Fallback)**:
-   - Implemented `Test-IsGitRepo` to accurately determine repository status.
-   - Built standalone non-git updater pipeline (`Get-LocalVersionInfo`, `Get-RemoteUpdateInfoHttp`, `Update-FromGitHubHttp`).
-   - Added `version.json` tracking local release version and commit hash for standalone installs.
-   - Connected `Check-ForUpdatesAsync` and `Check-ForUpdates` to automatically branch between Git fast-forward pulls and standalone HTTPS zipball downloads without third-party dependencies.
-   - Preserved UTF-8 BOM encoding across all script modifications for 100% PowerShell 5.1 compatibility.
+3. **Asset & Documentation Synchronization**:
+   - Added `dev_flux.png` to repository root.
+   - Updated `README.md` catalog table and UI features to document 10 protocols and the DEV FLUX tab.
+   - Bumped `version.json` to `1.3.0`.
 
 ---
 
 ## 📋 Active / Pending Tasks
 - **Active Task**:
-  - Ninguna activa (Dual-Mode Auto-Updater implementado, catálogo de prompts reestructurado y desplegado al 100%).
+  - Ninguna activa (v1.3.0 completada: DEV FLUX tab y protocolo PRODUCT_STRATEGY desplegados).
 - **Pending Tasks**:
-  - Monitorizar feedback de usuario sobre los 9 protocolos y auto-actualizaciones en entornos secundarios.
+  - Probar visualmente la pestaña DEV FLUX y la copia de los 10 protocolos en entorno de escritorio.
 
 ---
 
 ## 🎯 Next Immediate Step
-- Listo para arrancar sesión de desarrollo asistido con INTRO (`<session_start_hybrid>`) o ejecutar OUTRO / RDi según se requiera.
+- Listo para arrancar sesión de desarrollo asistido con INTRO (`<session_start_hybrid>`) o explorar producto con PRODUCT_STRATEGY (`<product_strategy_discovery>`).
