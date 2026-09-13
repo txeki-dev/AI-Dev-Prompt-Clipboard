@@ -17,12 +17,13 @@ La aplicación cuenta con integración nativa en Windows:
 
 ---
 
-## 🔄 Auto-Actualizaciones desde GitHub (Motor Ekin)
+## 🔄 Auto-Actualizaciones Dual-Mode desde GitHub (Git + Fallback HTTP)
 
-La aplicación cuenta con el mismo motor de actualización automática y seguro de [Ekin](https://github.com/txeki-dev/Ekin):
-- **Comprobación asíncrona en segundo plano**: Al arrancar y al restaurar la ventana, comprueba de forma no bloqueante si hay nuevas versiones en GitHub mediante fontanería nativa de Git agnóstica al idioma (`git rev-list`), sin congelar la interfaz.
+La aplicación cuenta con un motor de actualización automática híbrido y seguro:
+- **Modo Git Nativo (`git clone`)**: Si el equipo cuenta con Git, comprueba y descarga actualizaciones silenciosas y atómicas (`git pull --ff-only`), validando que no existan cambios locales sin confirmar y preservando intacta la configuración del usuario (`config.json`).
+- **Modo Standalone Universal (Sin Git / ZIP)**: Si el equipo **no tiene Git instalado** o se copió la aplicación directamente como carpeta/ZIP, se conecta directamente a la API pública de GitHub y descarga el archivo comprimido oficial mediante HTTPS nativo de Windows (`Invoke-RestMethod` / `Expand-Archive`), extrayendo la nueva versión, preservando tus ajustes y reiniciando la aplicación en 1 clic.
+- **Comprobación asíncrona en segundo plano**: Tanto en modo Git como en modo HTTP, comprueba en segundo plano sin bloquear ni congelar la interfaz.
 - **Comprobación manual**: Botón `🔄` en la barra de título o clic derecho en el icono de la bandeja -> *Buscar actualizaciones...*.
-- **Protección contra pérdida de datos**: Valida que no existan cambios locales sin confirmar en el código antes de descargar nada (`git pull --ff-only`), preservando intacta la configuración del usuario (`config.json`). Si hay una nueva versión disponible, te solicitará confirmación antes de instalarla y se reiniciará sola.
 
 ---
 

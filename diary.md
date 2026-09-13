@@ -5,7 +5,7 @@
 ---
 
 ## 📊 Current State
-**AI Dev Prompt Clipboard v1.2.0 Released**:
+**AI Dev Prompt Clipboard v1.2.1 Released**:
 1. **Architectural Graph & Static Analysis** (`graphify`):
    - Local AST and topological extraction mapped in `graphify-out/graph.json` and [`GRAPH_REPORT.md`](file:///C:/Users/sergi/Documents/Txek%20Systems/AI-Assisted-Dev-Prompt-Clipboard/GRAPH_REPORT.md).
    - Automatic sync enabled via Git hooks (`post-commit`, `post-checkout`, and `graphify` merge driver).
@@ -15,7 +15,7 @@
    - **Windows Startup Auto-boot**: Installed to `AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup` with `-Startup` switch to silently run in background on system boot.
    - **Native App Identity**: Custom `AppUserModelID` (`TxekSystems.AIDevPromptClipboard.App.1`) decoupling the process from `powershell.exe` on the Windows taskbar and displaying the custom squircle icon.
    - **Single-Instance IPC**: Named Mutex (`Global\TxekSystems_AIDevPromptClipboard_Mutex`) and EventWaitHandle (`Global\TxekSystems_AIDevPromptClipboard_ShowEvent`) ensuring only 1 resident process runs; secondary launches (`Ctrl+Alt+P` or desktop shortcut) wake the resident instance with 0ms latency.
-   - **GitHub Auto-Updater (Ekin Engine)**: Automated silent check on launch + manual button/menu option. Verifies clean git checkout, checks `origin/main` status, warns on dirty working tree, prompts user with confirmation dialog, pulls `--ff-only`, and hot-restarts the application.
+   - **Dual-Mode Auto-Updater Engine**: Automated silent check on launch + manual button/menu option. Dual-mode architecture supporting both native Git plumbing (`git pull --ff-only`) and Standalone HTTP Fallback via GitHub API / archive download (for non-git environments), preserving user config and hot-restarting.
 3. **Repository, License & Version Control**:
    - Git repository tracking `main` synchronized with remote origin `https://github.com/txeki-dev/AI-Dev-Prompt-Clipboard.git`.
    - Licensed under PolyForm Noncommercial 1.0.0 for public open-source distribution.
@@ -25,11 +25,11 @@
 ## 📅 Weekly Summary (Week ending 2026-09-13)
 - Restructured all 8 core AI development protocols to enforce decoupled backlog architecture and strict TDD loops.
 - Introduced new RDi protocol (`<rdi_exploration_protocol>`) with dedicated UI category chip (`R&D`) and tag synchronization.
-- Initialized persistent `backlog.md` memory file and archived historical sprint tasks to `diary_archive.md`.
+- Engineered Dual-Mode Auto-Updater supporting both native Git repos and standalone non-git installations via GitHub HTTPS API.
 
 ---
 
-## ✅ Done (2026-09-13 — Prompt Catalog Restructuring & RDi Protocol Addition)
+## ✅ Done (2026-09-13 — Prompt Catalog Restructuring, RDi Protocol & Dual-Mode Auto-Updater)
 
 1. **Restructured Existing 8 AI Protocols**:
    - `INTRO` (`<session_start_hybrid>`): Added explicit context awareness rule, prohibited reading `backlog.md`/`diary_archive.md` on startup to preserve token budget.
@@ -53,13 +53,20 @@
    - Initialized `backlog.md` with `## Prioritized Backlog` and `## Ideas & Tech Debt` sections.
    - Updated `README.md` catalog table and UI features to reflect 9 protocols and R&D filtering.
 
+4. **Universal Dual-Mode Auto-Updater (Git + Standalone HTTP Fallback)**:
+   - Implemented `Test-IsGitRepo` to accurately determine repository status.
+   - Built standalone non-git updater pipeline (`Get-LocalVersionInfo`, `Get-RemoteUpdateInfoHttp`, `Update-FromGitHubHttp`).
+   - Added `version.json` tracking local release version and commit hash for standalone installs.
+   - Connected `Check-ForUpdatesAsync` and `Check-ForUpdates` to automatically branch between Git fast-forward pulls and standalone HTTPS zipball downloads without third-party dependencies.
+   - Preserved UTF-8 BOM encoding across all script modifications for 100% PowerShell 5.1 compatibility.
+
 ---
 
 ## 📋 Active / Pending Tasks
 - **Active Task**:
-  - Ninguna activa (Reestructuración de catálogo de prompts y adición de protocolo RDi completada al 100%).
+  - Ninguna activa (Dual-Mode Auto-Updater implementado, catálogo de prompts reestructurado y desplegado al 100%).
 - **Pending Tasks**:
-  - Monitorizar feedback de usuario sobre los 9 protocolos en uso diario.
+  - Monitorizar feedback de usuario sobre los 9 protocolos y auto-actualizaciones en entornos secundarios.
 
 ---
 

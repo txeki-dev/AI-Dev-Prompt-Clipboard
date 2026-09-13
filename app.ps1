@@ -22,6 +22,7 @@ $promptsFile = Join-Path $scriptDir "prompts.json"
 $configFile  = Join-Path $scriptDir "config.json"
 $iconFile    = Join-Path $scriptDir "icon.ico"
 $vbsPath     = Join-Path $scriptDir "launch.vbs"
+$versionFile = Join-Path $scriptDir "version.json"
 
 # Auto-reparación (Self-Healing) de launch.vbs si no existe en el directorio
 if (-not (Test-Path -LiteralPath $vbsPath)) {
@@ -525,6 +526,23 @@ $script:bgUpdatePS   = $null
 $script:bgUpdateAsync = $null
 $script:bgPollTimer   = $null
 
+function Test-IsGitRepo {
+    param($dir = $scriptDir)
+    try {
+        if (-not (Get-Command git.exe -ErrorAction SilentlyContinue)) {
+            return $false
+        }
+        $gitDir = Join-Path $dir ".git"
+        if (-not (Test-Path -LiteralPath $gitDir)) {
+            return $false
+        }
+        $isGit = & git -C "$dir" rev-parse --is-inside-work-tree 2>$null
+        return ($LASTEXITCODE -eq 0 -and $isGit.Trim() -eq "true")
+    } catch {
+        return $false
+    }
+}
+
 function Get-GitBehindCount {
     $revCount = & git rev-list --count HEAD..@{u} 2>$null
     if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($revCount)) {
@@ -543,6 +561,7 @@ function Get-GitDirtyStatus {
         $line = $_.Trim()
         if ([string]::IsNullOrWhiteSpace($line)) { return $false }
         if ($line -match 'config\.json$') { return $false }
+        if ($line -match 'version\.json$') { return $false }
         if ($line -match 'graphify-out/cache/') { return $false }
         if ($line -match '\.cache/') { return $false }
         return $true
@@ -573,6 +592,132 @@ function Restore-MergedUserConfig {
     }
 }
 
+function Get-LocalVersionInfo {
+    $info = @{ Version = "1.2.1"; Commit = "unknown" }
+    if (Test-Path -LiteralPath $versionFile) {
+        try {
+            $data = Get-Content -LiteralPath $versionFile -Raw -Encoding UTF8 | ConvertFrom-Json
+            if ($data.version) { $info.Version = [string]$data.version }
+            if ($data.commit)  { $info.Commit  = [string]$data.commit }
+        } catch {}
+    } elseif (Test-IsGitRepo) {
+        try {
+            $sha = & git rev-parse --short HEAD 2>$null
+            if ($LASTEXITCODE -eq 0 -and $sha) {
+                $info.Commit = $sha.Trim()
+            }
+        } catch {}
+    }
+    return $info
+}
+
+function Get-RemoteUpdateInfoHttp {
+    try {
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        $headers = @{ 'User-Agent' = 'AI-Dev-Prompt-Clipboard-Updater' }
+
+        # 1. Check GitHub API for latest commit SHA on main
+        try {
+            $apiRes = Invoke-RestMethod -Uri "https://api.github.com/repos/txeki-dev/AI-Dev-Prompt-Clipboard/commits/main" -Headers $headers -UseBasicParsing -TimeoutSec 7
+            if ($apiRes -and $apiRes.sha) {
+                $fullSha = [string]$apiRes.sha
+                $shortSha = if ($fullSha.Length -ge 7) { $fullSha.Substring(0, 7) } else { $fullSha }
+                return @{
+                    RemoteCommit  = $shortSha
+                    FullSha       = $fullSha
+                    RemoteVersion = "latest"
+                    Source        = "api"
+                }
+            }
+        } catch {}
+
+        # 2. Fallback to raw version.json (no rate limits)
+        try {
+            $rawJson = Invoke-RestMethod -Uri "https://raw.githubusercontent.com/txeki-dev/AI-Dev-Prompt-Clipboard/main/version.json" -Headers $headers -UseBasicParsing -TimeoutSec 7
+            if ($rawJson -and ($rawJson.commit -or $rawJson.version)) {
+                return @{
+                    RemoteCommit  = [string]$rawJson.commit
+                    RemoteVersion = [string]$rawJson.version
+                    FullSha       = [string]$rawJson.commit
+                    Source        = "raw"
+                }
+            }
+        } catch {}
+
+        return $null
+    } catch {
+        return $null
+    }
+}
+
+function Update-FromGitHubHttp {
+    param($remoteSha = "")
+
+    $tempZip = Join-Path ([System.IO.Path]::GetTempPath()) ("aidev_update_" + [System.Guid]::NewGuid().ToString("N") + ".zip")
+    $tempDir = Join-Path ([System.IO.Path]::GetTempPath()) ("aidev_extract_" + [System.Guid]::NewGuid().ToString("N"))
+
+    try {
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        $zipUrl = "https://github.com/txeki-dev/AI-Dev-Prompt-Clipboard/archive/refs/heads/main.zip"
+
+        # 1. Download zip
+        Invoke-WebRequest -Uri $zipUrl -OutFile $tempZip -UseBasicParsing -TimeoutSec 45
+
+        # 2. Extract zip
+        Expand-Archive -LiteralPath $tempZip -DestinationPath $tempDir -Force
+
+        # 3. Locate extracted folder (AI-Dev-Prompt-Clipboard-main)
+        $extractedRoot = Get-ChildItem -LiteralPath $tempDir -Directory | Select-Object -First 1
+        if (-not $extractedRoot -or -not (Test-Path -LiteralPath $extractedRoot.FullName)) {
+            throw "No se pudo encontrar el contenido extraído en el archivo de actualización."
+        }
+        $sourceDir = $extractedRoot.FullName
+
+        # 4. Backup local user config
+        $configBackup = if (Test-Path -LiteralPath $configFile) { Get-Content -LiteralPath $configFile -Raw -Encoding UTF8 } else { $null }
+
+        # 5. Copy updated files recursively into $scriptDir, EXCLUDING config.json
+        $items = Get-ChildItem -LiteralPath $sourceDir
+        foreach ($item in $items) {
+            if ($item.Name -ieq "config.json") {
+                continue
+            }
+            $targetPath = Join-Path $scriptDir $item.Name
+            if ($item.PSIsContainer) {
+                Copy-Item -LiteralPath $item.FullName -Destination $targetPath -Recurse -Force
+            } else {
+                Copy-Item -LiteralPath $item.FullName -Destination $targetPath -Force
+            }
+        }
+
+        # 6. Save or update local version.json with the new remote commit
+        $newCommit = if ($remoteSha) { $remoteSha } else { "latest" }
+        $currentVersion = "1.2.1"
+        if (Test-Path -LiteralPath $versionFile) {
+            try {
+                $vJson = Get-Content -LiteralPath $versionFile -Raw -Encoding UTF8 | ConvertFrom-Json
+                if ($vJson.version) { $currentVersion = [string]$vJson.version }
+            } catch {}
+        }
+        $newVersionData = @{
+            version   = $currentVersion
+            commit    = if ($newCommit.Length -ge 7) { $newCommit.Substring(0, 7) } else { $newCommit }
+            updatedAt = (Get-Date -Format "yyyy-MM-dd")
+        }
+        [System.IO.File]::WriteAllText($versionFile, ($newVersionData | ConvertTo-Json), [System.Text.Encoding]::UTF8)
+
+        # 7. Merge preserved user config over updated config schema
+        Restore-MergedUserConfig -configBackupJson $configBackup
+
+        return $true
+    } catch {
+        throw $_
+    } finally {
+        if (Test-Path -LiteralPath $tempZip) { Remove-Item -LiteralPath $tempZip -Force -ErrorAction SilentlyContinue }
+        if (Test-Path -LiteralPath $tempDir) { Remove-Item -LiteralPath $tempDir -Recurse -Force -ErrorAction SilentlyContinue }
+    }
+}
+
 function Check-ForUpdatesAsync {
     if ($script:bgUpdatePS -and $script:bgUpdateAsync -and -not $script:bgUpdateAsync.IsCompleted) {
         return
@@ -584,21 +729,72 @@ function Check-ForUpdatesAsync {
             param($targetDir)
             try {
                 Set-Location -LiteralPath $targetDir
-                $isGit = & git rev-parse --is-inside-work-tree 2>$null
-                if ($LASTEXITCODE -ne 0 -or $isGit.Trim() -ne "true") { return 0 }
 
-                & git fetch origin 2>$null
-                if ($LASTEXITCODE -ne 0) { return 0 }
+                # Check if Git work tree
+                $hasGit = $false
+                if (Get-Command git.exe -ErrorAction SilentlyContinue) {
+                    $gitDir = Join-Path $targetDir ".git"
+                    if (Test-Path -LiteralPath $gitDir) {
+                        $isGit = & git -C "$targetDir" rev-parse --is-inside-work-tree 2>$null
+                        if ($LASTEXITCODE -eq 0 -and $isGit.Trim() -eq "true") {
+                            $hasGit = $true
+                        }
+                    }
+                }
 
-                $revCount = & git rev-list --count HEAD..@{u} 2>$null
-                if ($LASTEXITCODE -eq 0 -and $null -ne $revCount -and $revCount.Trim().Length -gt 0) {
-                    return [int]$revCount.Trim()
+                if ($hasGit) {
+                    & git fetch origin 2>$null
+                    if ($LASTEXITCODE -ne 0) { return 0 }
+
+                    $revCount = & git rev-list --count HEAD..@{u} 2>$null
+                    if ($LASTEXITCODE -eq 0 -and $null -ne $revCount -and $revCount.Trim().Length -gt 0) {
+                        return [int]$revCount.Trim()
+                    }
+                    $revCount = & git rev-list --count HEAD..origin/main 2>$null
+                    if ($LASTEXITCODE -eq 0 -and $null -ne $revCount -and $revCount.Trim().Length -gt 0) {
+                        return [int]$revCount.Trim()
+                    }
+                    return 0
+                } else {
+                    # Standalone / Non-Git HTTP check
+                    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+                    $headers = @{ 'User-Agent' = 'AI-Dev-Prompt-Clipboard-Updater' }
+
+                    $localCommit = ""
+                    $vPath = Join-Path $targetDir "version.json"
+                    if (Test-Path -LiteralPath $vPath) {
+                        try {
+                            $vData = Get-Content -LiteralPath $vPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                            if ($vData.commit) { $localCommit = [string]$vData.commit }
+                        } catch {}
+                    }
+
+                    $remoteCommit = ""
+                    try {
+                        $apiRes = Invoke-RestMethod -Uri "https://api.github.com/repos/txeki-dev/AI-Dev-Prompt-Clipboard/commits/main" -Headers $headers -UseBasicParsing -TimeoutSec 6
+                        if ($apiRes -and $apiRes.sha) {
+                            $remoteCommit = [string]$apiRes.sha
+                        }
+                    } catch {}
+
+                    if (-not $remoteCommit) {
+                        try {
+                            $rawJson = Invoke-RestMethod -Uri "https://raw.githubusercontent.com/txeki-dev/AI-Dev-Prompt-Clipboard/main/version.json" -Headers $headers -UseBasicParsing -TimeoutSec 6
+                            if ($rawJson -and $rawJson.commit) {
+                                $remoteCommit = [string]$rawJson.commit
+                            }
+                        } catch {}
+                    }
+
+                    if ($remoteCommit) {
+                        $shortRemote = if ($remoteCommit.Length -ge 7) { $remoteCommit.Substring(0, 7) } else { $remoteCommit }
+                        $shortLocal  = if ($localCommit.Length -ge 7)  { $localCommit.Substring(0, 7) }  else { $localCommit }
+                        if (-not $shortLocal -or ($shortLocal -ne $shortRemote)) {
+                            return 1 # Update available!
+                        }
+                    }
+                    return 0
                 }
-                $revCount = & git rev-list --count HEAD..origin/main 2>$null
-                if ($LASTEXITCODE -eq 0 -and $null -ne $revCount -and $revCount.Trim().Length -gt 0) {
-                    return [int]$revCount.Trim()
-                }
-                return 0
             } catch {
                 return 0
             }
@@ -628,7 +824,6 @@ function Check-ForUpdatesAsync {
                     $script:bgPollTimer = $null
                 }
             } elseif ($ticks -ge $maxTicks) {
-                # Timeout elapsed without response (e.g. network partition or hang)
                 $this.Stop()
                 try {
                     $script:bgUpdatePS.Stop()
@@ -647,93 +842,152 @@ function Check-ForUpdates {
     param([bool]$Silent = $true)
 
     try {
-        # 0. Check if git work tree
-        $isGit = & git rev-parse --is-inside-work-tree 2>$null
-        if ($LASTEXITCODE -ne 0 -or $isGit.Trim() -ne "true") {
-            if (-not $Silent) {
-                [System.Windows.MessageBox]::Show("Este directorio no es un repositorio Git.", "AI Prompt Clipboard", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
-            }
-            return
-        }
+        $isGitMode = Test-IsGitRepo
 
-        # 1. Fetch remote silently
-        $null = & git fetch origin 2>$null
-        if ($LASTEXITCODE -ne 0) {
-            if (-not $Silent) {
-                [System.Windows.MessageBox]::Show("No se pudo conectar con GitHub para comprobar actualizaciones.`nComprueba tu conexión a Internet.", "AI Prompt Clipboard", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning)
-            }
-            return
-        }
+        if ($isGitMode) {
+            # ========================
+            # MODO 1: REPOSITORIO GIT
+            # ========================
 
-        # 2. Check if local branch is behind remote
-        $behindCount = Get-GitBehindCount
-        $isBehind = ($behindCount -gt 0)
-        if (-not $isBehind) {
-            if (-not $Silent) {
-                [System.Windows.MessageBox]::Show("Ya tienes la versión más reciente instalada.", "AI Prompt Clipboard", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+            # 1. Fetch remote silently
+            $null = & git fetch origin 2>$null
+            if ($LASTEXITCODE -ne 0) {
+                if (-not $Silent) {
+                    [System.Windows.MessageBox]::Show("No se pudo conectar con GitHub para comprobar actualizaciones.`nComprueba tu conexión a Internet.", "AI Prompt Clipboard", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning)
+                }
+                return
             }
-            return
-        }
 
-        # 3. Check for dirty working tree (excluding runtime config & caches)
-        if (Get-GitDirtyStatus) {
-            [System.Windows.MessageBox]::Show(
-                "Hay una nueva versión disponible en GitHub, pero tienes cambios locales en el código sin confirmar.`nPor favor, realiza commit o descarta los cambios antes de actualizar.",
+            # 2. Check if local branch is behind remote
+            $behindCount = Get-GitBehindCount
+            $isBehind = ($behindCount -gt 0)
+            if (-not $isBehind) {
+                if (-not $Silent) {
+                    [System.Windows.MessageBox]::Show("Ya tienes la versión más reciente instalada.", "AI Prompt Clipboard", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+                }
+                return
+            }
+
+            # 3. Check for dirty working tree
+            if (Get-GitDirtyStatus) {
+                [System.Windows.MessageBox]::Show(
+                    "Hay una nueva versión disponible en GitHub, pero tienes cambios locales en el código sin confirmar.`nPor favor, realiza commit o descarta los cambios antes de actualizar.",
+                    "Actualización disponible - AI Prompt Clipboard",
+                    [System.Windows.MessageBoxButton]::OK,
+                    [System.Windows.MessageBoxImage]::Warning
+                )
+                return
+            }
+
+            # 4. Prompt user confirmation
+            $confirm = [System.Windows.MessageBox]::Show(
+                "Hay una nueva versión de AI Prompt Clipboard disponible en GitHub ($behindCount actualización/es).`n`n¿Deseas descargar e instalar la actualización ahora?",
                 "Actualización disponible - AI Prompt Clipboard",
-                [System.Windows.MessageBoxButton]::OK,
-                [System.Windows.MessageBoxImage]::Warning
+                [System.Windows.MessageBoxButton]::YesNo,
+                [System.Windows.MessageBoxImage]::Question
             )
-            return
-        }
+            if ($confirm -ne [System.Windows.MessageBoxResult]::Yes) {
+                return
+            }
 
-        # 4. Prompt user confirmation
-        $confirm = [System.Windows.MessageBox]::Show(
-            "Hay una nueva versión de AI Prompt Clipboard disponible en GitHub.`n`n¿Deseas descargar e instalar la actualización ahora?",
-            "Actualización disponible - AI Prompt Clipboard",
-            [System.Windows.MessageBoxButton]::YesNo,
-            [System.Windows.MessageBoxImage]::Question
-        )
-        if ($confirm -ne [System.Windows.MessageBoxResult]::Yes) {
-            return
-        }
+            # 5. Fast-forward pull
+            $configBackup = if (Test-Path -LiteralPath $configFile) { Get-Content -LiteralPath $configFile -Raw -Encoding UTF8 } else { $null }
+            & git checkout -- graphify-out/cache/ 2>$null
+            & git checkout -- config.json 2>$null
 
-        # 5. Fast-forward pull (protecting local user config & clearing transient cache modifications)
-        $configBackup = if (Test-Path -LiteralPath $configFile) { Get-Content -LiteralPath $configFile -Raw -Encoding UTF8 } else { $null }
-        & git checkout -- graphify-out/cache/ 2>$null
-        & git checkout -- config.json 2>$null
+            $pullOut = & git pull --ff-only origin main 2>&1
+            if ($LASTEXITCODE -ne 0) {
+                Restore-MergedUserConfig -configBackupJson $configBackup
+                [System.Windows.MessageBox]::Show(
+                    "Error al descargar la actualización desde GitHub:`n$pullOut`n`nIntenta actualizar manualmente con 'git pull'.",
+                    "Error de actualización",
+                    [System.Windows.MessageBoxButton]::OK,
+                    [System.Windows.MessageBoxImage]::Error
+                )
+                return
+            }
 
-        $pullOut = & git pull --ff-only origin main 2>&1
-        if ($LASTEXITCODE -ne 0) {
+            # Restore user config & refresh graphify
             Restore-MergedUserConfig -configBackupJson $configBackup
+            & graphify cluster-only . 2>$null
+
             [System.Windows.MessageBox]::Show(
-                "Error al descargar la actualización desde GitHub:`n$pullOut`n`nIntenta actualizar manualmente con 'git pull'.",
-                "Error de actualización",
+                "¡Actualización completada con éxito!`nLa aplicación se reiniciará ahora para aplicar los cambios.",
+                "Actualización completada",
                 [System.Windows.MessageBoxButton]::OK,
-                [System.Windows.MessageBoxImage]::Error
+                [System.Windows.MessageBoxImage]::Information
             )
-            return
-        }
 
-        # Restore preserved user config post-pull (safely merging over new schema)
-        Restore-MergedUserConfig -configBackupJson $configBackup
+            # 6. Restart application
+            if (Test-Path -LiteralPath $vbsPath) {
+                Start-Process "wscript.exe" -ArgumentList "`"$vbsPath`""
+            } else {
+                Start-Process "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File `"$PSCommandPath`""
+            }
+            Exit-Application
 
-        # Refresh graphify report if installed
-        & graphify cluster-only . 2>$null
-
-        [System.Windows.MessageBox]::Show(
-            "¡Actualización completada con éxito!`nLa aplicación se reiniciará ahora para aplicar los cambios.",
-            "Actualización completada",
-            [System.Windows.MessageBoxButton]::OK,
-            [System.Windows.MessageBoxImage]::Information
-        )
-
-        # 6. Restart application
-        if (Test-Path -LiteralPath $vbsPath) {
-            Start-Process "wscript.exe" -ArgumentList "`"$vbsPath`""
         } else {
-            Start-Process "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File `"$PSCommandPath`""
+            # ==========================================
+            # MODO 2: STANDALONE SIN GIT (HTTP FALLBACK)
+            # ==========================================
+
+            $remoteInfo = Get-RemoteUpdateInfoHttp
+            if ($null -eq $remoteInfo) {
+                if (-not $Silent) {
+                    [System.Windows.MessageBox]::Show("No se pudo conectar con GitHub para comprobar actualizaciones.`nComprueba tu conexión a Internet.", "AI Prompt Clipboard", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning)
+                }
+                return
+            }
+
+            $localInfo = Get-LocalVersionInfo
+            $hasUpdate = ($localInfo.Commit -eq "unknown") -or ($localInfo.Commit -ne $remoteInfo.RemoteCommit)
+
+            if (-not $hasUpdate) {
+                if (-not $Silent) {
+                    [System.Windows.MessageBox]::Show("Ya tienes la versión más reciente instalada (v$($localInfo.Version) - commit $($localInfo.Commit)).", "AI Prompt Clipboard", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information)
+                }
+                return
+            }
+
+            # Prompt user confirmation
+            $confirm = [System.Windows.MessageBox]::Show(
+                "Hay una nueva versión de AI Prompt Clipboard disponible en GitHub (commit $($remoteInfo.RemoteCommit)).`n`n¿Deseas descargar e instalar la actualización ahora?",
+                "Actualización disponible - AI Prompt Clipboard",
+                [System.Windows.MessageBoxButton]::YesNo,
+                [System.Windows.MessageBoxImage]::Question
+            )
+            if ($confirm -ne [System.Windows.MessageBoxResult]::Yes) {
+                return
+            }
+
+            # Execute HTTP zip download & extraction
+            try {
+                Update-FromGitHubHttp -remoteSha $remoteInfo.FullSha
+            } catch {
+                [System.Windows.MessageBox]::Show(
+                    "Error al descargar e instalar la actualización desde GitHub:`n$($_.Exception.Message)",
+                    "Error de actualización",
+                    [System.Windows.MessageBoxButton]::OK,
+                    [System.Windows.MessageBoxImage]::Error
+                )
+                return
+            }
+
+            [System.Windows.MessageBox]::Show(
+                "¡Actualización completada con éxito!`nLa aplicación se reiniciará ahora para aplicar los cambios.",
+                "Actualización completada",
+                [System.Windows.MessageBoxButton]::OK,
+                [System.Windows.MessageBoxImage]::Information
+            )
+
+            # Restart application
+            if (Test-Path -LiteralPath $vbsPath) {
+                Start-Process "wscript.exe" -ArgumentList "`"$vbsPath`""
+            } else {
+                Start-Process "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File `"$PSCommandPath`""
+            }
+            Exit-Application
         }
-        Exit-Application
     } catch {
         if (-not $Silent) {
             [System.Windows.MessageBox]::Show("Error al comprobar actualizaciones: $($_.Exception.Message)", "Error", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Error)

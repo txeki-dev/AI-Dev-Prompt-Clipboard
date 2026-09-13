@@ -1,8 +1,8 @@
 {
   "app.ps1": {
-    "mtime": 1789296326.556602,
-    "seen": 1789296389.8854845,
-    "ast_hash": "99b752b9fe001561a2d14f80d7905cb5",
+    "mtime": 1789298032.053265,
+    "seen": 1789298100.5033765,
+    "ast_hash": "025541cf93f1587c47f3f974bc20ae14",
     "semantic_hash": ""
   },
   "config.json": {
@@ -24,21 +24,21 @@
     "semantic_hash": ""
   },
   "GRAPH_REPORT.md": {
-    "mtime": 1789296389.8802793,
-    "seen": 1789296605.9291081,
-    "ast_hash": "6f5d73b2191f0b7204deaee8856c5701",
+    "mtime": 1789296605.923629,
+    "seen": 1789297264.440298,
+    "ast_hash": "5d80195c2cf5a7c799265912f6f67efc",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1789296346.3553674,
-    "seen": 1789296389.8854845,
-    "ast_hash": "b7a595b4b9a412aff859f3ca57a03811",
+    "mtime": 1789297906.9786904,
+    "seen": 1789298100.5033765,
+    "ast_hash": "218d6df86f66a3f68764db81605364a0",
     "semantic_hash": ""
   },
   "diary.md": {
-    "mtime": 1789296601.6358857,
-    "seen": 1789296605.9291081,
-    "ast_hash": "971e4386685026ddcbff95b4acbecd60",
+    "mtime": 1789297923.736627,
+    "seen": 1789298100.5033765,
+    "ast_hash": "e31b4b59f52882b2a6be4abfe9e6a2fd",
     "semantic_hash": ""
   },
   "diary_archive.md": {
@@ -51,6 +51,12 @@
     "mtime": 1789296362.6557646,
     "seen": 1789296389.8854845,
     "ast_hash": "11519dc5a223c13a56ae925c6f32c190",
+    "semantic_hash": ""
+  },
+  "version.json": {
+    "mtime": 1789298009.5086296,
+    "seen": 1789298100.5033765,
+    "ast_hash": "39f24d0a93212bb12a1ac0aee3861462",
     "semantic_hash": ""
   }
 }
