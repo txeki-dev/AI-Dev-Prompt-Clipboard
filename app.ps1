@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     AI Dev Prompt Clipboard - Modern Windows WPF GUI with System Tray & Auto-Updater
     Txek Systems
@@ -162,7 +162,7 @@ $xaml = @"
                             <TextBlock Text="📋" FontSize="18" Margin="0,0,8,0" VerticalAlignment="Center"/>
                             <TextBlock Text="AI Dev Prompt Clipboard" FontSize="15" FontWeight="SemiBold" Foreground="#CDD6F4" VerticalAlignment="Center"/>
                             <Border Background="#313244" CornerRadius="10" Margin="10,0,0,0" Padding="8,2" VerticalAlignment="Center">
-                                <TextBlock x:Name="PromptCountBadge" Text="8 protocolos" FontSize="11" Foreground="#BAC2DE"/>
+                                <TextBlock x:Name="PromptCountBadge" Text="9 protocolos" FontSize="11" Foreground="#BAC2DE"/>
                             </Border>
                         </StackPanel>
 
@@ -269,6 +269,9 @@ $xaml = @"
                             </Border>
                             <Border x:Name="ChipAudit" Background="#313244" CornerRadius="12" Padding="10,3" Margin="0,0,6,0" Cursor="Hand">
                                 <TextBlock Text="Auditoría" FontSize="11" FontWeight="SemiBold" Foreground="#CDD6F4"/>
+                            </Border>
+                            <Border x:Name="ChipRDi" Background="#313244" CornerRadius="12" Padding="10,3" Margin="0,0,6,0" Cursor="Hand">
+                                <TextBlock Text="R&amp;D" FontSize="11" FontWeight="SemiBold" Foreground="#CDD6F4"/>
                             </Border>
                         </StackPanel>
                     </Grid>
@@ -383,13 +386,15 @@ $chipWorkflow = $window.FindName("ChipWorkflow")
 $chipTDD      = $window.FindName("ChipTDD")
 $chipSetup    = $window.FindName("ChipSetup")
 $chipAudit    = $window.FindName("ChipAudit")
+$chipRDi      = $window.FindName("ChipRDi")
 
 $chips = @(
     @{ Control = $chipAll;      Category = "All" },
     @{ Control = $chipWorkflow; Category = "Workflow" },
     @{ Control = $chipTDD;      Category = "TDD" },
     @{ Control = $chipSetup;    Category = "Setup" },
-    @{ Control = $chipAudit;    Category = "Auditoría" }
+    @{ Control = $chipAudit;    Category = "Auditoría" },
+    @{ Control = $chipRDi;      Category = "R&D" }
 )
 
 $currentCategory = "All"
@@ -1189,6 +1194,9 @@ function Update-Filter {
 
     $promptCountBadge.Text = if ($visibleCount -eq 1) { "1 protocolo" } else { "$visibleCount protocolos" }
 }
+
+# Initial filter and count sync
+Update-Filter
 
 # Search Box Events
 $searchBox.Add_TextChanged({

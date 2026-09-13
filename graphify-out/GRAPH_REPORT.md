@@ -1,79 +1,86 @@
-# Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)
+# Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)
 
 ## Corpus Check
-- cluster-only mode — file stats not available
+- 9 files · ~10,519 words
+- Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 38 nodes · 43 edges · 8 communities (5 shown, 3 thin omitted)
+- 64 nodes · 68 edges · 8 communities
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `42102fca`
+- Built from commit: `6aab307e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)
-- diary.md
+- Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)
+- AI Dev Prompt Clipboard: Developer Diary
 - app.ps1
-- Check-ForUpdates
-- Update-ActiveClipboardIndicator
-- Show-MainWindow
-- Communities (3 total, 1 thin omitted)
+- AI Dev Prompt Clipboard 📋
+- Communities (9 total, 1 thin omitted)
+- Backlog - AI Dev Prompt Clipboard
+- AI Dev Prompt Clipboard: Diary Archive
 
 ## God Nodes (most connected - your core abstractions)
-1. `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)` - 11 edges
-2. `Update-ActiveClipboardIndicator()` - 5 edges
-3. `🔬 Forensic Audit Findings - 2026-09-09 (Principal Security & Performance Auditor)` - 4 edges
-4. `Copy-PromptToClipboard()` - 3 edges
-5. `Check-ForUpdates()` - 3 edges
-6. `Check-ForUpdatesAsync()` - 3 edges
-7. `Show-MainWindow()` - 3 edges
+1. `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)` - 11 edges
+2. `Communities (9 total, 1 thin omitted)` - 8 edges
+3. `AI Dev Prompt Clipboard 📋` - 8 edges
+4. `AI Dev Prompt Clipboard: Developer Diary` - 6 edges
+5. `Check-ForUpdates()` - 5 edges
+6. `Update-ActiveClipboardIndicator()` - 5 edges
+7. `AI Dev Prompt Clipboard: Diary Archive` - 5 edges
 8. `Trigger-BackgroundUpdateCheck()` - 3 edges
-9. `Hide-MainWindow()` - 2 edges
-10. `Exit-Application()` - 2 edges
+9. `Show-MainWindow()` - 3 edges
+10. `Check-ForUpdatesAsync()` - 3 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Copy-PromptToClipboard()` --calls--> `Update-ActiveClipboardIndicator()`  [EXTRACTED]
-  app.ps1 → app.ps1  _Bridges community 2 → community 4_
-- `Trigger-BackgroundUpdateCheck()` --calls--> `Check-ForUpdatesAsync()`  [EXTRACTED]
-  app.ps1 → app.ps1  _Bridges community 3 → community 5_
-- `Show-MainWindow()` --calls--> `Update-ActiveClipboardIndicator()`  [EXTRACTED]
-  app.ps1 → app.ps1  _Bridges community 4 → community 5_
+- None detected - all connections are within the same source files.
 
 ## Import Cycles
 - None detected.
 
-## Communities (8 total, 3 thin omitted)
+## Communities (8 total, 0 thin omitted)
 
-### Community 0 - "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)"
+### Community 0 - "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)"
 Cohesion: 0.18
-Nodes (10): Community Hubs (Navigation), Corpus Check, God Nodes (most connected - your core abstractions), Graph Freshness, Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10), Import Cycles, Knowledge Gaps, Suggested Questions (+2 more)
+Nodes (10): Community Hubs (Navigation), Corpus Check, God Nodes (most connected - your core abstractions), Graph Freshness, Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13), Import Cycles, Knowledge Gaps, Suggested Questions (+2 more)
 
-### Community 1 - "diary.md"
-Cohesion: 0.20
-Nodes (9): 📋 Active / Pending Tasks, 📊 Current State, ✅ Done (2026-09-10 — System Tray, Windows Startup, App Identity, Auto-Updater & Finding #2), 🔬 Forensic Audit Findings - 2026-09-09 (Principal Security & Performance Auditor), 🔴 HIGH — Bugs / Robustness, 🟢 LOW — UX / Optimization, 🟡 MEDIUM — Robustness / Edge cases, 🎯 Next Immediate Step (+1 more)
+### Community 1 - "AI Dev Prompt Clipboard: Developer Diary"
+Cohesion: 0.29
+Nodes (6): 📋 Active / Pending Tasks, AI Dev Prompt Clipboard: Developer Diary, 📊 Current State, ✅ Done (2026-09-13 — Prompt Catalog Restructuring & RDi Protocol Addition), 🎯 Next Immediate Step, 📅 Weekly Summary (Week ending 2026-09-13)
 
-### Community 3 - "Check-ForUpdates"
-Cohesion: 0.67
-Nodes (3): Check-ForUpdates(), Check-ForUpdatesAsync(), Exit-Application()
+### Community 2 - "app.ps1"
+Cohesion: 0.22
+Nodes (12): Check-ForUpdates(), Check-ForUpdatesAsync(), Copy-PromptToClipboard(), Exit-Application(), Get-GitBehindCount(), Get-SafeClipboardText(), Hide-MainWindow(), Restore-MergedUserConfig() (+4 more)
 
-### Community 4 - "Update-ActiveClipboardIndicator"
-Cohesion: 0.67
-Nodes (3): Get-SafeClipboardText(), Set-CardActiveState(), Update-ActiveClipboardIndicator()
+### Community 3 - "AI Dev Prompt Clipboard 📋"
+Cohesion: 0.18
+Nodes (10): 🚀 Acceso Rápido y Métodos de Inicio, AI Dev Prompt Clipboard 📋, 🔄 Auto-Actualizaciones desde GitHub (Motor Ekin), 🎨 Características de la Interfaz, 🛠️ Estructura del Proyecto, 💻 Instalación y Configuración de Atajo, 📄 Licencia, Opción 1: Doble clic (Recomendado) (+2 more)
+
+### Community 4 - "Communities (9 total, 1 thin omitted)"
+Cohesion: 0.25
+Nodes (8): Communities (9 total, 1 thin omitted), Community 0 - "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)", Community 1 - "AI Dev Prompt Clipboard: Developer Diary", Community 2 - "app.ps1", Community 3 - "AI Dev Prompt Clipboard 📋", Community 4 - "Update-ActiveClipboardIndicator", Community 5 - "Check-ForUpdatesAsync", Community 6 - "Backlog - AI Dev Prompt Clipboard"
+
+### Community 6 - "Backlog - AI Dev Prompt Clipboard"
+Cohesion: 0.50
+Nodes (3): Backlog - AI Dev Prompt Clipboard, Ideas & Tech Debt, Prioritized Backlog
+
+### Community 8 - "AI Dev Prompt Clipboard: Diary Archive"
+Cohesion: 0.33
+Nodes (5): AI Dev Prompt Clipboard: Diary Archive, 📅 Archived Sprint: Week ending 2026-09-12, ✅ Done (2026-09-10 — System Tray, Windows Startup, App Identity, Auto-Updater & Finding #2), 🔬 Forensic Audit Findings - 2026-09-10, 🔬 Historical Forensic Audit Findings - Remediated Prior (2026-09-10)
 
 ## Knowledge Gaps
-- **18 isolated node(s):** `Community Hubs (Navigation)`, `Corpus Check`, `God Nodes (most connected - your core abstractions)`, `Graph Freshness`, `Import Cycles` (+13 more)
+- **35 isolated node(s):** `Corpus Check`, `Summary`, `Graph Freshness`, `Community Hubs (Navigation)`, `God Nodes (most connected - your core abstractions)` (+30 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)` connect `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)` to `Communities (3 total, 1 thin omitted)`?**
-  _High betweenness centrality (0.098) - this node is a cross-community bridge._
-- **Why does `Communities (3 total, 1 thin omitted)` connect `Communities (3 total, 1 thin omitted)` to `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-10)`?**
-  _High betweenness centrality (0.017) - this node is a cross-community bridge._
-- **What connects `Community Hubs (Navigation)`, `Corpus Check`, `God Nodes (most connected - your core abstractions)` to the rest of the system?**
-  _18 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)` connect `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)` to `Communities (9 total, 1 thin omitted)`?**
+  _High betweenness centrality (0.064) - this node is a cross-community bridge._
+- **Why does `Communities (9 total, 1 thin omitted)` connect `Communities (9 total, 1 thin omitted)` to `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)`?**
+  _High betweenness centrality (0.050) - this node is a cross-community bridge._
+- **What connects `Corpus Check`, `Summary`, `Graph Freshness` to the rest of the system?**
+  _35 weakly-connected nodes found - possible documentation gaps or missing edges._
