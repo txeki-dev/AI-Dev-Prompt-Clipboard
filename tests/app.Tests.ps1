@@ -325,6 +325,43 @@ $ratio = if ($sampleMetrics.totalCopies -gt 0) { [math]::Round(($sampleMetrics.t
 Assert-Test -Name "Computes canonical TDD discipline ratio (30%)" -Condition ($ratio -eq 30) -Details "Got: $ratio%"
 
 # -----------------------------------------------------------------------------
+# SUITE 11: Inno Setup Packaging & Asset Integrity Gate
+# -----------------------------------------------------------------------------
+$script:currentSuite = "Inno Setup Packaging Integrity"
+Write-Host "`nRunning Suite: $script:currentSuite" -ForegroundColor Yellow
+
+$issFile = Join-Path $scriptDir "installer.iss"
+Assert-Test -Name "installer.iss exists" -Condition (Test-Path -LiteralPath $issFile)
+
+if (Test-Path -LiteralPath $issFile) {
+    $issContent = Get-Content -LiteralPath $issFile
+    $sourceFiles = [System.Collections.Generic.List[string]]::new()
+    $inFiles = $false
+    foreach ($line in $issContent) {
+        if ($line -match '^\s*\[Files\]') { $inFiles = $true; continue }
+        if ($inFiles -and $line -match '^\s*\[') { $inFiles = $false }
+        if ($inFiles -and $line -match 'Source:\s*"([^"]+)"') {
+            $sourceFiles.Add($matches[1])
+        }
+    }
+
+    Assert-Test -Name "installer.iss has Source files defined" -Condition ($sourceFiles.Count -gt 0)
+    Assert-Test -Name "metrics.json is NOT packaged in installer.iss (prevents CI failure and telemetry leak)" -Condition (-not ($sourceFiles -contains "metrics.json"))
+
+    $allSourcesExist = $true
+    $missingSources = @()
+    foreach ($src in $sourceFiles) {
+        $resolved = Join-Path $scriptDir $src
+        $items = @(Get-Item -Path $resolved -ErrorAction SilentlyContinue)
+        if ($items.Count -eq 0) {
+            $allSourcesExist = $false
+            $missingSources += $src
+        }
+    }
+    Assert-Test -Name "All installer.iss Source files exist on disk" -Condition $allSourcesExist -Details ($missingSources -join ", ")
+}
+
+# -----------------------------------------------------------------------------
 # SUMMARY REPORT
 # -----------------------------------------------------------------------------
 Write-Host "`n=======================================================" -ForegroundColor Cyan

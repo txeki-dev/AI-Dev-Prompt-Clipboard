@@ -30,6 +30,7 @@ jobs:
       - name: Compile Inno Setup (.exe)
         shell: powershell
         run: |
+          New-Item -ItemType Directory -Force -Path "dist" | Out-Null
           $iscc = @(
             "C:\Program Files\Inno Setup 7\iscc.exe",
             "C:\Program Files (x86)\Inno Setup 7\iscc.exe",
@@ -46,6 +47,7 @@ jobs:
           if (-not $iscc) { throw "No se pudo encontrar el compilador ISCC de Inno Setup en el runner." }
           Write-Host "Compilando instalador con: $iscc"
           & "$iscc" installer.iss
+          if ($LASTEXITCODE -ne 0) { throw "Error al compilar el instalador con Inno Setup (Exit code: $LASTEXITCODE)." }
 
       - name: Upload Setup.exe Artifact
         uses: actions/upload-artifact@v4
@@ -55,12 +57,12 @@ jobs:
 
       - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
+        if: startsWith(github.ref, 'refs/tags/v')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'latest' }}
-          name: ${{ startsWith(github.ref, 'refs/tags/') && format('AI Dev Prompt Clipboard {0}', github.ref_name) || 'AI Dev Prompt Clipboard (Latest Build)' }}
+          tag_name: ${{ github.ref_name }}
+          name: AI Dev Prompt Clipboard ${{ github.ref_name }}
           body: |
             ## AI Dev Prompt Clipboard - Instalador Oficial de Windows (.exe)
             

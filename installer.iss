@@ -44,9 +44,8 @@ Source: "version.json"; DestDir: "{app}"; Flags: ignoreversion
 Source: "prompts.json"; DestDir: "{app}"; Flags: ignoreversion
 Source: "packs\*"; DestDir: "{app}\packs"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "LICENSE"; DestDir: "{app}"; Flags: ignoreversion
-; Preservar configuracion y metricas locales sin sobrescribir en actualizaciones
+; Preservar configuracion local sin sobrescribir en actualizaciones
 Source: "config.json"; DestDir: "{app}"; Flags: onlyifdoesntexist
-Source: "metrics.json"; DestDir: "{app}"; Flags: onlyifdoesntexist
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "wscript.exe"; Parameters: """{app}\launch.vbs"""; IconFilename: "{app}\icon.ico"; Comment: "AI Dev Prompt Clipboard"

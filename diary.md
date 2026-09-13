@@ -31,17 +31,22 @@
 
 ## ✅ Done (2026-09-13)
 - Detailed task breakdown (13 initiatives & 21 remediations) moved to [`diary_archive.md`](diary_archive.md) per weekly archive policy.
-- v1.4.0 release consolidated: all forensic audit items resolved, test suite passing 41/41, and installer compiled cleanly.
+- v1.4.0 release consolidated: all forensic audit items resolved, test suite passing 45/45, and installer compiled cleanly.
+- **CI/CD Inno Setup Hotfix (GitHub Actions Run #34772799483 Remediation)**:
+  - Root cause: `installer.iss` declared `Source: "metrics.json"`, but `metrics.json` is a runtime file ignored by `.gitignore` (line 14), causing ISCC to abort on runner checkout.
+  - Fix: Removed `metrics.json` from `installer.iss` (it is generated on-demand at runtime by `Save-Metrics` and preserved on updates).
+  - Hardened `.github/workflows/build-installer.yml`: Ensured `dist/` directory pre-creation, added `$LASTEXITCODE` check, and simplified release publishing condition for tags `refs/tags/v*`.
+  - Added Suite 11 (Inno Setup Packaging Integrity) to `tests/app.Tests.ps1` with 4 new assertions (45/45 passing).
 
 ---
 
 ## 📋 Active / Pending Tasks
 - **Active Task**:
-  - Session closure `<session_end_hybrid>`: Version control staging, tagging, and remote synchronization.
+  - Push CI/CD hotfix to `main` and retag `v1.4.0` to trigger clean automated release build on GitHub Actions.
 - **Pending Tasks**:
-  - Monitor GitHub Actions release build for `v1.4.0` upon pushing tags.
+  - Monitor GitHub Actions release build for `v1.4.0` upon pushing updated tag.
 
 ---
 
 ## 🎯 Next Immediate Step
-- Version 1.4.0 released and tagged. Monitor GitHub Actions release build and gather developer telemetry on workspace packs.
+- Commit changes, re-point tag `v1.4.0` to the hotfix commit, and push to GitHub (`origin main` and `origin v1.4.0 --force`).
