@@ -24,19 +24,14 @@
 
 ## 📅 Weekly Summary (Week ending 2026-09-13)
 - **Enterprise Product Strategy & Workspaces v1.4.0**: Integrated visual prompt editor (`+ Nuevo` / `✏️`), multi-workspace modular pack profiles (`packs/`), developer telemetry dashboard (`📊 Métricas`), and DEV FLUX smart sequence stepper (`Ctrl + Alt + N`).
-- **Universal Non-Technical Installer Ecosystem**: Engineered 1-line web installer (`setup.ps1`), native Windows setup wizard (`installer.iss`), and GitHub Actions release workflow for automated `.exe` builds on version tags.
-- **Exhaustive Forensic Audit & Quality Gate (100% Green)**: Remediated all 21 audit findings across two sessions (Zip-Slip traversal prevention, Alt+F4 window lifecycle, variable scoping unification, clipboard concurrency) backed by a 41-assertion automated regression test suite.
+- **Universal Installer Ecosystem & CI/CD Release Automation**: Engineered 1-line web installer (`setup.ps1`), native Windows setup wizard (`installer.iss`), and hardened GitHub Actions workflow publishing official `AI-Prompt-Clipboard-Setup.exe` releases on version tags.
+- **Exhaustive Forensic Audit & Quality Gate (100% Green)**: Remediated all 22 audit findings across security, state persistence, window lifecycle, and CI/CD packaging, backed by a 45-assertion automated regression test suite (`tests/app.Tests.ps1`).
 
 ---
 
 ## ✅ Done (2026-09-13)
-- Detailed task breakdown (13 initiatives & 21 remediations) moved to [`diary_archive.md`](diary_archive.md) per weekly archive policy.
-- v1.4.0 release consolidated: all forensic audit items resolved, test suite passing 45/45, and installer compiled cleanly.
-- **CI/CD Inno Setup Hotfix (GitHub Actions Run #34772799483 Remediation)**:
-  - Root cause: `installer.iss` declared `Source: "metrics.json"`, but `metrics.json` is a runtime file ignored by `.gitignore` (line 14), causing ISCC to abort on runner checkout.
-  - Fix: Removed `metrics.json` from `installer.iss` (it is generated on-demand at runtime by `Save-Metrics` and preserved on updates).
-  - Hardened `.github/workflows/build-installer.yml`: Ensured `dist/` directory pre-creation, added `$LASTEXITCODE` check, and simplified release publishing condition for tags `refs/tags/v*`.
-  - Added Suite 11 (Inno Setup Packaging Integrity) to `tests/app.Tests.ps1` with 4 new assertions (45/45 passing).
+- Detailed task breakdown (14 initiatives & 22 remediations) moved to [`diary_archive.md`](diary_archive.md) per weekly archive policy.
+- v1.4.0 release consolidated: all forensic audit items resolved, test suite passing 45/45, and official `.exe` installer published cleanly on GitHub Releases.
 
 ---
 

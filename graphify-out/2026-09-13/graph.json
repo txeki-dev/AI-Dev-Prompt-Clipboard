@@ -4,114 +4,6 @@
   "graph": {},
   "nodes": [
     {
-      "id": "diary",
-      "label": "diary.md",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "diary.md",
-      "source_file": "diary.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "diary_active_pending_tasks",
-      "label": "\ud83d\udccb Active / Pending Tasks",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\ud83d\udccb active / pending tasks",
-      "source_file": "diary.md",
-      "source_location": "L145"
-    },
-    {
-      "id": "diary_ai_dev_prompt_clipboard_developer_diary",
-      "label": "AI Dev Prompt Clipboard: Developer Diary",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "ai dev prompt clipboard: developer diary",
-      "source_file": "diary.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "diary_current_state",
-      "label": "\ud83d\udcca Current State",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\ud83d\udcca current state",
-      "source_file": "diary.md",
-      "source_location": "L7"
-    },
-    {
-      "id": "diary_done_2026_09_13_product_strategy_initiatives_v1_4_0",
-      "label": "\u2705 Done (2026-09-13 \u2014 Product Strategy Initiatives v1.4.0)",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\u2705 done (2026-09-13 \u2014 product strategy initiatives v1.4.0)",
-      "source_file": "diary.md",
-      "source_location": "L36"
-    },
-    {
-      "id": "diary_forensic_audit_findings_2026_09_13",
-      "label": "\ud83d\udd2c Forensic Audit Findings - 2026-09-13",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\ud83d\udd2c forensic audit findings - 2026-09-13",
-      "source_file": "diary.md",
-      "source_location": "L131"
-    },
-    {
-      "id": "diary_next_immediate_step",
-      "label": "\ud83c\udfaf Next Immediate Step",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\ud83c\udfaf next immediate step",
-      "source_file": "diary.md",
-      "source_location": "L153"
-    },
-    {
-      "id": "diary_weekly_summary_week_ending_2026_09_13",
-      "label": "\ud83d\udcc5 Weekly Summary (Week ending 2026-09-13)",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\ud83d\udcc5 weekly summary (week ending 2026-09-13)",
-      "source_file": "diary.md",
-      "source_location": "L24"
-    },
-    {
-      "id": "graph_report",
-      "label": "GRAPH_REPORT.md",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "graph_report.md",
-      "source_file": "GRAPH_REPORT.md",
-      "source_location": "L1"
-    },
-    {
       "id": "graph_report_community_hubs_navigation",
       "label": "Community Hubs (Navigation)",
       "_origin": "ast",
@@ -240,18 +132,7 @@
       "file_type": "code",
       "norm_label": "check-forupdates()",
       "source_file": "app.ps1",
-      "source_location": "L2145"
-    },
-    {
-      "id": "app_check_forupdatesasync",
-      "label": "Check-ForUpdatesAsync()",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "Invoke-GitUpdateStep",
-      "file_type": "code",
-      "norm_label": "check-forupdatesasync()",
-      "source_file": "app.ps1",
-      "source_location": "L1870"
+      "source_location": "L2166"
     },
     {
       "id": "app_get_gitbehindcount",
@@ -262,7 +143,7 @@
       "file_type": "code",
       "norm_label": "get-gitbehindcount()",
       "source_file": "app.ps1",
-      "source_location": "L1641"
+      "source_location": "L1654"
     },
     {
       "id": "app_get_gitdirtystatus",
@@ -273,7 +154,7 @@
       "file_type": "code",
       "norm_label": "get-gitdirtystatus()",
       "source_file": "app.ps1",
-      "source_location": "L1653"
+      "source_location": "L1666"
     },
     {
       "id": "app_get_localversioninfo",
@@ -284,7 +165,7 @@
       "file_type": "code",
       "norm_label": "get-localversioninfo()",
       "source_file": "app.ps1",
-      "source_location": "L1691"
+      "source_location": "L1704"
     },
     {
       "id": "app_get_remoteupdateinfohttp",
@@ -295,7 +176,7 @@
       "file_type": "code",
       "norm_label": "get-remoteupdateinfohttp()",
       "source_file": "app.ps1",
-      "source_location": "L1710"
+      "source_location": "L1723"
     },
     {
       "id": "app_invoke_gitupdatestep",
@@ -306,7 +187,7 @@
       "file_type": "code",
       "norm_label": "invoke-gitupdatestep()",
       "source_file": "app.ps1",
-      "source_location": "L2017"
+      "source_location": "L2038"
     },
     {
       "id": "app_invoke_httpupdatestep",
@@ -317,7 +198,7 @@
       "file_type": "code",
       "norm_label": "invoke-httpupdatestep()",
       "source_file": "app.ps1",
-      "source_location": "L2091"
+      "source_location": "L2112"
     },
     {
       "id": "app_restart_application",
@@ -328,7 +209,7 @@
       "file_type": "code",
       "norm_label": "restart-application()",
       "source_file": "app.ps1",
-      "source_location": "L1428"
+      "source_location": "L1431"
     },
     {
       "id": "app_restore_mergeduserconfig",
@@ -339,7 +220,7 @@
       "file_type": "code",
       "norm_label": "restore-mergeduserconfig()",
       "source_file": "app.ps1",
-      "source_location": "L1666"
+      "source_location": "L1679"
     },
     {
       "id": "app_test_isgitrepo",
@@ -350,7 +231,7 @@
       "file_type": "code",
       "norm_label": "test-isgitrepo()",
       "source_file": "app.ps1",
-      "source_location": "L1624"
+      "source_location": "L1637"
     },
     {
       "id": "app_update_fromgithubhttp",
@@ -361,7 +242,7 @@
       "file_type": "code",
       "norm_label": "update-fromgithubhttp()",
       "source_file": "app.ps1",
-      "source_location": "L1749"
+      "source_location": "L1762"
     },
     {
       "id": "setup",
@@ -372,6 +253,126 @@
       "file_type": "code",
       "norm_label": "setup.ps1",
       "source_file": "setup.ps1",
+      "source_location": "L1"
+    },
+    {
+      "id": "diary",
+      "label": "diary.md",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "diary.md",
+      "source_file": "diary.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "diary_active_pending_tasks",
+      "label": "\ud83d\udccb Active / Pending Tasks",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udccb active / pending tasks",
+      "source_file": "diary.md",
+      "source_location": "L160"
+    },
+    {
+      "id": "diary_ai_dev_prompt_clipboard_developer_diary",
+      "label": "AI Dev Prompt Clipboard: Developer Diary",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "ai dev prompt clipboard: developer diary",
+      "source_file": "diary.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "diary_current_state",
+      "label": "\ud83d\udcca Current State",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udcca current state",
+      "source_file": "diary.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "diary_done_2026_09_13_product_strategy_initiatives_v1_4_0",
+      "label": "\u2705 Done (2026-09-13 \u2014 Product Strategy Initiatives v1.4.0)",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\u2705 done (2026-09-13 \u2014 product strategy initiatives v1.4.0)",
+      "source_file": "diary.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "diary_forensic_audit_findings_2026_09_13",
+      "label": "\ud83d\udd2c Forensic Audit Findings - 2026-09-13",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udd2c forensic audit findings - 2026-09-13",
+      "source_file": "diary.md",
+      "source_location": "L131"
+    },
+    {
+      "id": "diary_historical_forensic_audit_findings_remediated_2026_09_13_session_1",
+      "label": "\ud83d\udd2c Historical Forensic Audit Findings - Remediated (2026-09-13 Session 1)",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udd2c historical forensic audit findings - remediated (2026-09-13 session 1)",
+      "source_file": "diary.md",
+      "source_location": "L146"
+    },
+    {
+      "id": "diary_next_immediate_step",
+      "label": "\ud83c\udfaf Next Immediate Step",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83c\udfaf next immediate step",
+      "source_file": "diary.md",
+      "source_location": "L168"
+    },
+    {
+      "id": "diary_weekly_summary_week_ending_2026_09_13",
+      "label": "\ud83d\udcc5 Weekly Summary (Week ending 2026-09-13)",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udcc5 weekly summary (week ending 2026-09-13)",
+      "source_file": "diary.md",
+      "source_location": "L24"
+    },
+    {
+      "id": "graph_report",
+      "label": "GRAPH_REPORT.md",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "graph_report.md",
+      "source_file": "GRAPH_REPORT.md",
       "source_location": "L1"
     },
     {
@@ -397,81 +398,48 @@
       "source_location": "L16"
     },
     {
-      "id": "tests_app_tests_test_checkgitdirtystatus",
-      "label": "Test-CheckGitDirtyStatus()",
+      "id": "tests_app_tests_invoke_categorycyclestep",
+      "label": "Invoke-CategoryCycleStep()",
       "_origin": "ast",
       "community": 2,
       "community_name": "app.Tests.ps1",
       "file_type": "code",
-      "norm_label": "test-checkgitdirtystatus()",
+      "norm_label": "invoke-categorycyclestep()",
       "source_file": "tests/app.Tests.ps1",
-      "source_location": "L146"
+      "source_location": "L209"
     },
     {
-      "id": "tests_app_tests_test_cyclenextcategory",
-      "label": "Test-CycleNextCategory()",
+      "id": "tests_app_tests_invoke_configmergetest",
+      "label": "Invoke-ConfigMergeTest()",
       "_origin": "ast",
       "community": 2,
       "community_name": "app.Tests.ps1",
       "file_type": "code",
-      "norm_label": "test-cyclenextcategory()",
+      "norm_label": "invoke-configmergetest()",
       "source_file": "tests/app.Tests.ps1",
-      "source_location": "L214"
+      "source_location": "L168"
     },
     {
-      "id": "tests_app_tests_test_cyclenexttab",
-      "label": "Test-CycleNextTab()",
+      "id": "tests_app_tests_invoke_gitdirtyfiltertest",
+      "label": "Invoke-GitDirtyFilterTest()",
       "_origin": "ast",
       "community": 2,
       "community_name": "app.Tests.ps1",
       "file_type": "code",
-      "norm_label": "test-cyclenexttab()",
+      "norm_label": "invoke-gitdirtyfiltertest()",
       "source_file": "tests/app.Tests.ps1",
-      "source_location": "L235"
+      "source_location": "L137"
     },
     {
-      "id": "tests_app_tests_test_getnextphase",
-      "label": "Test-GetNextPhase()",
+      "id": "tests_app_tests_invoke_tabcyclestep",
+      "label": "Invoke-TabCycleStep()",
       "_origin": "ast",
       "community": 2,
       "community_name": "app.Tests.ps1",
       "file_type": "code",
-      "norm_label": "test-getnextphase()",
+      "norm_label": "invoke-tabcyclestep()",
       "source_file": "tests/app.Tests.ps1",
-      "source_location": "L258"
-    },
-    {
-      "id": "tests_app_tests_test_getsmartsuggestion",
-      "label": "Test-GetSmartSuggestion()",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "app.Tests.ps1",
-      "file_type": "code",
-      "norm_label": "test-getsmartsuggestion()",
-      "source_file": "tests/app.Tests.ps1",
-      "source_location": "L107"
-    },
-    {
-      "id": "tests_app_tests_test_gettemplatetokens",
-      "label": "Test-GetTemplateTokens()",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "app.Tests.ps1",
-      "file_type": "code",
-      "norm_label": "test-gettemplatetokens()",
-      "source_file": "tests/app.Tests.ps1",
-      "source_location": "L77"
-    },
-    {
-      "id": "tests_app_tests_test_mergeconfig",
-      "label": "Test-MergeConfig()",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "app.Tests.ps1",
-      "file_type": "code",
-      "norm_label": "test-mergeconfig()",
-      "source_file": "tests/app.Tests.ps1",
-      "source_location": "L177"
+      "source_location": "L238"
     },
     {
       "id": "readme",
@@ -785,6 +753,17 @@
       "source_location": "L1"
     },
     {
+      "id": "app_check_forupdatesasync",
+      "label": "Check-ForUpdatesAsync()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "check-forupdatesasync()",
+      "source_file": "app.ps1",
+      "source_location": "L1891"
+    },
+    {
       "id": "app_copy_prompttoclipboard",
       "label": "Copy-PromptToClipboard()",
       "_origin": "ast",
@@ -793,7 +772,7 @@
       "file_type": "code",
       "norm_label": "copy-prompttoclipboard()",
       "source_file": "app.ps1",
-      "source_location": "L2320"
+      "source_location": "L2362"
     },
     {
       "id": "app_exit_application",
@@ -804,18 +783,7 @@
       "file_type": "code",
       "norm_label": "exit-application()",
       "source_file": "app.ps1",
-      "source_location": "L1379"
-    },
-    {
-      "id": "app_get_availableworkspaces",
-      "label": "Get-AvailableWorkspaces()",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "app.ps1",
-      "file_type": "code",
-      "norm_label": "get-availableworkspaces()",
-      "source_file": "app.ps1",
-      "source_location": "L3150"
+      "source_location": "L1382"
     },
     {
       "id": "app_get_nextphaseprompt",
@@ -826,7 +794,7 @@
       "file_type": "code",
       "norm_label": "get-nextphaseprompt()",
       "source_file": "app.ps1",
-      "source_location": "L3107"
+      "source_location": "L3132"
     },
     {
       "id": "app_get_safeclipboardtext",
@@ -837,7 +805,7 @@
       "file_type": "code",
       "norm_label": "get-safeclipboardtext()",
       "source_file": "app.ps1",
-      "source_location": "L2230"
+      "source_location": "L2251"
     },
     {
       "id": "app_get_smartsuggestion",
@@ -848,7 +816,7 @@
       "file_type": "code",
       "norm_label": "get-smartsuggestion()",
       "source_file": "app.ps1",
-      "source_location": "L2425"
+      "source_location": "L2451"
     },
     {
       "id": "app_get_templatetokens",
@@ -859,7 +827,7 @@
       "file_type": "code",
       "norm_label": "get-templatetokens()",
       "source_file": "app.ps1",
-      "source_location": "L2410"
+      "source_location": "L2436"
     },
     {
       "id": "app_hide_mainwindow",
@@ -870,18 +838,7 @@
       "file_type": "code",
       "norm_label": "hide-mainwindow()",
       "source_file": "app.ps1",
-      "source_location": "L1369"
-    },
-    {
-      "id": "app_init_workspacesdropdown",
-      "label": "Init-WorkspacesDropdown()",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "app.ps1",
-      "file_type": "code",
-      "norm_label": "init-workspacesdropdown()",
-      "source_file": "app.ps1",
-      "source_location": "L3171"
+      "source_location": "L1372"
     },
     {
       "id": "app_load_metrics",
@@ -892,7 +849,7 @@
       "file_type": "code",
       "norm_label": "load-metrics()",
       "source_file": "app.ps1",
-      "source_location": "L2832"
+      "source_location": "L2858"
     },
     {
       "id": "app_render_promptcards",
@@ -903,7 +860,18 @@
       "file_type": "code",
       "norm_label": "render-promptcards()",
       "source_file": "app.ps1",
-      "source_location": "L2553"
+      "source_location": "L2579"
+    },
+    {
+      "id": "app_save_metrics",
+      "label": "Save-Metrics()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "save-metrics()",
+      "source_file": "app.ps1",
+      "source_location": "L2886"
     },
     {
       "id": "app_select_tab",
@@ -914,7 +882,7 @@
       "file_type": "code",
       "norm_label": "select-tab()",
       "source_file": "app.ps1",
-      "source_location": "L1246"
+      "source_location": "L1249"
     },
     {
       "id": "app_set_cardactivestate",
@@ -925,7 +893,18 @@
       "file_type": "code",
       "norm_label": "set-cardactivestate()",
       "source_file": "app.ps1",
-      "source_location": "L2248"
+      "source_location": "L2269"
+    },
+    {
+      "id": "app_set_safeclipboardtext",
+      "label": "Set-SafeClipboardText()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "set-safeclipboardtext()",
+      "source_file": "app.ps1",
+      "source_location": "L2341"
     },
     {
       "id": "app_show_mainwindow",
@@ -936,7 +915,7 @@
       "file_type": "code",
       "norm_label": "show-mainwindow()",
       "source_file": "app.ps1",
-      "source_location": "L1354"
+      "source_location": "L1357"
     },
     {
       "id": "app_show_preview",
@@ -947,7 +926,7 @@
       "file_type": "code",
       "norm_label": "show-preview()",
       "source_file": "app.ps1",
-      "source_location": "L2389"
+      "source_location": "L2415"
     },
     {
       "id": "app_show_prompteditor",
@@ -958,7 +937,7 @@
       "file_type": "code",
       "norm_label": "show-prompteditor()",
       "source_file": "app.ps1",
-      "source_location": "L3285"
+      "source_location": "L3312"
     },
     {
       "id": "app_show_quickfill",
@@ -969,7 +948,7 @@
       "file_type": "code",
       "norm_label": "show-quickfill()",
       "source_file": "app.ps1",
-      "source_location": "L2450"
+      "source_location": "L2476"
     },
     {
       "id": "app_step_tonextphase",
@@ -980,7 +959,7 @@
       "file_type": "code",
       "norm_label": "step-tonextphase()",
       "source_file": "app.ps1",
-      "source_location": "L3132"
+      "source_location": "L3157"
     },
     {
       "id": "app_switch_nexttab",
@@ -991,7 +970,18 @@
       "file_type": "code",
       "norm_label": "switch-nexttab()",
       "source_file": "app.ps1",
-      "source_location": "L1232"
+      "source_location": "L1235"
+    },
+    {
+      "id": "app_track_promptusage",
+      "label": "Track-PromptUsage()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "track-promptusage()",
+      "source_file": "app.ps1",
+      "source_location": "L2895"
     },
     {
       "id": "app_trigger_backgroundupdatecheck",
@@ -1002,7 +992,7 @@
       "file_type": "code",
       "norm_label": "trigger-backgroundupdatecheck()",
       "source_file": "app.ps1",
-      "source_location": "L1345"
+      "source_location": "L1348"
     },
     {
       "id": "app_update_activeclipboardindicator",
@@ -1013,7 +1003,7 @@
       "file_type": "code",
       "norm_label": "update-activeclipboardindicator()",
       "source_file": "app.ps1",
-      "source_location": "L2267"
+      "source_location": "L2288"
     },
     {
       "id": "app_update_metricsview",
@@ -1024,7 +1014,7 @@
       "file_type": "code",
       "norm_label": "update-metricsview()",
       "source_file": "app.ps1",
-      "source_location": "L2907"
+      "source_location": "L2933"
     },
     {
       "id": "backlog",
@@ -1166,7 +1156,7 @@
       "file_type": "code",
       "norm_label": "build-categorychips()",
       "source_file": "app.ps1",
-      "source_location": "L1075"
+      "source_location": "L1078"
     },
     {
       "id": "app_delete_currentprompteditor",
@@ -1177,7 +1167,29 @@
       "file_type": "code",
       "norm_label": "delete-currentprompteditor()",
       "source_file": "app.ps1",
-      "source_location": "L3385"
+      "source_location": "L3414"
+    },
+    {
+      "id": "app_get_availableworkspaces",
+      "label": "Get-AvailableWorkspaces()",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "Switch-Workspace",
+      "file_type": "code",
+      "norm_label": "get-availableworkspaces()",
+      "source_file": "app.ps1",
+      "source_location": "L3175"
+    },
+    {
+      "id": "app_init_workspacesdropdown",
+      "label": "Init-WorkspacesDropdown()",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "Switch-Workspace",
+      "file_type": "code",
+      "norm_label": "init-workspacesdropdown()",
+      "source_file": "app.ps1",
+      "source_location": "L3196"
     },
     {
       "id": "app_save_config",
@@ -1188,7 +1200,7 @@
       "file_type": "code",
       "norm_label": "save-config()",
       "source_file": "app.ps1",
-      "source_location": "L172"
+      "source_location": "L174"
     },
     {
       "id": "app_save_currentprompteditor",
@@ -1199,18 +1211,7 @@
       "file_type": "code",
       "norm_label": "save-currentprompteditor()",
       "source_file": "app.ps1",
-      "source_location": "L3314"
-    },
-    {
-      "id": "app_save_metrics",
-      "label": "Save-Metrics()",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "Switch-Workspace",
-      "file_type": "code",
-      "norm_label": "save-metrics()",
-      "source_file": "app.ps1",
-      "source_location": "L2860"
+      "source_location": "L3341"
     },
     {
       "id": "app_set_categoryfilter",
@@ -1221,7 +1222,7 @@
       "file_type": "code",
       "norm_label": "set-categoryfilter()",
       "source_file": "app.ps1",
-      "source_location": "L1052"
+      "source_location": "L1055"
     },
     {
       "id": "app_switch_nextcategory",
@@ -1232,7 +1233,7 @@
       "file_type": "code",
       "norm_label": "switch-nextcategory()",
       "source_file": "app.ps1",
-      "source_location": "L1208"
+      "source_location": "L1211"
     },
     {
       "id": "app_switch_workspace",
@@ -1243,18 +1244,7 @@
       "file_type": "code",
       "norm_label": "switch-workspace()",
       "source_file": "app.ps1",
-      "source_location": "L3189"
-    },
-    {
-      "id": "app_track_promptusage",
-      "label": "Track-PromptUsage()",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "Switch-Workspace",
-      "file_type": "code",
-      "norm_label": "track-promptusage()",
-      "source_file": "app.ps1",
-      "source_location": "L2869"
+      "source_location": "L3214"
     },
     {
       "id": "app_update_filter",
@@ -1265,7 +1255,7 @@
       "file_type": "code",
       "norm_label": "update-filter()",
       "source_file": "app.ps1",
-      "source_location": "L3475"
+      "source_location": "L3506"
     },
     {
       "id": "app_update_nextphaseindicator",
@@ -1276,7 +1266,7 @@
       "file_type": "code",
       "norm_label": "update-nextphaseindicator()",
       "source_file": "app.ps1",
-      "source_location": "L3122"
+      "source_location": "L3147"
     }
   ],
   "links": [
@@ -1288,7 +1278,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1188",
+      "source_location": "L1191",
       "weight": 1.0
     },
     {
@@ -1299,7 +1289,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2149",
+      "source_location": "L2170",
       "weight": 1.0
     },
     {
@@ -1310,7 +1300,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2150",
+      "source_location": "L2171",
       "weight": 1.0
     },
     {
@@ -1321,7 +1311,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2152",
+      "source_location": "L2173",
       "weight": 1.0
     },
     {
@@ -1332,7 +1322,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1978",
+      "source_location": "L1999",
+      "weight": 1.0
+    },
+    {
+      "source": "app_copy_prompttoclipboard",
+      "target": "app_set_safeclipboardtext",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2374",
       "weight": 1.0
     },
     {
@@ -1343,7 +1344,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2357",
+      "source_location": "L2383",
       "weight": 1.0
     },
     {
@@ -1354,7 +1355,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2366",
+      "source_location": "L2392",
       "weight": 1.0
     },
     {
@@ -1365,7 +1366,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2369",
+      "source_location": "L2395",
       "weight": 1.0
     },
     {
@@ -1376,7 +1377,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3403",
+      "source_location": "L3434",
       "weight": 1.0
     },
     {
@@ -1387,7 +1388,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3404",
+      "source_location": "L3435",
       "weight": 1.0
     },
     {
@@ -1398,7 +1399,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3405",
+      "source_location": "L3436",
       "weight": 1.0
     },
     {
@@ -1409,7 +1410,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3406",
+      "source_location": "L3437",
       "weight": 1.0
     },
     {
@@ -1420,7 +1421,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1699",
+      "source_location": "L1712",
       "weight": 1.0
     },
     {
@@ -1431,7 +1432,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3174",
+      "source_location": "L3199",
       "weight": 1.0
     },
     {
@@ -1442,7 +1443,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2030",
+      "source_location": "L2051",
       "weight": 1.0
     },
     {
@@ -1453,7 +1454,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2039",
+      "source_location": "L2060",
       "weight": 1.0
     },
     {
@@ -1464,7 +1465,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2067",
+      "source_location": "L2088",
       "weight": 1.0
     },
     {
@@ -1475,7 +1476,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2087",
+      "source_location": "L2108",
       "weight": 1.0
     },
     {
@@ -1486,23 +1487,12 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2094",
+      "source_location": "L2115",
       "weight": 1.0
     },
     {
       "source": "app_invoke_httpupdatestep",
       "target": "app_get_localversioninfo",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app.ps1",
-      "source_location": "L2102",
-      "weight": 1.0
-    },
-    {
-      "source": "app_invoke_httpupdatestep",
-      "target": "app_update_fromgithubhttp",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -1513,13 +1503,24 @@
     },
     {
       "source": "app_invoke_httpupdatestep",
+      "target": "app_update_fromgithubhttp",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2144",
+      "weight": 1.0
+    },
+    {
+      "source": "app_invoke_httpupdatestep",
       "target": "app_restart_application",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2141",
+      "source_location": "L2162",
       "weight": 1.0
     },
     {
@@ -1530,7 +1531,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2654",
+      "source_location": "L2680",
       "weight": 1.0
     },
     {
@@ -1541,7 +1542,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2717",
+      "source_location": "L2743",
       "weight": 1.0
     },
     {
@@ -1552,7 +1553,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2738",
+      "source_location": "L2764",
       "weight": 1.0
     },
     {
@@ -1563,7 +1564,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2761",
+      "source_location": "L2787",
       "weight": 1.0
     },
     {
@@ -1574,7 +1575,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2763",
+      "source_location": "L2789",
       "weight": 1.0
     },
     {
@@ -1585,7 +1586,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2820",
+      "source_location": "L2846",
       "weight": 1.0
     },
     {
@@ -1596,7 +1597,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3378",
+      "source_location": "L3407",
       "weight": 1.0
     },
     {
@@ -1607,7 +1608,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3379",
+      "source_location": "L3408",
       "weight": 1.0
     },
     {
@@ -1618,7 +1619,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3380",
+      "source_location": "L3409",
       "weight": 1.0
     },
     {
@@ -1629,7 +1630,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3381",
+      "source_location": "L3410",
       "weight": 1.0
     },
     {
@@ -1640,7 +1641,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1288",
+      "source_location": "L1291",
       "weight": 1.0
     },
     {
@@ -1651,7 +1652,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1072",
+      "source_location": "L1075",
       "weight": 1.0
     },
     {
@@ -1662,7 +1663,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1361",
+      "source_location": "L1364",
       "weight": 1.0
     },
     {
@@ -1673,7 +1674,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1366",
+      "source_location": "L1369",
       "weight": 1.0
     },
     {
@@ -1684,7 +1685,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2460",
+      "source_location": "L2486",
       "weight": 1.0
     },
     {
@@ -1695,7 +1696,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2485",
+      "source_location": "L2511",
       "weight": 1.0
     },
     {
@@ -1706,7 +1707,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3133",
+      "source_location": "L3158",
       "weight": 1.0
     },
     {
@@ -1717,7 +1718,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3135",
+      "source_location": "L3160",
       "weight": 1.0
     },
     {
@@ -1728,7 +1729,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3138",
+      "source_location": "L3163",
       "weight": 1.0
     },
     {
@@ -1739,7 +1740,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3140",
+      "source_location": "L3165",
       "weight": 1.0
     },
     {
@@ -1750,7 +1751,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1228",
+      "source_location": "L1231",
       "weight": 1.0
     },
     {
@@ -1761,7 +1762,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1243",
+      "source_location": "L1246",
       "weight": 1.0
     },
     {
@@ -1772,7 +1773,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3191",
+      "source_location": "L3216",
       "weight": 1.0
     },
     {
@@ -1783,7 +1784,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3207",
+      "source_location": "L3234",
       "weight": 1.0
     },
     {
@@ -1794,7 +1795,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3208",
+      "source_location": "L3235",
       "weight": 1.0
     },
     {
@@ -1805,7 +1806,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3209",
+      "source_location": "L3236",
       "weight": 1.0
     },
     {
@@ -1816,7 +1817,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3210",
+      "source_location": "L3237",
       "weight": 1.0
     },
     {
@@ -1827,7 +1828,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3211",
+      "source_location": "L3238",
       "weight": 1.0
     },
     {
@@ -1838,7 +1839,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2902",
+      "source_location": "L2928",
       "weight": 1.0
     },
     {
@@ -1849,7 +1850,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2904",
+      "source_location": "L2930",
       "weight": 1.0
     },
     {
@@ -1860,7 +1861,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1349",
+      "source_location": "L1352",
       "weight": 1.0
     },
     {
@@ -1871,7 +1872,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2272",
+      "source_location": "L2293",
       "weight": 1.0
     },
     {
@@ -1882,7 +1883,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2281",
+      "source_location": "L2302",
       "weight": 1.0
     },
     {
@@ -1893,7 +1894,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1859",
+      "source_location": "L1880",
       "weight": 1.0
     },
     {
@@ -1904,7 +1905,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3124",
+      "source_location": "L3149",
       "weight": 1.0
     },
     {
@@ -1915,7 +1916,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1052",
+      "source_location": "L1055",
       "weight": 1.0
     },
     {
@@ -1926,7 +1927,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1075",
+      "source_location": "L1078",
       "weight": 1.0
     },
     {
@@ -1937,7 +1938,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1208",
+      "source_location": "L1211",
       "weight": 1.0
     },
     {
@@ -1948,7 +1949,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1232",
+      "source_location": "L1235",
       "weight": 1.0
     },
     {
@@ -1959,7 +1960,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1246",
+      "source_location": "L1249",
       "weight": 1.0
     },
     {
@@ -1970,7 +1971,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1345",
+      "source_location": "L1348",
       "weight": 1.0
     },
     {
@@ -1981,7 +1982,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1354",
+      "source_location": "L1357",
       "weight": 1.0
     },
     {
@@ -1992,7 +1993,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1369",
+      "source_location": "L1372",
       "weight": 1.0
     },
     {
@@ -2003,7 +2004,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1379",
+      "source_location": "L1382",
       "weight": 1.0
     },
     {
@@ -2014,7 +2015,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1428",
+      "source_location": "L1431",
       "weight": 1.0
     },
     {
@@ -2025,7 +2026,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1624",
+      "source_location": "L1637",
       "weight": 1.0
     },
     {
@@ -2036,7 +2037,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1641",
+      "source_location": "L1654",
       "weight": 1.0
     },
     {
@@ -2047,7 +2048,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1653",
+      "source_location": "L1666",
       "weight": 1.0
     },
     {
@@ -2058,7 +2059,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1666",
+      "source_location": "L1679",
       "weight": 1.0
     },
     {
@@ -2069,7 +2070,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1691",
+      "source_location": "L1704",
       "weight": 1.0
     },
     {
@@ -2080,7 +2081,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1710",
+      "source_location": "L1723",
       "weight": 1.0
     },
     {
@@ -2091,7 +2092,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L172",
+      "source_location": "L174",
       "weight": 1.0
     },
     {
@@ -2102,7 +2103,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1749",
+      "source_location": "L1762",
       "weight": 1.0
     },
     {
@@ -2113,7 +2114,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1870",
+      "source_location": "L1891",
       "weight": 1.0
     },
     {
@@ -2124,7 +2125,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2017",
+      "source_location": "L2038",
       "weight": 1.0
     },
     {
@@ -2135,7 +2136,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2091",
+      "source_location": "L2112",
       "weight": 1.0
     },
     {
@@ -2146,7 +2147,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2145",
+      "source_location": "L2166",
       "weight": 1.0
     },
     {
@@ -2157,7 +2158,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2230",
+      "source_location": "L2251",
       "weight": 1.0
     },
     {
@@ -2168,7 +2169,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2248",
+      "source_location": "L2269",
       "weight": 1.0
     },
     {
@@ -2179,7 +2180,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2267",
+      "source_location": "L2288",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_set_safeclipboardtext",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2341",
       "weight": 1.0
     },
     {
@@ -2190,7 +2202,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2320",
+      "source_location": "L2362",
       "weight": 1.0
     },
     {
@@ -2201,7 +2213,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2389",
+      "source_location": "L2415",
       "weight": 1.0
     },
     {
@@ -2212,7 +2224,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2410",
+      "source_location": "L2436",
       "weight": 1.0
     },
     {
@@ -2223,7 +2235,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2425",
+      "source_location": "L2451",
       "weight": 1.0
     },
     {
@@ -2234,7 +2246,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2450",
+      "source_location": "L2476",
       "weight": 1.0
     },
     {
@@ -2245,7 +2257,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2553",
+      "source_location": "L2579",
       "weight": 1.0
     },
     {
@@ -2256,7 +2268,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2832",
+      "source_location": "L2858",
       "weight": 1.0
     },
     {
@@ -2267,7 +2279,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2860",
+      "source_location": "L2886",
       "weight": 1.0
     },
     {
@@ -2278,7 +2290,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2869",
+      "source_location": "L2895",
       "weight": 1.0
     },
     {
@@ -2289,7 +2301,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L2907",
+      "source_location": "L2933",
       "weight": 1.0
     },
     {
@@ -2300,7 +2312,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3107",
+      "source_location": "L3132",
       "weight": 1.0
     },
     {
@@ -2311,7 +2323,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3122",
+      "source_location": "L3147",
       "weight": 1.0
     },
     {
@@ -2322,7 +2334,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3132",
+      "source_location": "L3157",
       "weight": 1.0
     },
     {
@@ -2333,7 +2345,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3150",
+      "source_location": "L3175",
       "weight": 1.0
     },
     {
@@ -2344,7 +2356,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3171",
+      "source_location": "L3196",
       "weight": 1.0
     },
     {
@@ -2355,7 +2367,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3189",
+      "source_location": "L3214",
       "weight": 1.0
     },
     {
@@ -2366,7 +2378,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3285",
+      "source_location": "L3312",
       "weight": 1.0
     },
     {
@@ -2377,7 +2389,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3314",
+      "source_location": "L3341",
       "weight": 1.0
     },
     {
@@ -2388,7 +2400,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3385",
+      "source_location": "L3414",
       "weight": 1.0
     },
     {
@@ -2399,7 +2411,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L3475",
+      "source_location": "L3506",
       "weight": 1.0
     },
     {
@@ -2459,13 +2471,24 @@
     },
     {
       "source": "diary_ai_dev_prompt_clipboard_developer_diary",
+      "target": "diary_historical_forensic_audit_findings_remediated_2026_09_13_session_1",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L146",
+      "weight": 1.0
+    },
+    {
+      "source": "diary_ai_dev_prompt_clipboard_developer_diary",
       "target": "diary_active_pending_tasks",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "diary.md",
-      "source_location": "L145",
+      "source_location": "L160",
       "weight": 1.0
     },
     {
@@ -2476,7 +2499,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "diary.md",
-      "source_location": "L153",
+      "source_location": "L168",
       "weight": 1.0
     },
     {
@@ -2943,24 +2966,13 @@
     },
     {
       "source": "tests_app_tests",
-      "target": "tests_app_tests_test_getsmartsuggestion",
+      "target": "tests_app_tests_invoke_gitdirtyfiltertest",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/app.Tests.ps1",
-      "source_location": "L107",
-      "weight": 1.0
-    },
-    {
-      "source": "tests_app_tests",
-      "target": "tests_app_tests_test_checkgitdirtystatus",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tests/app.Tests.ps1",
-      "source_location": "L146",
+      "source_location": "L137",
       "weight": 1.0
     },
     {
@@ -2976,57 +2988,35 @@
     },
     {
       "source": "tests_app_tests",
-      "target": "tests_app_tests_test_mergeconfig",
+      "target": "tests_app_tests_invoke_configmergetest",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/app.Tests.ps1",
-      "source_location": "L177",
+      "source_location": "L168",
       "weight": 1.0
     },
     {
       "source": "tests_app_tests",
-      "target": "tests_app_tests_test_cyclenextcategory",
+      "target": "tests_app_tests_invoke_categorycyclestep",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/app.Tests.ps1",
-      "source_location": "L214",
+      "source_location": "L209",
       "weight": 1.0
     },
     {
       "source": "tests_app_tests",
-      "target": "tests_app_tests_test_cyclenexttab",
+      "target": "tests_app_tests_invoke_tabcyclestep",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/app.Tests.ps1",
-      "source_location": "L235",
-      "weight": 1.0
-    },
-    {
-      "source": "tests_app_tests",
-      "target": "tests_app_tests_test_getnextphase",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tests/app.Tests.ps1",
-      "source_location": "L258",
-      "weight": 1.0
-    },
-    {
-      "source": "tests_app_tests",
-      "target": "tests_app_tests_test_gettemplatetokens",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tests/app.Tests.ps1",
-      "source_location": "L77",
+      "source_location": "L238",
       "weight": 1.0
     },
     {

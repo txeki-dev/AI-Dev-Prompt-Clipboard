@@ -277,7 +277,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83d\udccb active / pending tasks",
       "source_file": "diary.md",
-      "source_location": "L160"
+      "source_location": "L43"
     },
     {
       "id": "diary_ai_dev_prompt_clipboard_developer_diary",
@@ -292,6 +292,78 @@
       "source_location": "L1"
     },
     {
+      "id": "diary_archive",
+      "label": "diary_archive.md",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "diary_archive.md",
+      "source_file": "diary_archive.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "diary_archive_ai_dev_prompt_clipboard_diary_archive",
+      "label": "AI Dev Prompt Clipboard: Diary Archive",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "ai dev prompt clipboard: diary archive",
+      "source_file": "diary_archive.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "diary_archive_archived_sprint_week_ending_2026_09_12",
+      "label": "\ud83d\udcc5 Archived Sprint: Week ending 2026-09-12",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udcc5 archived sprint: week ending 2026-09-12",
+      "source_file": "diary_archive.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "diary_archive_done_2026_09_10_system_tray_windows_startup_app_identity_auto_updater_finding_2",
+      "label": "\u2705 Done (2026-09-10 \u2014 System Tray, Windows Startup, App Identity, Auto-Updater & Finding #2)",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\u2705 done (2026-09-10 \u2014 system tray, windows startup, app identity, auto-updater & finding #2)",
+      "source_file": "diary_archive.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "diary_archive_forensic_audit_findings_2026_09_10",
+      "label": "\ud83d\udd2c Forensic Audit Findings - 2026-09-10",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udd2c forensic audit findings - 2026-09-10",
+      "source_file": "diary_archive.md",
+      "source_location": "L80"
+    },
+    {
+      "id": "diary_archive_historical_forensic_audit_findings_remediated_prior_2026_09_10",
+      "label": "\ud83d\udd2c Historical Forensic Audit Findings - Remediated Prior (2026-09-10)",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udd2c historical forensic audit findings - remediated prior (2026-09-10)",
+      "source_file": "diary_archive.md",
+      "source_location": "L92"
+    },
+    {
       "id": "diary_current_state",
       "label": "\ud83d\udcca Current State",
       "_origin": "ast",
@@ -304,40 +376,16 @@
       "source_location": "L7"
     },
     {
-      "id": "diary_done_2026_09_13_product_strategy_initiatives_v1_4_0",
-      "label": "\u2705 Done (2026-09-13 \u2014 Product Strategy Initiatives v1.4.0)",
+      "id": "diary_done_2026_09_13",
+      "label": "\u2705 Done (2026-09-13)",
       "_origin": "ast",
       "community": 11,
       "community_name": "AI Dev Prompt Clipboard: Developer Diary",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "\u2705 done (2026-09-13 \u2014 product strategy initiatives v1.4.0)",
+      "norm_label": "\u2705 done (2026-09-13)",
       "source_file": "diary.md",
-      "source_location": "L36"
-    },
-    {
-      "id": "diary_forensic_audit_findings_2026_09_13",
-      "label": "\ud83d\udd2c Forensic Audit Findings - 2026-09-13",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\ud83d\udd2c forensic audit findings - 2026-09-13",
-      "source_file": "diary.md",
-      "source_location": "L131"
-    },
-    {
-      "id": "diary_historical_forensic_audit_findings_remediated_2026_09_13_session_1",
-      "label": "\ud83d\udd2c Historical Forensic Audit Findings - Remediated (2026-09-13 Session 1)",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\ud83d\udd2c historical forensic audit findings - remediated (2026-09-13 session 1)",
-      "source_file": "diary.md",
-      "source_location": "L146"
+      "source_location": "L32"
     },
     {
       "id": "diary_next_immediate_step",
@@ -349,7 +397,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83c\udfaf next immediate step",
       "source_file": "diary.md",
-      "source_location": "L168"
+      "source_location": "L51"
     },
     {
       "id": "diary_weekly_summary_week_ending_2026_09_13",
@@ -361,7 +409,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83d\udcc5 weekly summary (week ending 2026-09-13)",
       "source_file": "diary.md",
-      "source_location": "L24"
+      "source_location": "L25"
     },
     {
       "id": "graph_report",
@@ -1074,78 +1122,6 @@
       "norm_label": "install-shortcut.ps1",
       "source_file": "install-shortcut.ps1",
       "source_location": "L1"
-    },
-    {
-      "id": "diary_archive",
-      "label": "diary_archive.md",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "AI Dev Prompt Clipboard: Diary Archive",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "diary_archive.md",
-      "source_file": "diary_archive.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "diary_archive_ai_dev_prompt_clipboard_diary_archive",
-      "label": "AI Dev Prompt Clipboard: Diary Archive",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "AI Dev Prompt Clipboard: Diary Archive",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "ai dev prompt clipboard: diary archive",
-      "source_file": "diary_archive.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "diary_archive_archived_sprint_week_ending_2026_09_12",
-      "label": "\ud83d\udcc5 Archived Sprint: Week ending 2026-09-12",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "AI Dev Prompt Clipboard: Diary Archive",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\ud83d\udcc5 archived sprint: week ending 2026-09-12",
-      "source_file": "diary_archive.md",
-      "source_location": "L7"
-    },
-    {
-      "id": "diary_archive_done_2026_09_10_system_tray_windows_startup_app_identity_auto_updater_finding_2",
-      "label": "\u2705 Done (2026-09-10 \u2014 System Tray, Windows Startup, App Identity, Auto-Updater & Finding #2)",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "AI Dev Prompt Clipboard: Diary Archive",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\u2705 done (2026-09-10 \u2014 system tray, windows startup, app identity, auto-updater & finding #2)",
-      "source_file": "diary_archive.md",
-      "source_location": "L9"
-    },
-    {
-      "id": "diary_archive_forensic_audit_findings_2026_09_10",
-      "label": "\ud83d\udd2c Forensic Audit Findings - 2026-09-10",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "AI Dev Prompt Clipboard: Diary Archive",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\ud83d\udd2c forensic audit findings - 2026-09-10",
-      "source_file": "diary_archive.md",
-      "source_location": "L80"
-    },
-    {
-      "id": "diary_archive_historical_forensic_audit_findings_remediated_prior_2026_09_10",
-      "label": "\ud83d\udd2c Historical Forensic Audit Findings - Remediated Prior (2026-09-10)",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "AI Dev Prompt Clipboard: Diary Archive",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\ud83d\udd2c historical forensic audit findings - remediated prior (2026-09-10)",
-      "source_file": "diary_archive.md",
-      "source_location": "L92"
     },
     {
       "id": "app_build_categorychips",
@@ -2460,24 +2436,24 @@
     },
     {
       "source": "diary_ai_dev_prompt_clipboard_developer_diary",
-      "target": "diary_forensic_audit_findings_2026_09_13",
+      "target": "diary_weekly_summary_week_ending_2026_09_13",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "diary.md",
-      "source_location": "L131",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
       "source": "diary_ai_dev_prompt_clipboard_developer_diary",
-      "target": "diary_historical_forensic_audit_findings_remediated_2026_09_13_session_1",
+      "target": "diary_done_2026_09_13",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "diary.md",
-      "source_location": "L146",
+      "source_location": "L32",
       "weight": 1.0
     },
     {
@@ -2488,7 +2464,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "diary.md",
-      "source_location": "L160",
+      "source_location": "L43",
       "weight": 1.0
     },
     {
@@ -2499,29 +2475,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "diary.md",
-      "source_location": "L168",
-      "weight": 1.0
-    },
-    {
-      "source": "diary_ai_dev_prompt_clipboard_developer_diary",
-      "target": "diary_weekly_summary_week_ending_2026_09_13",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "diary.md",
-      "source_location": "L24",
-      "weight": 1.0
-    },
-    {
-      "source": "diary_ai_dev_prompt_clipboard_developer_diary",
-      "target": "diary_done_2026_09_13_product_strategy_initiatives_v1_4_0",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "diary.md",
-      "source_location": "L36",
+      "source_location": "L51",
       "weight": 1.0
     },
     {
@@ -3029,8 +2983,19 @@
       "source_file": "diary.md",
       "source_location": "L10",
       "weight": 1.0
+    },
+    {
+      "source": "diary",
+      "target": "diary_archive",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L33",
+      "weight": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "5d2a42feac2db70a2b5d963fa2cf695f25529298"
+  "built_at_commit": "e15817b498a86fa45e82a0e3c58d4d0d317a493c"
 }

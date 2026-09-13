@@ -214,9 +214,17 @@ Historical completed sprint tasks and archived weekly summaries.
     - `[x] [MEDIUM] [TECH-DEBT]` `app.ps1` (`btnExportMetrics`): Extracted shared `Set-SafeClipboardText` helper with retry-backoff loop across `Copy-PromptToClipboard` and metrics export, eliminating `CLIPBRD_E_CANT_OPEN` failures.
     - `[x] [LOW] [CLEANUP]` `GRAPH_REPORT.md` (AST Extraction Metadata): Verified and documented `setup.ps1` and `install-shortcut.ps1` as standalone CLI/Web entrypoints in knowledge graph and project documentation.
 
+14. **CI/CD Inno Setup Hotfix & Packaging Gate (`[CI/CD]` / `[REMEDIATION]`)**:
+    - **Diagnóstico de causa raíz**: El workflow de GitHub Actions fallaba en el paso `Compile Inno Setup (.exe)` (Job ID `103765351183`) con `Error on line 49 in installer.iss: Source file "metrics.json" does not exist`. `metrics.json` es telemetría de ejecución ignorada por `.gitignore`, por lo que en el runner limpio de GitHub Actions no existía en disco.
+    - **Remediación en `installer.iss`**: Se eliminó `metrics.json` de la sección `[Files]`. La telemetría es auto-generada por `app.ps1` en el primer uso y preservada de forma natural en las actualizaciones.
+    - **Robustecimiento de CI/CD (`build-installer.yml`)**: Creación defensiva previa de la carpeta `dist/`, validación explícita de `$LASTEXITCODE` tras invocar `iscc.exe`, y corrección de la condición y nombres de tags para publicación en GitHub Releases (`refs/tags/v*`).
+    - **Suite 11 en `tests/app.Tests.ps1`**: Implementada nueva suite automatizada con 4 aserciones que verifican la integridad de packaging de Inno Setup (45/45 aserciones pasando).
+    - **Publicación Exitosa de v1.4.0**: Binario oficial `AI-Prompt-Clipboard-Setup.exe` (2.07 MB) compilado y publicado automáticamente en GitHub Releases.
+
 ---
 
 ## 🔬 Forensic Audit Findings - Remediated (2026-09-13 Session 2)
+- [x] [HIGH] [CI/CD] `installer.iss`: Empaquetado de archivo no versionado (`metrics.json`) provocaba fallo de compilación en GitHub Actions (`Exit code 1`) al no existir en checkout limpio.
 - [x] [HIGH] [SECURITY] `app.ps1` (`Update-FromGitHubHttp`) & `setup.ps1`: Enforced in-memory pre-extraction Zip-Slip traversal validation on all archive entries using ZipFile::OpenRead prior to disk extraction.
 - [x] [HIGH] [BUG] `app.ps1` (`Save-CurrentPromptEditor`, `Delete-CurrentPromptEditor`, `Switch-Workspace`): Unified variable scoping to `$script:prompts` across all mutation and serialization points, ensuring added/deleted prompts reliably persist to disk and workspace packs update cleanly.
 - [x] [HIGH] [BUG] `app.ps1` (Window Lifecycle & Alt+F4): Registered `$window.Add_Closing` handler to intercept Alt+F4 and OS close commands, safely redirecting to `Hide-MainWindow` and preserving the resident WPF window HWND.
