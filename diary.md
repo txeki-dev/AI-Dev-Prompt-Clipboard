@@ -42,11 +42,11 @@
 
 ## 📋 Active / Pending Tasks
 - **Active Task**:
-  - Push CI/CD hotfix to `main` and retag `v1.4.0` to trigger clean automated release build on GitHub Actions.
+  - v1.4.0 release published and live on GitHub Releases with automated installer `.exe`.
 - **Pending Tasks**:
-  - Monitor GitHub Actions release build for `v1.4.0` upon pushing updated tag.
+  - Gather developer telemetry on workspace packs and monitor community adoption.
 
 ---
 
 ## 🎯 Next Immediate Step
-- Commit changes, re-point tag `v1.4.0` to the hotfix commit, and push to GitHub (`origin main` and `origin v1.4.0 --force`).
+- v1.4.0 release successfully compiled and published. Ready for regular sprint planning or new feature backlog prioritization.
