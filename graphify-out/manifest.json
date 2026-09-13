@@ -1,44 +1,44 @@
 {
   "app.ps1": {
-    "mtime": 1789298635.3974862,
-    "seen": 1789298684.2700381,
-    "ast_hash": "dd5a7b55e1c5a39386122e1c2f6b1870",
+    "mtime": 1789321589.3534963,
+    "seen": 1789321598.9748073,
+    "ast_hash": "cc64e6442e741e1627cc19816ccb5300",
     "semantic_hash": ""
   },
   "config.json": {
-    "mtime": 1788985948.7156198,
-    "seen": 1788986476.1180508,
-    "ast_hash": "54672d9b094d006b11f628d2917a6c62",
-    "semantic_hash": "54672d9b094d006b11f628d2917a6c62"
+    "mtime": 1789316743.2071948,
+    "seen": 1789317267.6387963,
+    "ast_hash": "8f4bdd9e8ba1e9f696f7396d357930d1",
+    "semantic_hash": ""
   },
   "install-shortcut.ps1": {
-    "mtime": 1789053813.2679555,
-    "seen": 1789296389.8854845,
-    "ast_hash": "097d64ea3ccf3db4d3fe4f65d7876282",
+    "mtime": 1789317670.1327448,
+    "seen": 1789319789.8811848,
+    "ast_hash": "6502f53af9d66e94f383eddaa6b07a02",
     "semantic_hash": ""
   },
   "prompts.json": {
-    "mtime": 1789298446.9013214,
-    "seen": 1789298684.2700381,
-    "ast_hash": "f90b524b7ce8bef36b848d61611fdb71",
+    "mtime": 1789314285.976802,
+    "seen": 1789314350.5553117,
+    "ast_hash": "735f971251aebe5c62ad586c9c5d7e57",
     "semantic_hash": ""
   },
   "GRAPH_REPORT.md": {
-    "mtime": 1789298100.4967158,
-    "seen": 1789298684.2700381,
-    "ast_hash": "9286c4a562b60eeae8c31d7c3509137f",
+    "mtime": 1789300776.6901577,
+    "seen": 1789302098.3282096,
+    "ast_hash": "8009bbecbf11d03b469f58ff76914287",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1789298664.6293874,
-    "seen": 1789298684.2700381,
-    "ast_hash": "8d6b446f02a1a7bd222b2e86e7592087",
+    "mtime": 1789318381.2664146,
+    "seen": 1789319789.8811848,
+    "ast_hash": "402b80f17e06d19134339cc5e3ad392a",
     "semantic_hash": ""
   },
   "diary.md": {
-    "mtime": 1789298674.1894512,
-    "seen": 1789298684.2700381,
-    "ast_hash": "241ce036cef2acaca6a68ebb66f8e2c8",
+    "mtime": 1789321594.920773,
+    "seen": 1789321598.9748073,
+    "ast_hash": "9348e69e9fc681938f512b8d325ddbba",
     "semantic_hash": ""
   },
   "diary_archive.md": {
@@ -48,21 +48,57 @@
     "semantic_hash": ""
   },
   "backlog.md": {
-    "mtime": 1789296362.6557646,
-    "seen": 1789296389.8854845,
-    "ast_hash": "11519dc5a223c13a56ae925c6f32c190",
+    "mtime": 1789302076.9131565,
+    "seen": 1789302098.3282096,
+    "ast_hash": "590252871907399b2558e3730d0776bb",
     "semantic_hash": ""
   },
   "version.json": {
-    "mtime": 1789298652.9913056,
-    "seen": 1789298684.2700381,
-    "ast_hash": "60cc719c13b8ded853e596ba38fa3f4f",
+    "mtime": 1789302051.543791,
+    "seen": 1789302098.3282096,
+    "ast_hash": "9c90ce1828bbc917440140755a3aac29",
     "semantic_hash": ""
   },
   "dev_flux.png": {
     "mtime": 1789298315.598728,
     "seen": 1789298684.2700381,
     "ast_hash": "2b0425c7681ec9013bc5d6540321c33b",
+    "semantic_hash": ""
+  },
+  "packs/core-engineering.json": {
+    "mtime": 1789314285.976802,
+    "seen": 1789314350.5553117,
+    "ast_hash": "735f971251aebe5c62ad586c9c5d7e57",
+    "semantic_hash": ""
+  },
+  "packs/frontend-ui.json": {
+    "mtime": 1789301772.8342173,
+    "seen": 1789302098.3282096,
+    "ast_hash": "b01ac0866d9b87c8916cf1adf1a933ff",
+    "semantic_hash": ""
+  },
+  "packs/security-devops.json": {
+    "mtime": 1789301772.83491,
+    "seen": 1789302098.3282096,
+    "ast_hash": "3c8fd0b02dc3ea92566a07f4e925fcd3",
+    "semantic_hash": ""
+  },
+  "setup.ps1": {
+    "mtime": 1789321530.570816,
+    "seen": 1789321598.9748073,
+    "ast_hash": "8f81042afe7b1d5dedd8928a4f2581aa",
+    "semantic_hash": ""
+  },
+  "tests/app.Tests.ps1": {
+    "mtime": 1789321474.0455136,
+    "seen": 1789321598.9748073,
+    "ast_hash": "59479845ba7f53aefcd9110fbf114cf4",
+    "semantic_hash": ""
+  },
+  ".github/workflows/build-installer.yml": {
+    "mtime": 1789321542.9707744,
+    "seen": 1789321598.9748073,
+    "ast_hash": "c5eb7684f88524e00a88347600fa4240",
     "semantic_hash": ""
   }
 }

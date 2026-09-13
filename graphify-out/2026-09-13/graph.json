@@ -4,6 +4,102 @@
   "graph": {},
   "nodes": [
     {
+      "id": "diary",
+      "label": "diary.md",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "diary.md",
+      "source_file": "diary.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "diary_active_pending_tasks",
+      "label": "\ud83d\udccb Active / Pending Tasks",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udccb active / pending tasks",
+      "source_file": "diary.md",
+      "source_location": "L145"
+    },
+    {
+      "id": "diary_ai_dev_prompt_clipboard_developer_diary",
+      "label": "AI Dev Prompt Clipboard: Developer Diary",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "ai dev prompt clipboard: developer diary",
+      "source_file": "diary.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "diary_current_state",
+      "label": "\ud83d\udcca Current State",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udcca current state",
+      "source_file": "diary.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "diary_done_2026_09_13_product_strategy_initiatives_v1_4_0",
+      "label": "\u2705 Done (2026-09-13 \u2014 Product Strategy Initiatives v1.4.0)",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\u2705 done (2026-09-13 \u2014 product strategy initiatives v1.4.0)",
+      "source_file": "diary.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "diary_forensic_audit_findings_2026_09_13",
+      "label": "\ud83d\udd2c Forensic Audit Findings - 2026-09-13",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udd2c forensic audit findings - 2026-09-13",
+      "source_file": "diary.md",
+      "source_location": "L131"
+    },
+    {
+      "id": "diary_next_immediate_step",
+      "label": "\ud83c\udfaf Next Immediate Step",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83c\udfaf next immediate step",
+      "source_file": "diary.md",
+      "source_location": "L153"
+    },
+    {
+      "id": "diary_weekly_summary_week_ending_2026_09_13",
+      "label": "\ud83d\udcc5 Weekly Summary (Week ending 2026-09-13)",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udcc5 weekly summary (week ending 2026-09-13)",
+      "source_file": "diary.md",
+      "source_location": "L24"
+    },
+    {
       "id": "graph_report",
       "label": "GRAPH_REPORT.md",
       "_origin": "ast",
@@ -49,7 +145,7 @@
       "node_kind": "heading",
       "norm_label": "god nodes (most connected - your core abstractions)",
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L26"
+      "source_location": "L29"
     },
     {
       "id": "graph_report_graph_freshness",
@@ -85,7 +181,7 @@
       "node_kind": "heading",
       "norm_label": "import cycles",
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L41"
+      "source_location": "L47"
     },
     {
       "id": "graph_report_knowledge_gaps",
@@ -97,7 +193,7 @@
       "node_kind": "heading",
       "norm_label": "knowledge gaps",
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L74"
+      "source_location": "L92"
     },
     {
       "id": "graph_report_suggested_questions",
@@ -109,7 +205,7 @@
       "node_kind": "heading",
       "norm_label": "suggested questions",
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L78"
+      "source_location": "L96"
     },
     {
       "id": "graph_report_summary",
@@ -133,190 +229,249 @@
       "node_kind": "heading",
       "norm_label": "surprising connections (you probably didn't know these)",
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L38"
+      "source_location": "L41"
     },
     {
-      "id": "diary",
-      "label": "diary.md",
+      "id": "app_check_forupdates",
+      "label": "Check-ForUpdates()",
       "_origin": "ast",
       "community": 1,
-      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "diary.md",
-      "source_file": "diary.md",
+      "community_name": "Invoke-GitUpdateStep",
+      "file_type": "code",
+      "norm_label": "check-forupdates()",
+      "source_file": "app.ps1",
+      "source_location": "L2145"
+    },
+    {
+      "id": "app_check_forupdatesasync",
+      "label": "Check-ForUpdatesAsync()",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Invoke-GitUpdateStep",
+      "file_type": "code",
+      "norm_label": "check-forupdatesasync()",
+      "source_file": "app.ps1",
+      "source_location": "L1870"
+    },
+    {
+      "id": "app_get_gitbehindcount",
+      "label": "Get-GitBehindCount()",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Invoke-GitUpdateStep",
+      "file_type": "code",
+      "norm_label": "get-gitbehindcount()",
+      "source_file": "app.ps1",
+      "source_location": "L1641"
+    },
+    {
+      "id": "app_get_gitdirtystatus",
+      "label": "Get-GitDirtyStatus()",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Invoke-GitUpdateStep",
+      "file_type": "code",
+      "norm_label": "get-gitdirtystatus()",
+      "source_file": "app.ps1",
+      "source_location": "L1653"
+    },
+    {
+      "id": "app_get_localversioninfo",
+      "label": "Get-LocalVersionInfo()",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Invoke-GitUpdateStep",
+      "file_type": "code",
+      "norm_label": "get-localversioninfo()",
+      "source_file": "app.ps1",
+      "source_location": "L1691"
+    },
+    {
+      "id": "app_get_remoteupdateinfohttp",
+      "label": "Get-RemoteUpdateInfoHttp()",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Invoke-GitUpdateStep",
+      "file_type": "code",
+      "norm_label": "get-remoteupdateinfohttp()",
+      "source_file": "app.ps1",
+      "source_location": "L1710"
+    },
+    {
+      "id": "app_invoke_gitupdatestep",
+      "label": "Invoke-GitUpdateStep()",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Invoke-GitUpdateStep",
+      "file_type": "code",
+      "norm_label": "invoke-gitupdatestep()",
+      "source_file": "app.ps1",
+      "source_location": "L2017"
+    },
+    {
+      "id": "app_invoke_httpupdatestep",
+      "label": "Invoke-HttpUpdateStep()",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Invoke-GitUpdateStep",
+      "file_type": "code",
+      "norm_label": "invoke-httpupdatestep()",
+      "source_file": "app.ps1",
+      "source_location": "L2091"
+    },
+    {
+      "id": "app_restart_application",
+      "label": "Restart-Application()",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Invoke-GitUpdateStep",
+      "file_type": "code",
+      "norm_label": "restart-application()",
+      "source_file": "app.ps1",
+      "source_location": "L1428"
+    },
+    {
+      "id": "app_restore_mergeduserconfig",
+      "label": "Restore-MergedUserConfig()",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Invoke-GitUpdateStep",
+      "file_type": "code",
+      "norm_label": "restore-mergeduserconfig()",
+      "source_file": "app.ps1",
+      "source_location": "L1666"
+    },
+    {
+      "id": "app_test_isgitrepo",
+      "label": "Test-IsGitRepo()",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Invoke-GitUpdateStep",
+      "file_type": "code",
+      "norm_label": "test-isgitrepo()",
+      "source_file": "app.ps1",
+      "source_location": "L1624"
+    },
+    {
+      "id": "app_update_fromgithubhttp",
+      "label": "Update-FromGitHubHttp()",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "Invoke-GitUpdateStep",
+      "file_type": "code",
+      "norm_label": "update-fromgithubhttp()",
+      "source_file": "app.ps1",
+      "source_location": "L1749"
+    },
+    {
+      "id": "setup",
+      "label": "setup.ps1",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "setup.ps1",
+      "file_type": "code",
+      "norm_label": "setup.ps1",
+      "source_file": "setup.ps1",
       "source_location": "L1"
     },
     {
-      "id": "diary_active_pending_tasks",
-      "label": "\ud83d\udccb Active / Pending Tasks",
+      "id": "tests_app_tests",
+      "label": "app.Tests.ps1",
       "_origin": "ast",
-      "community": 1,
-      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\ud83d\udccb active / pending tasks",
-      "source_file": "diary.md",
-      "source_location": "L65"
-    },
-    {
-      "id": "diary_ai_dev_prompt_clipboard_developer_diary",
-      "label": "AI Dev Prompt Clipboard: Developer Diary",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "ai dev prompt clipboard: developer diary",
-      "source_file": "diary.md",
+      "community": 2,
+      "community_name": "app.Tests.ps1",
+      "file_type": "code",
+      "norm_label": "app.tests.ps1",
+      "source_file": "tests/app.Tests.ps1",
       "source_location": "L1"
     },
     {
-      "id": "diary_current_state",
-      "label": "\ud83d\udcca Current State",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\ud83d\udcca current state",
-      "source_file": "diary.md",
-      "source_location": "L7"
-    },
-    {
-      "id": "diary_done_2026_09_13_prompt_catalog_restructuring_rdi_protocol_dual_mode_auto_updater",
-      "label": "\u2705 Done (2026-09-13 \u2014 Prompt Catalog Restructuring, RDi Protocol & Dual-Mode Auto-Updater)",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\u2705 done (2026-09-13 \u2014 prompt catalog restructuring, rdi protocol & dual-mode auto-updater)",
-      "source_file": "diary.md",
-      "source_location": "L32"
-    },
-    {
-      "id": "diary_next_immediate_step",
-      "label": "\ud83c\udfaf Next Immediate Step",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\ud83c\udfaf next immediate step",
-      "source_file": "diary.md",
-      "source_location": "L73"
-    },
-    {
-      "id": "diary_weekly_summary_week_ending_2026_09_13",
-      "label": "\ud83d\udcc5 Weekly Summary (Week ending 2026-09-13)",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "AI Dev Prompt Clipboard: Developer Diary",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "\ud83d\udcc5 weekly summary (week ending 2026-09-13)",
-      "source_file": "diary.md",
-      "source_location": "L25"
-    },
-    {
-      "id": "app",
-      "label": "app.ps1",
+      "id": "tests_app_tests_assert_test",
+      "label": "Assert-Test()",
       "_origin": "ast",
       "community": 2,
-      "community_name": "app.ps1",
+      "community_name": "app.Tests.ps1",
       "file_type": "code",
-      "norm_label": "app.ps1",
-      "source_file": "app.ps1",
-      "source_location": "L1"
+      "norm_label": "assert-test()",
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L16"
     },
     {
-      "id": "app_copy_prompttoclipboard",
-      "label": "Copy-PromptToClipboard()",
+      "id": "tests_app_tests_test_checkgitdirtystatus",
+      "label": "Test-CheckGitDirtyStatus()",
       "_origin": "ast",
       "community": 2,
-      "community_name": "app.ps1",
+      "community_name": "app.Tests.ps1",
       "file_type": "code",
-      "norm_label": "copy-prompttoclipboard()",
-      "source_file": "app.ps1",
-      "source_location": "L1138"
+      "norm_label": "test-checkgitdirtystatus()",
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L146"
     },
     {
-      "id": "app_get_safeclipboardtext",
-      "label": "Get-SafeClipboardText()",
+      "id": "tests_app_tests_test_cyclenextcategory",
+      "label": "Test-CycleNextCategory()",
       "_origin": "ast",
       "community": 2,
-      "community_name": "app.ps1",
+      "community_name": "app.Tests.ps1",
       "file_type": "code",
-      "norm_label": "get-safeclipboardtext()",
-      "source_file": "app.ps1",
-      "source_location": "L1070"
+      "norm_label": "test-cyclenextcategory()",
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L214"
     },
     {
-      "id": "app_hide_mainwindow",
-      "label": "Hide-MainWindow()",
+      "id": "tests_app_tests_test_cyclenexttab",
+      "label": "Test-CycleNextTab()",
       "_origin": "ast",
       "community": 2,
-      "community_name": "app.ps1",
+      "community_name": "app.Tests.ps1",
       "file_type": "code",
-      "norm_label": "hide-mainwindow()",
-      "source_file": "app.ps1",
-      "source_location": "L444"
+      "norm_label": "test-cyclenexttab()",
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L235"
     },
     {
-      "id": "app_save_config",
-      "label": "Save-Config()",
+      "id": "tests_app_tests_test_getnextphase",
+      "label": "Test-GetNextPhase()",
       "_origin": "ast",
       "community": 2,
-      "community_name": "app.ps1",
+      "community_name": "app.Tests.ps1",
       "file_type": "code",
-      "norm_label": "save-config()",
-      "source_file": "app.ps1",
-      "source_location": "L112"
+      "norm_label": "test-getnextphase()",
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L258"
     },
     {
-      "id": "app_set_cardactivestate",
-      "label": "Set-CardActiveState()",
+      "id": "tests_app_tests_test_getsmartsuggestion",
+      "label": "Test-GetSmartSuggestion()",
       "_origin": "ast",
       "community": 2,
-      "community_name": "app.ps1",
+      "community_name": "app.Tests.ps1",
       "file_type": "code",
-      "norm_label": "set-cardactivestate()",
-      "source_file": "app.ps1",
-      "source_location": "L1079"
+      "norm_label": "test-getsmartsuggestion()",
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L107"
     },
     {
-      "id": "app_show_preview",
-      "label": "Show-Preview()",
+      "id": "tests_app_tests_test_gettemplatetokens",
+      "label": "Test-GetTemplateTokens()",
       "_origin": "ast",
       "community": 2,
-      "community_name": "app.ps1",
+      "community_name": "app.Tests.ps1",
       "file_type": "code",
-      "norm_label": "show-preview()",
-      "source_file": "app.ps1",
-      "source_location": "L1202"
+      "norm_label": "test-gettemplatetokens()",
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L77"
     },
     {
-      "id": "app_update_activeclipboardindicator",
-      "label": "Update-ActiveClipboardIndicator()",
+      "id": "tests_app_tests_test_mergeconfig",
+      "label": "Test-MergeConfig()",
       "_origin": "ast",
       "community": 2,
-      "community_name": "app.ps1",
+      "community_name": "app.Tests.ps1",
       "file_type": "code",
-      "norm_label": "update-activeclipboardindicator()",
-      "source_file": "app.ps1",
-      "source_location": "L1098"
-    },
-    {
-      "id": "app_update_filter",
-      "label": "Update-Filter()",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "app.ps1",
-      "file_type": "code",
-      "norm_label": "update-filter()",
-      "source_file": "app.ps1",
-      "source_location": "L1433"
+      "norm_label": "test-mergeconfig()",
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L177"
     },
     {
       "id": "readme",
@@ -376,7 +531,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83c\udfa8 caracteristicas de la interfaz",
       "source_file": "README.md",
-      "source_location": "L46"
+      "source_location": "L104"
     },
     {
       "id": "readme_estructura_del_proyecto",
@@ -388,7 +543,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83d\udee0\ufe0f estructura del proyecto",
       "source_file": "README.md",
-      "source_location": "L62"
+      "source_location": "L125"
     },
     {
       "id": "readme_instalaci\u00f3n_y_configuraci\u00f3n_de_atajo",
@@ -400,7 +555,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83d\udcbb instalacion y configuracion de atajo",
       "source_file": "README.md",
-      "source_location": "L75"
+      "source_location": "L145"
     },
     {
       "id": "readme_licencia",
@@ -412,227 +567,464 @@
       "node_kind": "heading",
       "norm_label": "\ud83d\udcc4 licencia",
       "source_file": "README.md",
-      "source_location": "L87"
+      "source_location": "L192"
     },
     {
-      "id": "readme_opci\u00f3n_1_doble_clic_recomendado",
-      "label": "Opci\u00f3n 1: Doble clic (Recomendado)",
+      "id": "readme_m\u00e9todo_1_instalador_autom\u00e1tico_de_1_l\u00ednea_recomendado_para_usuarios_no_t\u00e9cnicos_sin_git",
+      "label": "\ud83c\udf1f M\u00e9todo 1: Instalador Autom\u00e1tico de 1 L\u00ednea (Recomendado para usuarios no t\u00e9cnicos / Sin Git)",
       "_origin": "ast",
       "community": 3,
       "community_name": "AI Dev Prompt Clipboard \ud83d\udccb",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "opcion 1: doble clic (recomendado)",
+      "norm_label": "\ud83c\udf1f metodo 1: instalador automatico de 1 linea (recomendado para usuarios no tecnicos / sin git)",
       "source_file": "README.md",
-      "source_location": "L77"
+      "source_location": "L149"
     },
     {
-      "id": "readme_opci\u00f3n_2_powershell_personalizando_atajo",
-      "label": "Opci\u00f3n 2: PowerShell (Personalizando atajo)",
+      "id": "readme_m\u00e9todo_2_instalador_de_windows_exe_cl\u00e1sico",
+      "label": "\ud83d\udce6 M\u00e9todo 2: Instalador de Windows `.exe` (Cl\u00e1sico)",
       "_origin": "ast",
       "community": 3,
       "community_name": "AI Dev Prompt Clipboard \ud83d\udccb",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "opcion 2: powershell (personalizando atajo)",
+      "norm_label": "\ud83d\udce6 metodo 2: instalador de windows `.exe` (clasico)",
       "source_file": "README.md",
-      "source_location": "L80"
+      "source_location": "L164"
     },
     {
-      "id": "readme_prompts_y_protocolos_incluidos_9_protocolos",
-      "label": "\u26a1 Prompts y Protocolos Incluidos (9 Protocolos)",
+      "id": "readme_m\u00e9todo_3_descarga_en_zip_manual_en_1_clic",
+      "label": "\ud83d\udcc2 M\u00e9todo 3: Descarga en ZIP (Manual en 1 clic)",
       "_origin": "ast",
       "community": 3,
       "community_name": "AI Dev Prompt Clipboard \ud83d\udccb",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "\u26a1 prompts y protocolos incluidos (9 protocolos)",
+      "norm_label": "\ud83d\udcc2 metodo 3: descarga en zip (manual en 1 clic)",
+      "source_file": "README.md",
+      "source_location": "L174"
+    },
+    {
+      "id": "readme_m\u00e9todo_4_para_desarrolladores_git_clone",
+      "label": "\ud83d\udc68\u200d\ud83d\udcbb M\u00e9todo 4: Para Desarrolladores (Git Clone)",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "AI Dev Prompt Clipboard \ud83d\udccb",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udc68\u200d\ud83d\udcbb metodo 4: para desarrolladores (git clone)",
+      "source_file": "README.md",
+      "source_location": "L181"
+    },
+    {
+      "id": "readme_pesta\u00f1a_dev_flux_metodolog\u00eda_de_desarrollo_h\u00edbrido",
+      "label": "\ud83d\uddfa\ufe0f Pesta\u00f1a DEV FLUX (Metodolog\u00eda de Desarrollo H\u00edbrido)",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "AI Dev Prompt Clipboard \ud83d\udccb",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\uddfa\ufe0f pestana dev flux (metodologia de desarrollo hibrido)",
+      "source_file": "README.md",
+      "source_location": "L48"
+    },
+    {
+      "id": "readme_prompts_y_protocolos_incluidos_11_protocolos",
+      "label": "\u26a1 Prompts y Protocolos Incluidos (11 Protocolos)",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "AI Dev Prompt Clipboard \ud83d\udccb",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\u26a1 prompts y protocolos incluidos (11 protocolos)",
       "source_file": "README.md",
       "source_location": "L30"
     },
     {
-      "id": "graph_report_communities_8_total_0_thin_omitted",
-      "label": "Communities (8 total, 0 thin omitted)",
+      "id": "graph_report_communities_11_total_0_thin_omitted",
+      "label": "Communities (11 total, 0 thin omitted)",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Communities (8 total, 0 thin omitted)",
+      "community_name": "Communities (11 total, 0 thin omitted)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "communities (8 total, 0 thin omitted)",
+      "norm_label": "communities (11 total, 0 thin omitted)",
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L44"
+      "source_location": "L50"
     },
     {
       "id": "graph_report_community_0_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_13",
       "label": "Community 0 - \"Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)\"",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Communities (8 total, 0 thin omitted)",
+      "community_name": "Communities (11 total, 0 thin omitted)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "community 0 - \"graph report - ai-assisted-dev-prompt-clipboard  (2026-09-13)\"",
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L46"
+      "source_location": "L52"
+    },
+    {
+      "id": "graph_report_community_10_update_activeclipboardindicator",
+      "label": "Community 10 - \"Update-ActiveClipboardIndicator\"",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "Communities (11 total, 0 thin omitted)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "community 10 - \"update-activeclipboardindicator\"",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L88"
     },
     {
       "id": "graph_report_community_1_ai_dev_prompt_clipboard_developer_diary",
       "label": "Community 1 - \"AI Dev Prompt Clipboard: Developer Diary\"",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Communities (8 total, 0 thin omitted)",
+      "community_name": "Communities (11 total, 0 thin omitted)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "community 1 - \"ai dev prompt clipboard: developer diary\"",
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L50"
+      "source_location": "L56"
     },
     {
       "id": "graph_report_community_2_app_ps1",
       "label": "Community 2 - \"app.ps1\"",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Communities (8 total, 0 thin omitted)",
+      "community_name": "Communities (11 total, 0 thin omitted)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "community 2 - \"app.ps1\"",
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L54"
+      "source_location": "L60"
     },
     {
       "id": "graph_report_community_3_ai_dev_prompt_clipboard",
       "label": "Community 3 - \"AI Dev Prompt Clipboard \ud83d\udccb\"",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Communities (8 total, 0 thin omitted)",
+      "community_name": "Communities (11 total, 0 thin omitted)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "community 3 - \"ai dev prompt clipboard \ud83d\udccb\"",
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L58"
+      "source_location": "L64"
     },
     {
-      "id": "graph_report_community_4_communities_9_total_1_thin_omitted",
-      "label": "Community 4 - \"Communities (9 total, 1 thin omitted)\"",
+      "id": "graph_report_community_4_communities_11_total_0_thin_omitted",
+      "label": "Community 4 - \"Communities (11 total, 0 thin omitted)\"",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Communities (8 total, 0 thin omitted)",
+      "community_name": "Communities (11 total, 0 thin omitted)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "community 4 - \"communities (9 total, 1 thin omitted)\"",
+      "norm_label": "community 4 - \"communities (11 total, 0 thin omitted)\"",
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L62"
+      "source_location": "L68"
+    },
+    {
+      "id": "graph_report_community_5_check_forupdates",
+      "label": "Community 5 - \"Check-ForUpdates\"",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "Communities (11 total, 0 thin omitted)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "community 5 - \"check-forupdates\"",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L72"
     },
     {
       "id": "graph_report_community_6_backlog_ai_dev_prompt_clipboard",
       "label": "Community 6 - \"Backlog - AI Dev Prompt Clipboard\"",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Communities (8 total, 0 thin omitted)",
+      "community_name": "Communities (11 total, 0 thin omitted)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "community 6 - \"backlog - ai dev prompt clipboard\"",
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L66"
+      "source_location": "L76"
     },
     {
       "id": "graph_report_community_8_ai_dev_prompt_clipboard_diary_archive",
       "label": "Community 8 - \"AI Dev Prompt Clipboard: Diary Archive\"",
       "_origin": "ast",
       "community": 4,
-      "community_name": "Communities (8 total, 0 thin omitted)",
+      "community_name": "Communities (11 total, 0 thin omitted)",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "community 8 - \"ai dev prompt clipboard: diary archive\"",
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L70"
+      "source_location": "L80"
     },
     {
-      "id": "app_check_forupdates",
-      "label": "Check-ForUpdates()",
+      "id": "graph_report_community_9_check_forupdatesasync",
+      "label": "Community 9 - \"Check-ForUpdatesAsync\"",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "Communities (11 total, 0 thin omitted)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "community 9 - \"check-forupdatesasync\"",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L84"
+    },
+    {
+      "id": "app",
+      "label": "app.ps1",
       "_origin": "ast",
       "community": 5,
-      "community_name": "Check-ForUpdates",
+      "community_name": "app.ps1",
       "file_type": "code",
-      "norm_label": "check-forupdates()",
+      "norm_label": "app.ps1",
       "source_file": "app.ps1",
-      "source_location": "L841"
+      "source_location": "L1"
+    },
+    {
+      "id": "app_copy_prompttoclipboard",
+      "label": "Copy-PromptToClipboard()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "copy-prompttoclipboard()",
+      "source_file": "app.ps1",
+      "source_location": "L2320"
     },
     {
       "id": "app_exit_application",
       "label": "Exit-Application()",
       "_origin": "ast",
       "community": 5,
-      "community_name": "Check-ForUpdates",
+      "community_name": "app.ps1",
       "file_type": "code",
       "norm_label": "exit-application()",
       "source_file": "app.ps1",
-      "source_location": "L451"
+      "source_location": "L1379"
     },
     {
-      "id": "app_get_gitbehindcount",
-      "label": "Get-GitBehindCount()",
+      "id": "app_get_availableworkspaces",
+      "label": "Get-AvailableWorkspaces()",
       "_origin": "ast",
       "community": 5,
-      "community_name": "Check-ForUpdates",
+      "community_name": "app.ps1",
       "file_type": "code",
-      "norm_label": "get-gitbehindcount()",
+      "norm_label": "get-availableworkspaces()",
       "source_file": "app.ps1",
-      "source_location": "L546"
+      "source_location": "L3150"
     },
     {
-      "id": "app_get_localversioninfo",
-      "label": "Get-LocalVersionInfo()",
+      "id": "app_get_nextphaseprompt",
+      "label": "Get-NextPhasePrompt()",
       "_origin": "ast",
       "community": 5,
-      "community_name": "Check-ForUpdates",
+      "community_name": "app.ps1",
       "file_type": "code",
-      "norm_label": "get-localversioninfo()",
+      "norm_label": "get-nextphaseprompt()",
       "source_file": "app.ps1",
-      "source_location": "L595"
+      "source_location": "L3107"
     },
     {
-      "id": "app_get_remoteupdateinfohttp",
-      "label": "Get-RemoteUpdateInfoHttp()",
+      "id": "app_get_safeclipboardtext",
+      "label": "Get-SafeClipboardText()",
       "_origin": "ast",
       "community": 5,
-      "community_name": "Check-ForUpdates",
+      "community_name": "app.ps1",
       "file_type": "code",
-      "norm_label": "get-remoteupdateinfohttp()",
+      "norm_label": "get-safeclipboardtext()",
       "source_file": "app.ps1",
-      "source_location": "L614"
+      "source_location": "L2230"
     },
     {
-      "id": "app_restore_mergeduserconfig",
-      "label": "Restore-MergedUserConfig()",
+      "id": "app_get_smartsuggestion",
+      "label": "Get-SmartSuggestion()",
       "_origin": "ast",
       "community": 5,
-      "community_name": "Check-ForUpdates",
+      "community_name": "app.ps1",
       "file_type": "code",
-      "norm_label": "restore-mergeduserconfig()",
+      "norm_label": "get-smartsuggestion()",
       "source_file": "app.ps1",
-      "source_location": "L572"
+      "source_location": "L2425"
     },
     {
-      "id": "app_test_isgitrepo",
-      "label": "Test-IsGitRepo()",
+      "id": "app_get_templatetokens",
+      "label": "Get-TemplateTokens()",
       "_origin": "ast",
       "community": 5,
-      "community_name": "Check-ForUpdates",
+      "community_name": "app.ps1",
       "file_type": "code",
-      "norm_label": "test-isgitrepo()",
+      "norm_label": "get-templatetokens()",
       "source_file": "app.ps1",
-      "source_location": "L529"
+      "source_location": "L2410"
     },
     {
-      "id": "app_update_fromgithubhttp",
-      "label": "Update-FromGitHubHttp()",
+      "id": "app_hide_mainwindow",
+      "label": "Hide-MainWindow()",
       "_origin": "ast",
       "community": 5,
-      "community_name": "Check-ForUpdates",
+      "community_name": "app.ps1",
       "file_type": "code",
-      "norm_label": "update-fromgithubhttp()",
+      "norm_label": "hide-mainwindow()",
       "source_file": "app.ps1",
-      "source_location": "L653"
+      "source_location": "L1369"
+    },
+    {
+      "id": "app_init_workspacesdropdown",
+      "label": "Init-WorkspacesDropdown()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "init-workspacesdropdown()",
+      "source_file": "app.ps1",
+      "source_location": "L3171"
+    },
+    {
+      "id": "app_load_metrics",
+      "label": "Load-Metrics()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "load-metrics()",
+      "source_file": "app.ps1",
+      "source_location": "L2832"
+    },
+    {
+      "id": "app_render_promptcards",
+      "label": "Render-PromptCards()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "render-promptcards()",
+      "source_file": "app.ps1",
+      "source_location": "L2553"
+    },
+    {
+      "id": "app_select_tab",
+      "label": "Select-Tab()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "select-tab()",
+      "source_file": "app.ps1",
+      "source_location": "L1246"
+    },
+    {
+      "id": "app_set_cardactivestate",
+      "label": "Set-CardActiveState()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "set-cardactivestate()",
+      "source_file": "app.ps1",
+      "source_location": "L2248"
+    },
+    {
+      "id": "app_show_mainwindow",
+      "label": "Show-MainWindow()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "show-mainwindow()",
+      "source_file": "app.ps1",
+      "source_location": "L1354"
+    },
+    {
+      "id": "app_show_preview",
+      "label": "Show-Preview()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "show-preview()",
+      "source_file": "app.ps1",
+      "source_location": "L2389"
+    },
+    {
+      "id": "app_show_prompteditor",
+      "label": "Show-PromptEditor()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "show-prompteditor()",
+      "source_file": "app.ps1",
+      "source_location": "L3285"
+    },
+    {
+      "id": "app_show_quickfill",
+      "label": "Show-QuickFill()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "show-quickfill()",
+      "source_file": "app.ps1",
+      "source_location": "L2450"
+    },
+    {
+      "id": "app_step_tonextphase",
+      "label": "Step-ToNextPhase()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "step-tonextphase()",
+      "source_file": "app.ps1",
+      "source_location": "L3132"
+    },
+    {
+      "id": "app_switch_nexttab",
+      "label": "Switch-NextTab()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "switch-nexttab()",
+      "source_file": "app.ps1",
+      "source_location": "L1232"
+    },
+    {
+      "id": "app_trigger_backgroundupdatecheck",
+      "label": "Trigger-BackgroundUpdateCheck()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "trigger-backgroundupdatecheck()",
+      "source_file": "app.ps1",
+      "source_location": "L1345"
+    },
+    {
+      "id": "app_update_activeclipboardindicator",
+      "label": "Update-ActiveClipboardIndicator()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "update-activeclipboardindicator()",
+      "source_file": "app.ps1",
+      "source_location": "L2267"
+    },
+    {
+      "id": "app_update_metricsview",
+      "label": "Update-MetricsView()",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "app.ps1",
+      "file_type": "code",
+      "norm_label": "update-metricsview()",
+      "source_file": "app.ps1",
+      "source_location": "L2907"
     },
     {
       "id": "backlog",
@@ -668,7 +1060,7 @@
       "node_kind": "heading",
       "norm_label": "ideas & tech debt",
       "source_file": "backlog.md",
-      "source_location": "L6"
+      "source_location": "L13"
     },
     {
       "id": "backlog_prioritized_backlog",
@@ -766,40 +1158,139 @@
       "source_location": "L92"
     },
     {
-      "id": "app_check_forupdatesasync",
-      "label": "Check-ForUpdatesAsync()",
+      "id": "app_build_categorychips",
+      "label": "Build-CategoryChips()",
       "_origin": "ast",
       "community": 9,
-      "community_name": "Check-ForUpdatesAsync",
+      "community_name": "Switch-Workspace",
       "file_type": "code",
-      "norm_label": "check-forupdatesasync()",
+      "norm_label": "build-categorychips()",
       "source_file": "app.ps1",
-      "source_location": "L721"
+      "source_location": "L1075"
     },
     {
-      "id": "app_show_mainwindow",
-      "label": "Show-MainWindow()",
+      "id": "app_delete_currentprompteditor",
+      "label": "Delete-CurrentPromptEditor()",
       "_origin": "ast",
       "community": 9,
-      "community_name": "Check-ForUpdatesAsync",
+      "community_name": "Switch-Workspace",
       "file_type": "code",
-      "norm_label": "show-mainwindow()",
+      "norm_label": "delete-currentprompteditor()",
       "source_file": "app.ps1",
-      "source_location": "L433"
+      "source_location": "L3385"
     },
     {
-      "id": "app_trigger_backgroundupdatecheck",
-      "label": "Trigger-BackgroundUpdateCheck()",
+      "id": "app_save_config",
+      "label": "Save-Config()",
       "_origin": "ast",
       "community": 9,
-      "community_name": "Check-ForUpdatesAsync",
+      "community_name": "Switch-Workspace",
       "file_type": "code",
-      "norm_label": "trigger-backgroundupdatecheck()",
+      "norm_label": "save-config()",
       "source_file": "app.ps1",
-      "source_location": "L424"
+      "source_location": "L172"
+    },
+    {
+      "id": "app_save_currentprompteditor",
+      "label": "Save-CurrentPromptEditor()",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "Switch-Workspace",
+      "file_type": "code",
+      "norm_label": "save-currentprompteditor()",
+      "source_file": "app.ps1",
+      "source_location": "L3314"
+    },
+    {
+      "id": "app_save_metrics",
+      "label": "Save-Metrics()",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "Switch-Workspace",
+      "file_type": "code",
+      "norm_label": "save-metrics()",
+      "source_file": "app.ps1",
+      "source_location": "L2860"
+    },
+    {
+      "id": "app_set_categoryfilter",
+      "label": "Set-CategoryFilter()",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "Switch-Workspace",
+      "file_type": "code",
+      "norm_label": "set-categoryfilter()",
+      "source_file": "app.ps1",
+      "source_location": "L1052"
+    },
+    {
+      "id": "app_switch_nextcategory",
+      "label": "Switch-NextCategory()",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "Switch-Workspace",
+      "file_type": "code",
+      "norm_label": "switch-nextcategory()",
+      "source_file": "app.ps1",
+      "source_location": "L1208"
+    },
+    {
+      "id": "app_switch_workspace",
+      "label": "Switch-Workspace()",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "Switch-Workspace",
+      "file_type": "code",
+      "norm_label": "switch-workspace()",
+      "source_file": "app.ps1",
+      "source_location": "L3189"
+    },
+    {
+      "id": "app_track_promptusage",
+      "label": "Track-PromptUsage()",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "Switch-Workspace",
+      "file_type": "code",
+      "norm_label": "track-promptusage()",
+      "source_file": "app.ps1",
+      "source_location": "L2869"
+    },
+    {
+      "id": "app_update_filter",
+      "label": "Update-Filter()",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "Switch-Workspace",
+      "file_type": "code",
+      "norm_label": "update-filter()",
+      "source_file": "app.ps1",
+      "source_location": "L3475"
+    },
+    {
+      "id": "app_update_nextphaseindicator",
+      "label": "Update-NextPhaseIndicator()",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "Switch-Workspace",
+      "file_type": "code",
+      "norm_label": "update-nextphaseindicator()",
+      "source_file": "app.ps1",
+      "source_location": "L3122"
     }
   ],
   "links": [
+    {
+      "source": "app_build_categorychips",
+      "target": "app_set_categoryfilter",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L1188",
+      "weight": 1.0
+    },
     {
       "source": "app_check_forupdates",
       "target": "app_test_isgitrepo",
@@ -808,73 +1299,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L845",
+      "source_location": "L2149",
       "weight": 1.0
     },
     {
       "source": "app_check_forupdates",
-      "target": "app_get_gitbehindcount",
+      "target": "app_invoke_gitupdatestep",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L862",
+      "source_location": "L2150",
       "weight": 1.0
     },
     {
       "source": "app_check_forupdates",
-      "target": "app_restore_mergeduserconfig",
+      "target": "app_invoke_httpupdatestep",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L900",
-      "weight": 1.0
-    },
-    {
-      "source": "app_check_forupdates",
-      "target": "app_exit_application",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app.ps1",
-      "source_location": "L927",
-      "weight": 1.0
-    },
-    {
-      "source": "app_check_forupdates",
-      "target": "app_get_remoteupdateinfohttp",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app.ps1",
-      "source_location": "L934",
-      "weight": 1.0
-    },
-    {
-      "source": "app_check_forupdates",
-      "target": "app_get_localversioninfo",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app.ps1",
-      "source_location": "L942",
-      "weight": 1.0
-    },
-    {
-      "source": "app_check_forupdates",
-      "target": "app_update_fromgithubhttp",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app.ps1",
-      "source_location": "L965",
+      "source_location": "L2152",
       "weight": 1.0
     },
     {
@@ -885,7 +1332,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L817",
+      "source_location": "L1978",
+      "weight": 1.0
+    },
+    {
+      "source": "app_copy_prompttoclipboard",
+      "target": "app_set_cardactivestate",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2357",
       "weight": 1.0
     },
     {
@@ -896,18 +1354,62 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1177",
+      "source_location": "L2366",
       "weight": 1.0
     },
     {
       "source": "app_copy_prompttoclipboard",
-      "target": "app_hide_mainwindow",
+      "target": "app_track_promptusage",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1190",
+      "source_location": "L2369",
+      "weight": 1.0
+    },
+    {
+      "source": "app_delete_currentprompteditor",
+      "target": "app_render_promptcards",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3403",
+      "weight": 1.0
+    },
+    {
+      "source": "app_delete_currentprompteditor",
+      "target": "app_build_categorychips",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3404",
+      "weight": 1.0
+    },
+    {
+      "source": "app_delete_currentprompteditor",
+      "target": "app_update_filter",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3405",
+      "weight": 1.0
+    },
+    {
+      "source": "app_delete_currentprompteditor",
+      "target": "app_update_nextphaseindicator",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3406",
       "weight": 1.0
     },
     {
@@ -918,7 +1420,238 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L603",
+      "source_location": "L1699",
+      "weight": 1.0
+    },
+    {
+      "source": "app_init_workspacesdropdown",
+      "target": "app_get_availableworkspaces",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3174",
+      "weight": 1.0
+    },
+    {
+      "source": "app_invoke_gitupdatestep",
+      "target": "app_get_gitbehindcount",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2030",
+      "weight": 1.0
+    },
+    {
+      "source": "app_invoke_gitupdatestep",
+      "target": "app_get_gitdirtystatus",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2039",
+      "weight": 1.0
+    },
+    {
+      "source": "app_invoke_gitupdatestep",
+      "target": "app_restore_mergeduserconfig",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2067",
+      "weight": 1.0
+    },
+    {
+      "source": "app_invoke_gitupdatestep",
+      "target": "app_restart_application",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2087",
+      "weight": 1.0
+    },
+    {
+      "source": "app_invoke_httpupdatestep",
+      "target": "app_get_remoteupdateinfohttp",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2094",
+      "weight": 1.0
+    },
+    {
+      "source": "app_invoke_httpupdatestep",
+      "target": "app_get_localversioninfo",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2102",
+      "weight": 1.0
+    },
+    {
+      "source": "app_invoke_httpupdatestep",
+      "target": "app_update_fromgithubhttp",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2123",
+      "weight": 1.0
+    },
+    {
+      "source": "app_invoke_httpupdatestep",
+      "target": "app_restart_application",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2141",
+      "weight": 1.0
+    },
+    {
+      "source": "app_render_promptcards",
+      "target": "app_get_templatetokens",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2654",
+      "weight": 1.0
+    },
+    {
+      "source": "app_render_promptcards",
+      "target": "app_show_preview",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2717",
+      "weight": 1.0
+    },
+    {
+      "source": "app_render_promptcards",
+      "target": "app_show_prompteditor",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2738",
+      "weight": 1.0
+    },
+    {
+      "source": "app_render_promptcards",
+      "target": "app_show_quickfill",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2761",
+      "weight": 1.0
+    },
+    {
+      "source": "app_render_promptcards",
+      "target": "app_copy_prompttoclipboard",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2763",
+      "weight": 1.0
+    },
+    {
+      "source": "app_render_promptcards",
+      "target": "app_update_activeclipboardindicator",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2820",
+      "weight": 1.0
+    },
+    {
+      "source": "app_save_currentprompteditor",
+      "target": "app_render_promptcards",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3378",
+      "weight": 1.0
+    },
+    {
+      "source": "app_save_currentprompteditor",
+      "target": "app_build_categorychips",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3379",
+      "weight": 1.0
+    },
+    {
+      "source": "app_save_currentprompteditor",
+      "target": "app_update_filter",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3380",
+      "weight": 1.0
+    },
+    {
+      "source": "app_save_currentprompteditor",
+      "target": "app_update_nextphaseindicator",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3381",
+      "weight": 1.0
+    },
+    {
+      "source": "app_select_tab",
+      "target": "app_update_metricsview",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L1288",
+      "weight": 1.0
+    },
+    {
+      "source": "app_set_categoryfilter",
+      "target": "app_update_filter",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L1072",
       "weight": 1.0
     },
     {
@@ -929,7 +1662,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L440",
+      "source_location": "L1361",
       "weight": 1.0
     },
     {
@@ -940,7 +1673,183 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L441",
+      "source_location": "L1366",
+      "weight": 1.0
+    },
+    {
+      "source": "app_show_quickfill",
+      "target": "app_get_templatetokens",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2460",
+      "weight": 1.0
+    },
+    {
+      "source": "app_show_quickfill",
+      "target": "app_get_smartsuggestion",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2485",
+      "weight": 1.0
+    },
+    {
+      "source": "app_step_tonextphase",
+      "target": "app_get_nextphaseprompt",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3133",
+      "weight": 1.0
+    },
+    {
+      "source": "app_step_tonextphase",
+      "target": "app_get_templatetokens",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3135",
+      "weight": 1.0
+    },
+    {
+      "source": "app_step_tonextphase",
+      "target": "app_show_quickfill",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3138",
+      "weight": 1.0
+    },
+    {
+      "source": "app_step_tonextphase",
+      "target": "app_copy_prompttoclipboard",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3140",
+      "weight": 1.0
+    },
+    {
+      "source": "app_switch_nextcategory",
+      "target": "app_set_categoryfilter",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L1228",
+      "weight": 1.0
+    },
+    {
+      "source": "app_switch_nexttab",
+      "target": "app_select_tab",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L1243",
+      "weight": 1.0
+    },
+    {
+      "source": "app_switch_workspace",
+      "target": "app_get_availableworkspaces",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3191",
+      "weight": 1.0
+    },
+    {
+      "source": "app_switch_workspace",
+      "target": "app_save_config",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3207",
+      "weight": 1.0
+    },
+    {
+      "source": "app_switch_workspace",
+      "target": "app_render_promptcards",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3208",
+      "weight": 1.0
+    },
+    {
+      "source": "app_switch_workspace",
+      "target": "app_build_categorychips",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3209",
+      "weight": 1.0
+    },
+    {
+      "source": "app_switch_workspace",
+      "target": "app_update_filter",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3210",
+      "weight": 1.0
+    },
+    {
+      "source": "app_switch_workspace",
+      "target": "app_update_nextphaseindicator",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3211",
+      "weight": 1.0
+    },
+    {
+      "source": "app_track_promptusage",
+      "target": "app_save_metrics",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2902",
+      "weight": 1.0
+    },
+    {
+      "source": "app_track_promptusage",
+      "target": "app_update_nextphaseindicator",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2904",
       "weight": 1.0
     },
     {
@@ -951,7 +1860,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L428",
+      "source_location": "L1349",
       "weight": 1.0
     },
     {
@@ -962,7 +1871,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1103",
+      "source_location": "L2272",
       "weight": 1.0
     },
     {
@@ -973,7 +1882,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1106",
+      "source_location": "L2281",
       "weight": 1.0
     },
     {
@@ -984,84 +1893,73 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L710",
+      "source_location": "L1859",
+      "weight": 1.0
+    },
+    {
+      "source": "app_update_nextphaseindicator",
+      "target": "app_get_nextphaseprompt",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3124",
       "weight": 1.0
     },
     {
       "source": "app",
-      "target": "app_get_safeclipboardtext",
+      "target": "app_set_categoryfilter",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1070",
+      "source_location": "L1052",
       "weight": 1.0
     },
     {
       "source": "app",
-      "target": "app_set_cardactivestate",
+      "target": "app_build_categorychips",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1079",
+      "source_location": "L1075",
       "weight": 1.0
     },
     {
       "source": "app",
-      "target": "app_update_activeclipboardindicator",
+      "target": "app_switch_nextcategory",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1098",
+      "source_location": "L1208",
       "weight": 1.0
     },
     {
       "source": "app",
-      "target": "app_save_config",
+      "target": "app_switch_nexttab",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L112",
+      "source_location": "L1232",
       "weight": 1.0
     },
     {
       "source": "app",
-      "target": "app_copy_prompttoclipboard",
+      "target": "app_select_tab",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L1138",
-      "weight": 1.0
-    },
-    {
-      "source": "app",
-      "target": "app_show_preview",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app.ps1",
-      "source_location": "L1202",
-      "weight": 1.0
-    },
-    {
-      "source": "app",
-      "target": "app_update_filter",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app.ps1",
-      "source_location": "L1433",
+      "source_location": "L1246",
       "weight": 1.0
     },
     {
@@ -1072,7 +1970,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L424",
+      "source_location": "L1345",
       "weight": 1.0
     },
     {
@@ -1083,7 +1981,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L433",
+      "source_location": "L1354",
       "weight": 1.0
     },
     {
@@ -1094,7 +1992,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L444",
+      "source_location": "L1369",
       "weight": 1.0
     },
     {
@@ -1105,7 +2003,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L451",
+      "source_location": "L1379",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_restart_application",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L1428",
       "weight": 1.0
     },
     {
@@ -1116,7 +2025,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L529",
+      "source_location": "L1624",
       "weight": 1.0
     },
     {
@@ -1127,7 +2036,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L546",
+      "source_location": "L1641",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_get_gitdirtystatus",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L1653",
       "weight": 1.0
     },
     {
@@ -1138,7 +2058,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L572",
+      "source_location": "L1666",
       "weight": 1.0
     },
     {
@@ -1149,7 +2069,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L595",
+      "source_location": "L1691",
       "weight": 1.0
     },
     {
@@ -1160,7 +2080,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L614",
+      "source_location": "L1710",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_save_config",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L172",
       "weight": 1.0
     },
     {
@@ -1171,7 +2102,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L653",
+      "source_location": "L1749",
       "weight": 1.0
     },
     {
@@ -1182,7 +2113,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L721",
+      "source_location": "L1870",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_invoke_gitupdatestep",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2017",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_invoke_httpupdatestep",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2091",
       "weight": 1.0
     },
     {
@@ -1193,7 +2146,260 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app.ps1",
-      "source_location": "L841",
+      "source_location": "L2145",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_get_safeclipboardtext",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2230",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_set_cardactivestate",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2248",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_update_activeclipboardindicator",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2267",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_copy_prompttoclipboard",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2320",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_show_preview",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2389",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_get_templatetokens",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2410",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_get_smartsuggestion",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2425",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_show_quickfill",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2450",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_render_promptcards",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2553",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_load_metrics",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2832",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_save_metrics",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2860",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_track_promptusage",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2869",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_update_metricsview",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L2907",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_get_nextphaseprompt",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3107",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_update_nextphaseindicator",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3122",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_step_tonextphase",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3132",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_get_availableworkspaces",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3150",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_init_workspacesdropdown",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3171",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_switch_workspace",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3189",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_show_prompteditor",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3285",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_save_currentprompteditor",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3314",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_delete_currentprompteditor",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3385",
+      "weight": 1.0
+    },
+    {
+      "source": "app",
+      "target": "app_update_filter",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app.ps1",
+      "source_location": "L3475",
       "weight": 1.0
     },
     {
@@ -1209,6 +2415,17 @@
     },
     {
       "source": "backlog_backlog_ai_dev_prompt_clipboard",
+      "target": "backlog_ideas_tech_debt",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backlog.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "backlog_backlog_ai_dev_prompt_clipboard",
       "target": "backlog_prioritized_backlog",
       "relation": "contains",
       "_origin": "ast",
@@ -1216,17 +2433,6 @@
       "confidence_score": 1.0,
       "source_file": "backlog.md",
       "source_location": "L3",
-      "weight": 1.0
-    },
-    {
-      "source": "backlog_backlog_ai_dev_prompt_clipboard",
-      "target": "backlog_ideas_tech_debt",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "backlog.md",
-      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -1242,24 +2448,13 @@
     },
     {
       "source": "diary_ai_dev_prompt_clipboard_developer_diary",
-      "target": "diary_weekly_summary_week_ending_2026_09_13",
+      "target": "diary_forensic_audit_findings_2026_09_13",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "diary.md",
-      "source_location": "L25",
-      "weight": 1.0
-    },
-    {
-      "source": "diary_ai_dev_prompt_clipboard_developer_diary",
-      "target": "diary_done_2026_09_13_prompt_catalog_restructuring_rdi_protocol_dual_mode_auto_updater",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "diary.md",
-      "source_location": "L32",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -1270,7 +2465,40 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "diary.md",
-      "source_location": "L65",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "diary_ai_dev_prompt_clipboard_developer_diary",
+      "target": "diary_next_immediate_step",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "diary_ai_dev_prompt_clipboard_developer_diary",
+      "target": "diary_weekly_summary_week_ending_2026_09_13",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "diary_ai_dev_prompt_clipboard_developer_diary",
+      "target": "diary_done_2026_09_13_product_strategy_initiatives_v1_4_0",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L36",
       "weight": 1.0
     },
     {
@@ -1282,17 +2510,6 @@
       "confidence_score": 1.0,
       "source_file": "diary.md",
       "source_location": "L7",
-      "weight": 1.0
-    },
-    {
-      "source": "diary_ai_dev_prompt_clipboard_developer_diary",
-      "target": "diary_next_immediate_step",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "diary.md",
-      "source_location": "L73",
       "weight": 1.0
     },
     {
@@ -1362,80 +2579,113 @@
       "weight": 1.0
     },
     {
-      "source": "graph_report_communities_8_total_0_thin_omitted",
+      "source": "graph_report_communities_11_total_0_thin_omitted",
       "target": "graph_report_community_0_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_13",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L46",
+      "source_location": "L52",
       "weight": 1.0
     },
     {
-      "source": "graph_report_communities_8_total_0_thin_omitted",
+      "source": "graph_report_communities_11_total_0_thin_omitted",
       "target": "graph_report_community_1_ai_dev_prompt_clipboard_developer_diary",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L50",
+      "source_location": "L56",
       "weight": 1.0
     },
     {
-      "source": "graph_report_communities_8_total_0_thin_omitted",
+      "source": "graph_report_communities_11_total_0_thin_omitted",
       "target": "graph_report_community_2_app_ps1",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L54",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
-      "source": "graph_report_communities_8_total_0_thin_omitted",
+      "source": "graph_report_communities_11_total_0_thin_omitted",
       "target": "graph_report_community_3_ai_dev_prompt_clipboard",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L58",
+      "source_location": "L64",
       "weight": 1.0
     },
     {
-      "source": "graph_report_communities_8_total_0_thin_omitted",
-      "target": "graph_report_community_4_communities_9_total_1_thin_omitted",
+      "source": "graph_report_communities_11_total_0_thin_omitted",
+      "target": "graph_report_community_4_communities_11_total_0_thin_omitted",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L62",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
-      "source": "graph_report_communities_8_total_0_thin_omitted",
+      "source": "graph_report_communities_11_total_0_thin_omitted",
+      "target": "graph_report_community_5_check_forupdates",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "graph_report_communities_11_total_0_thin_omitted",
       "target": "graph_report_community_6_backlog_ai_dev_prompt_clipboard",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L66",
+      "source_location": "L76",
       "weight": 1.0
     },
     {
-      "source": "graph_report_communities_8_total_0_thin_omitted",
+      "source": "graph_report_communities_11_total_0_thin_omitted",
       "target": "graph_report_community_8_ai_dev_prompt_clipboard_diary_archive",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L70",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "graph_report_communities_11_total_0_thin_omitted",
+      "target": "graph_report_community_9_check_forupdatesasync",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "graph_report_communities_11_total_0_thin_omitted",
+      "target": "graph_report_community_10_update_activeclipboardindicator",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -1468,7 +2718,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L26",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -1490,7 +2740,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L38",
+      "source_location": "L41",
       "weight": 1.0
     },
     {
@@ -1501,18 +2751,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L41",
+      "source_location": "L47",
       "weight": 1.0
     },
     {
       "source": "graph_report_graph_report_ai_assisted_dev_prompt_clipboard_2026_09_13",
-      "target": "graph_report_communities_8_total_0_thin_omitted",
+      "target": "graph_report_communities_11_total_0_thin_omitted",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L44",
+      "source_location": "L50",
       "weight": 1.0
     },
     {
@@ -1534,7 +2784,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L74",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
@@ -1545,7 +2795,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "GRAPH_REPORT.md",
-      "source_location": "L78",
+      "source_location": "L96",
       "weight": 1.0
     },
     {
@@ -1561,6 +2811,50 @@
     },
     {
       "source": "readme_ai_dev_prompt_clipboard",
+      "target": "readme_caracter\u00edsticas_de_la_interfaz",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_ai_dev_prompt_clipboard",
+      "target": "readme_estructura_del_proyecto",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_ai_dev_prompt_clipboard",
+      "target": "readme_instalaci\u00f3n_y_configuraci\u00f3n_de_atajo",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_ai_dev_prompt_clipboard",
+      "target": "readme_licencia",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L192",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_ai_dev_prompt_clipboard",
       "target": "readme_auto_actualizaciones_dual_mode_desde_github_git_fallback_http",
       "relation": "contains",
       "_origin": "ast",
@@ -1572,7 +2866,7 @@
     },
     {
       "source": "readme_ai_dev_prompt_clipboard",
-      "target": "readme_prompts_y_protocolos_incluidos_9_protocolos",
+      "target": "readme_prompts_y_protocolos_incluidos_11_protocolos",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -1583,46 +2877,13 @@
     },
     {
       "source": "readme_ai_dev_prompt_clipboard",
-      "target": "readme_caracter\u00edsticas_de_la_interfaz",
+      "target": "readme_pesta\u00f1a_dev_flux_metodolog\u00eda_de_desarrollo_h\u00edbrido",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L46",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_ai_dev_prompt_clipboard",
-      "target": "readme_estructura_del_proyecto",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L62",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_ai_dev_prompt_clipboard",
-      "target": "readme_instalaci\u00f3n_y_configuraci\u00f3n_de_atajo",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L75",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_ai_dev_prompt_clipboard",
-      "target": "readme_licencia",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L87",
+      "source_location": "L48",
       "weight": 1.0
     },
     {
@@ -1638,27 +2899,148 @@
     },
     {
       "source": "readme_instalaci\u00f3n_y_configuraci\u00f3n_de_atajo",
-      "target": "readme_opci\u00f3n_1_doble_clic_recomendado",
+      "target": "readme_m\u00e9todo_1_instalador_autom\u00e1tico_de_1_l\u00ednea_recomendado_para_usuarios_no_t\u00e9cnicos_sin_git",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L77",
+      "source_location": "L149",
       "weight": 1.0
     },
     {
       "source": "readme_instalaci\u00f3n_y_configuraci\u00f3n_de_atajo",
-      "target": "readme_opci\u00f3n_2_powershell_personalizando_atajo",
+      "target": "readme_m\u00e9todo_2_instalador_de_windows_exe_cl\u00e1sico",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L80",
+      "source_location": "L164",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_instalaci\u00f3n_y_configuraci\u00f3n_de_atajo",
+      "target": "readme_m\u00e9todo_3_descarga_en_zip_manual_en_1_clic",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L174",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_instalaci\u00f3n_y_configuraci\u00f3n_de_atajo",
+      "target": "readme_m\u00e9todo_4_para_desarrolladores_git_clone",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L181",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_app_tests",
+      "target": "tests_app_tests_test_getsmartsuggestion",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_app_tests",
+      "target": "tests_app_tests_test_checkgitdirtystatus",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L146",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_app_tests",
+      "target": "tests_app_tests_assert_test",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_app_tests",
+      "target": "tests_app_tests_test_mergeconfig",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_app_tests",
+      "target": "tests_app_tests_test_cyclenextcategory",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L214",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_app_tests",
+      "target": "tests_app_tests_test_cyclenexttab",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L235",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_app_tests",
+      "target": "tests_app_tests_test_getnextphase",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L258",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_app_tests",
+      "target": "tests_app_tests_test_gettemplatetokens",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/app.Tests.ps1",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "diary",
+      "target": "graph_report",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L10",
       "weight": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "fe49e0973139e3834c49b834c357121928f97e14"
+  "built_at_commit": "5d2a42feac2db70a2b5d963fa2cf695f25529298"
 }

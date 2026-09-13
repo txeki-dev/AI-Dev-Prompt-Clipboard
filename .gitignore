@@ -1,4 +1,4 @@
-﻿# Graphify internal cache
+# Graphify internal cache
 graphify-out/cache/
 *.log
 
@@ -9,3 +9,12 @@ test_*.ps1
 # Windows thumbnail & desktop caches
 Thumbs.db
 Desktop.ini
+
+# Local runtime & telemetry files
+metrics.json
+metrics_test.json
+*.tmp
+*.old
+
+# Build & installer artifacts
+dist/

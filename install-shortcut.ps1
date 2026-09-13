@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Instala los accesos directos de Windows para AI Prompt Clipboard
     - Escritorio (Desktop)
@@ -75,11 +75,8 @@ if (-not (Test-Path -LiteralPath $vbsPath)) {
         '',
         'args = ""',
         'For Each arg In WScript.Arguments',
-        '    If InStr(arg, " ") > 0 Then',
-        '        args = args & " """ & arg & """"',
-        '    Else',
-        '        args = args & " " & arg',
-        '    End If',
+        '    cleanArg = Replace(arg, """", """""")',
+        '    args = args & " """ & cleanArg & """"',
         'Next',
         '',
         'cmd = "powershell.exe -NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File """ & scriptDir & "\app.ps1""" & args',

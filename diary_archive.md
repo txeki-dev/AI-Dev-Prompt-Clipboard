@@ -100,3 +100,145 @@ Historical completed sprint tasks and archived weekly summaries.
 - ✅ **[DONE 2026-09-09] Clipboard lock contention (COMException CLIPBRD_E_CANT_OPEN)**
 - ✅ **[DONE 2026-09-10] Path quoting in editor launch and icon specifier syntax in shortcut installer**
 - ✅ **[DONE 2026-09-10] Redundant timer garbage collection overhead on rapid multiple card clicks**
+
+---
+
+## 📅 Archived Sprint: Week ending 2026-09-13
+
+## ✅ Done (2026-09-13 — Product Strategy Initiatives v1.4.0)
+
+1. **Integrated In-App Visual Prompt Editor & Creator (`[UX-REV]`)**:
+   - Designed and integrated `PromptEditorOverlay` modal in WPF with dark-mode aesthetic.
+   - Added `+ Nuevo` button in search row and `✏️` edit button on each prompt card.
+   - Supports editing Title, Tag, Role, Category, Color (Hex), Description, and Multiline Prompt with `{{var}}` interpolation.
+   - Implemented in-memory hot-reload via `Render-PromptCards` and `Build-CategoryChips`, updating the UI instantly without application restart.
+   - Added confirmation dialog for deletion and persistence to the active pack JSON file.
+
+2. **Built Multi-Workspace & Team Profiles Engine (`[BIZ-CAP]`)**:
+   - Created `packs/` directory structure with modular pack loader (`Get-AvailableWorkspaces`, `Switch-Workspace`).
+   - Pre-seeded 3 curated packs:
+     - `core-engineering.json`: 10 core dev lifecycle protocols.
+     - `frontend-ui.json`: 4 specialized frontend, design system, and accessibility protocols.
+     - `security-devops.json`: 4 specialized DevSecOps, threat modeling, and container hardening protocols.
+   - Added workspace dropdown `CmbWorkspace` in navigation bar alongside `📤 Exportar` and `📥 Importar` buttons.
+   - Integrated workspace persistence in `config.json` (`ActivePack`).
+
+3. **Created Developer Productivity & Telemetry Dashboard (`[DATA-EXP]`)**:
+   - Added third navigation tab `📊 Métricas` (`TabMetrics`) and view grid `ViewMetrics`.
+   - Local JSON telemetry store in `metrics.json` tracking total prompt copies, TDD cycles, frequency by prompt ID, and category breakdown.
+   - 4 live KPI cards: Total Copiados, Ciclos TDD, Ratio Disciplina TDD %, and Protocolo #1.
+   - Visual distribution bar charts and recent activity feed.
+   - Added `📋 Copiar Resumen Markdown` button exporting formatted standup/retrospective markdown directly to clipboard.
+
+4. **Engineered DEV FLUX Smart Sequence Stepper (`[AUTOMATION]`)**:
+   - Defined progression state machine: `initial -> intro -> feature_plan -> feature_build -> audit -> remediate -> outro` (with non-linear bridges for `rdi`, `product_strategy`, and `migrate`).
+   - Integrated clickable `NextPhasePill` in footer status bar with dynamic phase label.
+   - Hooked global keyboard accelerator **`Ctrl + Alt + N`** to step to the next phase automatically.
+
+5. **Engineered Forensic Remediation for Auto-Updater & Mutex Race Condition (`[REMEDIATION]`)**:
+   - Preserved mandatory UTF-8 BOM encoding across `app.ps1` to prevent Windows PowerShell 5.1 parser crashes on unicode emojis and accents.
+   - Fixed regex wildcard matching bug in `Get-GitDirtyStatus` (`-match '^\?\?\s+'`) so untracked files no longer falsely flag working tree as dirty.
+   - Resolved shutdown/restart race condition by placing Mutex and tray icon release at the very beginning of `Exit-Application` and `Restart-Application` (non-blocking).
+   - Added 500ms `WaitOne` grace period in single-instance mutex initialization to absorb rapid process restarts.
+   - Enhanced `Check-ForUpdatesAsync` to detect local disk file modifications alongside remote git behind commits.
+   - Hardened `Show-MainWindow` with momentary `Topmost` foreground elevation.
+
+6. **Upgraded Protocol Suite to 11 Protocols & Extended DEV FLUX Map (`[PROTOCOLS]`)**:
+   - Refactored `AUDIT` (`<codebase_audit_hybrid>`): comprehensive forensic audit spanning cybersecurity, QA coverage gaps, test fragility, and code quality using Graphify AST analysis.
+   - Introduced 11th protocol `BUSINESS STRATEGY` (`<business_strategy_advisory>`): SaaS/B2B founder consultation covering monetization tiers, licensing architectures, GTM ICP, fiscal setups, and `BUSINESS.md` persistence.
+   - Updated DEV FLUX map across `app.ps1` (embedded ASCII diagram card + `BtnFluxBiz` interactive quick-launch button + stepper progression) and `README.md`.
+
+7. **DEV FLUX Cleanup & Reactive Category Filter Chips Engine (`[UI/UX]`)**:
+   - Removed legacy `dev_flux.png` visual rendering and `BtnOpenFullFlux` button from DEV FLUX tab.
+   - Upgraded DEV FLUX view to exclusively display the clean monospace ASCII architecture map with direct navigation button `📋 Ver Catálogo Completo` to switch to Prompts tab.
+   - Reorganized "ACCESOS RÁPIDOS POR FASE" into 5 distinct architectural phases strictly aligned with the workflow map:
+     - *Fase 1: Inicio Proyecto* (`INITIAL`, `MIGRATE`).
+     - *Fase 2: Sesión* (`INTRO`).
+     - *Fase 3: Innovación & Estrategia* (`RDi`, `PRODUCT_STRATEGY`, `BUSINESS_STRATEGY`).
+     - *Fase 4: Diagnóstico & TDD* (`AUDIT`, `REMEDIATE`, `FEATURE_PLAN`, `FEATURE_BUILD`).
+     - *Fase 5: Cierre de Sesión* (`OUTRO`).
+   - Diagnosed and resolved the root cause of non-responsive category chips (`TODOS`, `WORKFLOW`, `TDD`, `SETUP`, `AUDITORÍA`, `R&D`, `ESTRATEGIA`): eliminated the PowerShell `.GetNewClosure()` dynamic module scope trap that kept `$script:currentCategory` permanently locked to `"All"` in script scope.
+   - Implemented centralized `Set-CategoryFilter` function with instantaneous `PreviewMouseLeftButtonDown` routing, smooth hover states, and real-time protocol count badges (`Todos (11)`, `Workflow (2)`, `TDD (2)`, `Setup (2)`, `Auditoría (2)`, `R&D (1)`, `Estrategia (2)`).
+   - Enhanced DEV FLUX phase buttons with dual interaction: Left-click copies prompt to clipboard (with QuickFill if templated), Right-click automatically switches to `📋 Protocolos` and filters the target category.
+   - Preserved mandatory UTF-8 with BOM on `app.ps1`, verified with 0 AST errors.
+
+8. **Smooth Two-Finger Touchpad & Mouse Wheel Scrolling Engine for DEV FLUX (`[UI/UX]`)**:
+   - Diagnosed root cause of scrolling failure in DEV FLUX: nested `AsciiDiagramScrollViewer` intercepted all `MouseWheel` events and marked them as handled, preventing the outer `DevFluxScrollViewer` from scrolling when the cursor hovered over the ASCII diagram card (~80% of the screen).
+   - Hooked `Add_PreviewMouseWheel` on `AsciiDiagramScrollViewer` to capture tunneling vertical scroll deltas from precision touchpads and mouse wheels, smoothly routing them to `$devFluxScrollViewer.ScrollToVerticalOffset($devFluxScrollViewer.VerticalOffset - ($e.Delta * 0.85))`.
+   - Preserved horizontal diagram panning when Shift is held (`Shift + Wheel/Touchpad`).
+   - Configured `Background="Transparent"` and `Focusable="True"` on `DevFluxScrollViewer` and ensured keyboard/touch focus is set upon tab selection (`Select-Tab -tabName "DevFlux"`).
+   - Validated complete clean execution with 0 PowerShell AST parser errors, clean UTF-8 with BOM, and tested live touchpad delta simulation.
+
+9. **Triple-Tab Keyboard Switching Engine (`Ctrl + Tab` / `Shift + Tab`) (`[UI/UX]`)**:
+   - Added `Switch-NextTab` function with bidirectional modular index cycling across `PROTOCOLOS` (1), `DEV FLUX` (2), and `MÉTRICAS` (3).
+   - Hooked `$window.Add_PreviewKeyDown` to intercept tunneling `Tab` events before WPF's internal `KeyboardNavigation` manager swallows them.
+   - Bound **`Ctrl + Tab`** (and **`Ctrl + Shift + Tab`**) to cycle main tabs.
+   - Preserved standard focus navigation in input fields when modal overlays (Prompt Editor, QuickFill, Preview) are active.
+   - Tested live with simulated tab events, verified 0 AST parser errors, and updated `README.md`.
+
+10. **Emoji Glyph Rendering, Hardened Win32/WinForms Clipboard Engine & Category Cycling (`[UI/UX]`)**:
+    - Fixed broken `"([char]::... Copiar"` text and missing glyph boxes (`□`) by setting explicit `FontFamily="Segoe UI, Segoe UI Emoji, Segoe UI Symbol"` across all buttons (`$btnPreview` 👁️, `$btnEdit` ✏️, `$btnCopy` 📋/⚡, `$lblActive` 📋).
+    - Eliminated `CLIPBRD_E_CANT_OPEN` COM exceptions by switching `Copy-PromptToClipboard` and `Get-SafeClipboardText` to `System.Windows.Forms.Clipboard.SetDataObject(..., $true, 10, 50)` with built-in retry backoff.
+    - Fixed card click behavior: clicking anywhere on a prompt card directly copies it to the clipboard and immediately lights up the card border green (`#34D399`) with the `📋 En portapapeles` badge. Clicking `⚡ Rellenar` opens the QuickFill parameter form.
+    - Implemented **`Shift + Tab`** category cycling inside `PROTOCOLOS` (`Switch-NextCategory`), dynamically stepping through all category chips (`Todos -> Workflow -> TDD -> Setup -> Auditoría -> R&D -> Estrategia -> Todos`) with instant reactive filtering.
+
+11. **Comprehensive Codebase Remediation across Security, QA, and Architecture (`[REMEDIATION]`)**:
+    - `[x] [HIGH] [SECURITY]` `app.ps1` (`Update-FromGitHubHttp`): Enforced SHA-256 cryptographic hash computation, zip magic byte verification (`PK 0x03 0x04`), and Zip-Slip path traversal protection on downloaded update archives.
+    - `[x] [HIGH] [SECURITY]` `launch.vbs` (`WshShell.Run`): Implemented strict quote escaping (`Replace(arg, """", """""")`) and boundary quoting across `launch.vbs` and self-healing templates in `app.ps1` and `install-shortcut.ps1`, preventing command injection.
+    - `[x] [HIGH] [BUG]` `app.ps1` (`Update-FromGitHubHttp`): Engineered safe rename-then-copy mechanism (`.old` swap) to prevent Windows file-locking `IOException` on active running script files (`app.ps1`), with automatic cleanup of `.old` artifacts on process startup.
+    - `[x] [HIGH] [BUG]` `app.ps1` (`Restore-MergedUserConfig`): Added strict null and whitespace checks on `$configBackupJson` to guarantee `config.json` is never overwritten with an empty payload.
+    - `[x] [MEDIUM] [QA]` `tests/app.Tests.ps1` & `tests/run-tests.bat`: Engineered automated unit and regression test suite with 10 test suites and 38 deterministic assertions (AST syntax, template tokens, smart suggestions, git dirty filters, config merging, category cycling, tab cycling, sequence stepper, pack discovery, and metrics), achieving 100% Green QA gate.
+    - `[x] [MEDIUM] [BUG]` `app.ps1` (`BtnOpenFolder` & Tray `menuEdit`): Replaced hardcoded `prompts.json` path with `$script:activePromptsPath`, ensuring the currently active workspace pack is opened for editing.
+    - `[x] [MEDIUM] [TECH-DEBT]` `app.ps1` (`Check-ForUpdates`): Decoupled monolithic God-node into modular single-purpose helper functions: `Invoke-GitUpdateStep` and `Invoke-HttpUpdateStep`, orchestrated by a lean coordinator.
+    - `[x] [MEDIUM] [TECH-DEBT]` `app.ps1` (Error Handling Hygiene): Replaced bare `catch {}` blocks in `Save-Config`, `Save-Metrics`, and `Load-Metrics` with diagnostic warnings and status feedback.
+    - `[x] [LOW] [CLEANUP]` `app.ps1` (`PromptCountBadge`): Converted hardcoded `"10 protocolos"` in XAML to dynamic count binding on startup and upon switching workspace packs.
+    - `[x] [LOW] [CLEANUP]` `app.ps1` (`NativeClipboardHelper` & HwndSource Hook): Added proper hook removal (`$source.RemoveHook`) and unmanaged resource disposal (`$source.Dispose()`) across window close, exit, and restart sequences.
+
+12. **Universal Non-Technical Installer Ecosystem (`setup.ps1` & Inno Setup `.iss`) (`[DISTRIBUTION]`)**:
+    - Built `setup.ps1` automated 1-line web installer (`Win + R` / PowerShell) that downloads from GitHub, installs to `%LOCALAPPDATA%\Programs\AI-Dev-Prompt-Clipboard`, preserves configs, unlocks SmartScreen, creates shortcuts, and launches the app.
+    - Created Inno Setup script `installer.iss` producing `AI-Prompt-Clipboard-Setup.exe` with standard Windows wizard, non-admin installation, desktop/startup shortcuts with `Ctrl+Alt+P`, and clean uninstaller in Windows Settings.
+    - Configured GitHub Actions workflow `.github/workflows/build-installer.yml` to automatically compile and publish the Windows Setup `.exe`.
+    - Integrated `setup.ps1` into automated test suite (`tests/app.Tests.ps1`, 39/39 passing).
+    - Extensively documented all 4 installation tiers (One-Liner, `.exe` Setup, ZIP, Git Clone) in `README.md`.
+
+13. **Comprehensive Forensic Remediation (Session 2) across Security, Architecture, and QA Gate (`[REMEDIATION]`)**:
+    - `[x] [HIGH] [SECURITY]` `app.ps1` (`Update-FromGitHubHttp`) & `setup.ps1`: Enforced in-memory pre-extraction Zip-Slip traversal validation on all archive entries using `ZipFile::OpenRead` prior to disk extraction.
+    - `[x] [HIGH] [BUG]` `app.ps1` (`Save-CurrentPromptEditor`, `Delete-CurrentPromptEditor`, `Switch-Workspace`): Unified variable scoping to `$script:prompts` across all mutation and serialization points, ensuring added/deleted prompts reliably persist to disk and workspace packs update cleanly.
+    - `[x] [HIGH] [BUG]` `app.ps1` (Window Lifecycle & Alt+F4): Registered `$window.Add_Closing` handler to intercept Alt+F4 and OS close commands, safely redirecting to `Hide-MainWindow` and preserving the resident WPF window HWND.
+    - `[x] [HIGH] [BUG]` `installer.iss` vs `setup.ps1`: Unified Inno Setup install destination to `{localappdata}\Programs\AI-Dev-Prompt-Clipboard`, perfectly aligning with `setup.ps1` and eliminating dual parallel installations.
+    - `[x] [MEDIUM] [QA]` `tests/app.Tests.ps1`: Upgraded test suite to dynamically extract and execute production functions (`Get-TemplateTokens`, `Get-SmartSuggestion`, `Get-NextPhasePrompt`) directly from `app.ps1` AST in isolation, eliminating duplicate mock implementations.
+    - `[x] [MEDIUM] [QA]` `tests/app.Tests.ps1` (Business Rules Divergence): Synchronized sequence stepper assertions with canonical production DEV FLUX rules (`outro -> feature_plan`, `rdi -> product_strategy -> business_strategy -> feature_plan`) and aligned TDD discipline ratio calculation (30%).
+    - `[x] [MEDIUM] [BUG]` `app.ps1` (`Check-ForUpdatesAsync`): Initialized `$script:scriptFile` and `$script:startupScriptWriteTime` at process startup, enabling accurate local disk file modification detection.
+    - `[x] [MEDIUM] [BUG]` `setup.ps1`: Added proactive process termination of running background instances, safe file copy with `.old` swap fallback, and smart non-destructive config schema merging.
+    - `[x] [MEDIUM] [BUG]` `.github/workflows/build-installer.yml`: Replaced hardcoded x86 ISCC path with dynamic detection across Inno Setup 6/7, 32-bit/64-bit, chocolatey bin, and system PATH.
+    - `[x] [MEDIUM] [TECH-DEBT]` `app.ps1` (`btnExportMetrics`): Extracted shared `Set-SafeClipboardText` helper with retry-backoff loop across `Copy-PromptToClipboard` and metrics export, eliminating `CLIPBRD_E_CANT_OPEN` failures.
+    - `[x] [LOW] [CLEANUP]` `GRAPH_REPORT.md` (AST Extraction Metadata): Verified and documented `setup.ps1` and `install-shortcut.ps1` as standalone CLI/Web entrypoints in knowledge graph and project documentation.
+
+---
+
+## 🔬 Forensic Audit Findings - Remediated (2026-09-13 Session 2)
+- [x] [HIGH] [SECURITY] `app.ps1` (`Update-FromGitHubHttp`) & `setup.ps1`: Enforced in-memory pre-extraction Zip-Slip traversal validation on all archive entries using ZipFile::OpenRead prior to disk extraction.
+- [x] [HIGH] [BUG] `app.ps1` (`Save-CurrentPromptEditor`, `Delete-CurrentPromptEditor`, `Switch-Workspace`): Unified variable scoping to `$script:prompts` across all mutation and serialization points, ensuring added/deleted prompts reliably persist to disk and workspace packs update cleanly.
+- [x] [HIGH] [BUG] `app.ps1` (Window Lifecycle & Alt+F4): Registered `$window.Add_Closing` handler to intercept Alt+F4 and OS close commands, safely redirecting to `Hide-MainWindow` and preserving the resident WPF window HWND.
+- [x] [HIGH] [BUG] `installer.iss` vs `setup.ps1`: Unified Inno Setup install destination to `{localappdata}\Programs\AI-Dev-Prompt-Clipboard`, perfectly aligning with `setup.ps1` and eliminating dual parallel installations.
+- [x] [MEDIUM] [QA] `tests/app.Tests.ps1`: Upgraded test suite to dynamically extract and execute production functions (`Get-TemplateTokens`, `Get-SmartSuggestion`, `Get-NextPhasePrompt`) directly from `app.ps1` AST in isolation, eliminating duplicate mock implementations.
+- [x] [MEDIUM] [QA] `tests/app.Tests.ps1` (Business Rules Divergence): Synchronized sequence stepper assertions with canonical production DEV FLUX rules (`outro -> feature_plan`, `rdi -> product_strategy -> business_strategy -> feature_plan`) and aligned TDD discipline ratio calculation (30%).
+- [x] [MEDIUM] [BUG] `app.ps1` (`Check-ForUpdatesAsync`): Initialized `$script:scriptFile` and `$script:startupScriptWriteTime` at process startup, enabling accurate local disk file modification detection.
+- [x] [MEDIUM] [BUG] `setup.ps1`: Added proactive process termination of running background instances, safe file copy with `.old` swap fallback, and smart non-destructive config schema merging.
+- [x] [MEDIUM] [BUG] `.github/workflows/build-installer.yml`: Replaced hardcoded x86 ISCC path with dynamic detection across Inno Setup 6/7, 32-bit/64-bit, chocolatey bin, and system PATH.
+- [x] [MEDIUM] [TECH-DEBT] `app.ps1` (`btnExportMetrics`): Extracted shared `Set-SafeClipboardText` helper with retry-backoff loop across `Copy-PromptToClipboard` and metrics export, eliminating `CLIPBRD_E_CANT_OPEN` failures.
+- [x] [LOW] [CLEANUP] `GRAPH_REPORT.md` (AST Extraction Metadata): Verified and documented `setup.ps1` and `install-shortcut.ps1` as standalone CLI/Web entrypoints in knowledge graph and project documentation.
+
+---
+
+## 🔬 Historical Forensic Audit Findings - Remediated (2026-09-13 Session 1)
+- [x] [HIGH] [SECURITY] `app.ps1` (`Update-FromGitHubHttp`): Missing cryptographic checksum (SHA-256) validation on downloaded update archive from GitHub HTTP endpoint prior to extraction and execution.
+- [x] [HIGH] [SECURITY] `launch.vbs` (`WshShell.Run`): Insufficient argument sanitization and quote escaping in VBS wrapper allows potential parameter injection into hidden `powershell.exe` execution.
+- [x] [HIGH] [BUG] `app.ps1` (`Update-FromGitHubHttp`): In-place recursive copy of running script files (`app.ps1`) causes `IOException` due to Windows file-locking, leading to failed updates and inconsistent disk state.
+- [x] [HIGH] [BUG] `app.ps1` (`Restore-MergedUserConfig`): Fallback catch handler writes `$configBackupJson` without null-check; if null or unreadable, it overwrites `config.json` with empty content.
+- [x] [MEDIUM] [QA] `Repository Root` (Test Automation): Zero unit or integration tests (0% automated test coverage); core state machines, templating engines, and update parsers have no automated test suite.
+- [x] [MEDIUM] [BUG] `app.ps1` (`BtnOpenFolder` & Tray `menuEdit`): Hardcoded launch path `notepad.exe "$promptsFile"` ignores active workspace pack (`$script:activePromptsPath`), always opening default prompts.
+- [x] [MEDIUM] [TECH-DEBT] `app.ps1` (`Check-ForUpdates`): God-node with 10 outgoing dependencies coupling Git CLI execution, HTTP endpoints, WPF UI message boxes, and process restart logic into a single monolithic function.
+- [x] [MEDIUM] [TECH-DEBT] `app.ps1` (Error Handling Hygiene): 42 bare `catch {}` blocks suppress critical I/O, network, and parser errors, preventing diagnostic telemetry and user feedback.
+- [x] [LOW] [CLEANUP] `app.ps1` (`PromptCountBadge`): Initial XAML defines hardcoded `"10 protocolos"` badge, causing count mismatch with the 11 loaded protocols prior to dynamic filter refresh.
+- [x] [LOW] [CLEANUP] `app.ps1` (`NativeClipboardHelper` & HwndSource Hook): Omission of `$source.RemoveHook($script:clipHook)` and `$source.Dispose()` in window closing sequence.

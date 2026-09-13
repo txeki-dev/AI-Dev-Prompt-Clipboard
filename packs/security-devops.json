@@ -1,0 +1,42 @@
+[
+  {
+    "id": "sec_threat_model",
+    "title": "THREAT MODEL",
+    "tag": "<security_threat_model>",
+    "category": "SecOps",
+    "color": "#F38BA8",
+    "role": "Principal Security Architect",
+    "description": "Modelado de amenazas STRIDE, análisis de superficies de ataque y flujo de datos sensibles.",
+    "prompt": "Execute the <security_threat_model> protocol.\nRole: Principal Security Architect.\nTask: Conduct STRIDE threat modeling on application boundaries, IPC channels, and storage.\n\n<execution_steps>\n1. Map data flows, trust boundaries, and IPC endpoints.\n2. Identify threat vectors (Spoofing, Tampering, Repudiation, Information Disclosure, DoS, Elevation of Privilege).\n3. Recommend mitigation controls and automated tests.\n</execution_steps>"
+  },
+  {
+    "id": "docker_hardening",
+    "title": "CONTAINER HARDENING",
+    "tag": "<container_hardening>",
+    "category": "SecOps",
+    "color": "#FAB387",
+    "role": "DevSecOps Specialist",
+    "description": "Auditoría de Dockerfiles, non-root users, multi-stage builds y escaneo de vulnerabilidades.",
+    "prompt": "Execute the <container_hardening> protocol.\nRole: DevSecOps Specialist.\nTask: Audit and harden container definitions, minimize image attack surfaces, and enforce non-root execution.\n\n<execution_steps>\n1. Check base image vulnerabilities and minimize dependencies.\n2. Enforce non-root USER and read-only root filesystems where applicable.\n3. Configure minimal attack surface and secure secrets handling.\n</execution_steps>"
+  },
+  {
+    "id": "cicd_pipeline",
+    "title": "CI/CD AUTOMATION",
+    "tag": "<cicd_pipeline_hardening>",
+    "category": "DevOps",
+    "color": "#89B4FA",
+    "role": "CI/CD Automation Engineer",
+    "description": "Pipelines de integración continua, matrices de pruebas automáticas y releases reproducibles.",
+    "prompt": "Execute the <cicd_pipeline_hardening> protocol.\nRole: CI/CD Automation Engineer.\nTask: Build robust CI/CD GitHub Actions workflows with caching, automated test gates, and signed releases.\n\n<execution_steps>\n1. Define automated test execution matrix on pull requests.\n2. Enforce linting, syntax tokenization, and QA gates.\n3. Automate release packaging and artifact integrity hashing.\n</execution_steps>"
+  },
+  {
+    "id": "telemetry_obs",
+    "title": "OBSERVABILITY",
+    "tag": "<telemetry_observability>",
+    "category": "DevOps",
+    "color": "#10B981",
+    "role": "Site Reliability & Observability Lead",
+    "description": "Métricas operativas, health-checks, structured logging y dashboards de rendimiento.",
+    "prompt": "Execute the <telemetry_observability> protocol.\nRole: Site Reliability & Observability Lead.\nTask: Implement structured JSON telemetry, heartbeat health-checks, and error rate tracking.\n\n<execution_steps>\n1. Implement structured logger with correlation IDs.\n2. Track latency histograms and error status counts.\n3. Prepare exportable metrics format for aggregation dashboards.\n</execution_steps>"
+  }
+]

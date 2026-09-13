@@ -1,0 +1,42 @@
+[
+  {
+    "id": "ui_system",
+    "title": "DESIGN SYSTEM",
+    "tag": "<ui_design_system>",
+    "category": "Frontend UI",
+    "color": "#38BDF8",
+    "role": "Lead Design System Architect",
+    "description": "Diseño y especificación de tokens, paleta de color, tipografía y componentes atómicos.",
+    "prompt": "Execute the <ui_design_system> protocol.\nRole: Lead Design System Architect.\nTask: Specify and audit design tokens, color palette, typography hierarchy, and reusable atomic components.\n\n<execution_steps>\n1. Ingest existing UI components and styling tokens.\n2. Define cohesive color tokens, border radiuses, spacing scales, and typography.\n3. Implement reusable UI primitives with zero external visual anomalies.\n</execution_steps>"
+  },
+  {
+    "id": "a11y_audit",
+    "title": "A11Y AUDIT",
+    "tag": "<accessibility_wcag>",
+    "category": "Frontend UI",
+    "color": "#A6E3A1",
+    "role": "WCAG 2.1 Accessibility Specialist",
+    "description": "Auditoría de accesibilidad: contraste WCAG AA/AAA, navegación por teclado y lectores de pantalla.",
+    "prompt": "Execute the <accessibility_wcag> protocol.\nRole: WCAG 2.1 Accessibility Specialist.\nTask: Audit accessibility compliance across all views and interactive controls.\n\n<execution_steps>\n1. Check color contrast ratios for text and icons against WCAG AA standards.\n2. Verify keyboard navigation tab order, focus rings, and screen reader labels.\n3. Output a remediation checklist for any accessibility violations.\n</execution_steps>"
+  },
+  {
+    "id": "responsive_ui",
+    "title": "RESPONSIVE UX",
+    "tag": "<responsive_adaptive_ui>",
+    "category": "Frontend UI",
+    "color": "#F9E2AF",
+    "role": "Adaptive UI/UX Engineer",
+    "description": "Adaptabilidad para diferentes resoluciones, escalado DPI y comportamiento fluido de layouts.",
+    "prompt": "Execute the <responsive_adaptive_ui> protocol.\nRole: Adaptive UI/UX Engineer.\nTask: Ensure layouts adapt smoothly to window resizing, different DPI scales, and screen dimensions.\n\n<execution_steps>\n1. Inspect Grid/StackPanel definitions, margin/padding ratios, and auto-sizing policies.\n2. Prevent text truncation, overflow, and awkward whitespace collapse.\n3. Verify UI at minimum and high DPI resolutions.\n</execution_steps>"
+  },
+  {
+    "id": "ui_polish",
+    "title": "MICRO-INTERACTIONS",
+    "tag": "<ui_polish_interactions>",
+    "category": "Frontend UI",
+    "color": "#CBA6F7",
+    "role": "Interaction Designer & Micro-animations Specialist",
+    "description": "Refinamiento de transiciones visuales, estados hover/active y feedback táctil inmediato.",
+    "prompt": "Execute the <ui_polish_interactions> protocol.\nRole: Interaction Designer & Micro-animations Specialist.\nTask: Refine micro-interactions, subtle hover feedback, cursor affordances, and active states.\n\n<execution_steps>\n1. Audit button hover transitions, active press states, and cursor hints.\n2. Ensure feedback latency is under 50ms on all user actions.\n3. Polish visual accents and card borders for premium feel.\n</execution_steps>"
+  }
+]

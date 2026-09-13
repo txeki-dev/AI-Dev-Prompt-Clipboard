@@ -1,12 +1,13 @@
 {
   "0": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-13)",
-  "1": "AI Dev Prompt Clipboard: Developer Diary",
-  "2": "app.ps1",
+  "1": "Invoke-GitUpdateStep",
+  "2": "app.Tests.ps1",
   "3": "AI Dev Prompt Clipboard 📋",
-  "4": "Communities (8 total, 0 thin omitted)",
-  "5": "Check-ForUpdates",
+  "4": "Communities (11 total, 0 thin omitted)",
+  "5": "app.ps1",
   "6": "Backlog - AI Dev Prompt Clipboard",
   "7": "install-shortcut.ps1",
   "8": "AI Dev Prompt Clipboard: Diary Archive",
-  "9": "Check-ForUpdatesAsync"
+  "9": "Switch-Workspace",
+  "10": "setup.ps1"
 }

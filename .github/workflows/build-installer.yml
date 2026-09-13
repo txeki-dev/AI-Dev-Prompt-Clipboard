@@ -1,0 +1,79 @@
+name: Build & Release Installer (.exe)
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Automated QA Test Suite
+        shell: powershell
+        run: |
+          .\tests\app.Tests.ps1
+
+      - name: Install Inno Setup
+        run: |
+          choco install innosetup --no-progress
+
+      - name: Compile Inno Setup (.exe)
+        shell: powershell
+        run: |
+          $iscc = @(
+            "C:\Program Files\Inno Setup 7\iscc.exe",
+            "C:\Program Files (x86)\Inno Setup 7\iscc.exe",
+            "C:\Program Files\Inno Setup 6\iscc.exe",
+            "C:\Program Files (x86)\Inno Setup 6\iscc.exe",
+            "C:\ProgramData\chocolatey\bin\iscc.exe"
+          ) | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
+
+          if (-not $iscc) {
+            $cmd = Get-Command iscc.exe -ErrorAction SilentlyContinue
+            if ($cmd) { $iscc = $cmd.Source }
+          }
+
+          if (-not $iscc) { throw "No se pudo encontrar el compilador ISCC de Inno Setup en el runner." }
+          Write-Host "Compilando instalador con: $iscc"
+          & "$iscc" installer.iss
+
+      - name: Upload Setup.exe Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AI-Prompt-Clipboard-Setup
+          path: dist/AI-Prompt-Clipboard-Setup.exe
+
+      - name: Publish to GitHub Releases
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'latest' }}
+          name: ${{ startsWith(github.ref, 'refs/tags/') && format('AI Dev Prompt Clipboard {0}', github.ref_name) || 'AI Dev Prompt Clipboard (Latest Build)' }}
+          body: |
+            ## AI Dev Prompt Clipboard - Instalador Oficial de Windows (.exe)
+            
+            Descarga **`AI-Prompt-Clipboard-Setup.exe`** para instalar la aplicación con 1 solo clic en Windows.
+            
+            ### 🚀 Características de la instalación:
+            - Asistente gráfico de instalación tradicional de Windows.
+            - Acceso directo en el Escritorio con atajo global **`Ctrl + Alt + P`**.
+            - Acceso directo en el Menú Inicio.
+            - Arranque automático en la bandeja del sistema (*"Mostrar iconos ocultos"*).
+            - Desinstalador limpio en *Configuración ➔ Aplicaciones instaladas* de Windows.
+            - Auto-actualizaciones automáticas continuas por HTTPS.
+          files: |
+            dist/AI-Prompt-Clipboard-Setup.exe
+          draft: false
+          prerelease: false
