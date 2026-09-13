@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     AI Dev Prompt Clipboard - Modern Windows WPF GUI with System Tray & Auto-Updater
     Txek Systems
