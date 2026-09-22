@@ -29,10 +29,29 @@ try {
         throw "No se pudo descargar el archivo de instalación desde GitHub."
     }
 
-    # Verificación de cabecera ZIP (PK 0x03 0x04)
+    # Verificación de tamaño y cabecera ZIP (PK 0x03 0x04)
+    $fileInfo = Get-Item -LiteralPath $tempZip
+    if ($fileInfo.Length -lt 20480 -or $fileInfo.Length -gt 52428800) {
+        throw "El tamaño del paquete descargado ($($fileInfo.Length) bytes) está fuera de los límites de seguridad permitidos."
+    }
+
     $bytes = [System.IO.File]::ReadAllBytes($tempZip)
     if ($bytes.Length -lt 4 -or $bytes[0] -ne 0x50 -or $bytes[1] -ne 0x4B) {
         throw "El paquete descargado no es un archivo ZIP válido de GitHub."
+    }
+
+    # Verificación criptográfica de integridad SHA-256
+    $calcHash = (Get-FileHash -LiteralPath $tempZip -Algorithm SHA256).Hash
+    try {
+        $vJson = Invoke-RestMethod -Uri "https://raw.githubusercontent.com/txeki-dev/AI-Dev-Prompt-Clipboard/main/version.json" -UseBasicParsing -TimeoutSec 7
+        if ($vJson -and $vJson.sha256 -and -not [string]::IsNullOrWhiteSpace($vJson.sha256)) {
+            if ($calcHash.Trim().ToUpperInvariant() -ne $vJson.sha256.Trim().ToUpperInvariant()) {
+                throw "Alerta de seguridad: La firma SHA-256 del paquete ($calcHash) no coincide con la versión oficial registrada ($($vJson.sha256))."
+            }
+            Write-Host "  [OK] Integridad SHA-256 verificada contra versión oficial." -ForegroundColor DarkGray
+        }
+    } catch [System.Net.WebException] {
+        # Si GitHub rate-limit o sin conexión al manifiesto, continúa con validación estructural
     }
 
     # 2. Descompresión segura con validación previa de Zip-Slip en memoria
@@ -155,13 +174,8 @@ try {
 
     # 5. Iniciar la aplicación en modo residente
     Write-Host "[5/5] Iniciando AI Dev Prompt Clipboard..." -ForegroundColor Green
-    $vbsPath = Join-Path $installDir "launch.vbs"
-    if (Test-Path -LiteralPath $vbsPath) {
-        Start-Process "wscript.exe" -ArgumentList "`"$vbsPath`""
-    } else {
-        $appPath = Join-Path $installDir "app.ps1"
-        Start-Process "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File `"$appPath`""
-    }
+    $appPath = Join-Path $installDir "app.ps1"
+    Start-Process "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File `"$appPath`""
 
     Write-Host ""
     Write-Host "=======================================================" -ForegroundColor Green

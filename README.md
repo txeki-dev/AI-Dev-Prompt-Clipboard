@@ -130,10 +130,9 @@ La aplicación incorpora una pestaña dedicada **⚡ DEV FLUX** que visualiza el
 - `setup.ps1`: Instalador web automatizado de 1 línea para instalar en AppData sin necesidad de Git ni descompresión manual.
 - `installer.iss`: Script de Inno Setup para compilar el instalador ejecutable de Windows (`AI-Prompt-Clipboard-Setup.exe`).
 - `tests/`: Suite de pruebas unitarias automatizadas (`app.Tests.ps1`) y lanzador en 1 clic (`run-tests.bat`).
-- `launch.vbs`: Lanzador silencioso que evita cualquier parpadeo de consola negra de PowerShell (con auto-reparación integrada).
-- `launch.bat`: Lanzador ejecutable directo para iniciar la aplicación con doble clic desde el Explorador de Windows.
+- `launch.bat`: Lanzador ejecutable directo para iniciar la aplicación con doble clic desde el Explorador de Windows (Zero-VBS).
 - `install.bat`: Instalador en 1 solo clic que registra automáticamente los accesos directos sin necesidad de abrir PowerShell.
-- `install-shortcut.ps1`: Script automatizado y auto-reparador para registrar los accesos directos (Escritorio, Menú Inicio y Startup).
+- `install-shortcut.ps1`: Script automatizado para registrar los accesos directos corporativos (Escritorio, Menú Inicio y Startup).
 - `prompts.json`: Base de datos editable con los prompts principales del workspace predeterminado.
 - `metrics.json`: Almacén local de telemetría y productividad del desarrollador.
 - `config.json`: Almacena las preferencias del usuario (modo siempre visible, cerrar al copiar, pack activo, etc.).

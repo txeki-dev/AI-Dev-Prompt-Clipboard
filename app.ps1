@@ -22,7 +22,6 @@ $Script:AppVersion = "1.4.0"
 $promptsFile = Join-Path $scriptDir "prompts.json"
 $configFile  = Join-Path $scriptDir "config.json"
 $iconFile    = Join-Path $scriptDir "icon.ico"
-$vbsPath     = Join-Path $scriptDir "launch.vbs"
 $versionFile = Join-Path $scriptDir "version.json"
 $packsDir    = Join-Path $scriptDir "packs"
 $metricsFile = Join-Path $scriptDir "metrics.json"
@@ -34,27 +33,6 @@ $script:startupScriptWriteTime = if (Test-Path -LiteralPath $script:scriptFile) 
 try {
     Get-ChildItem -LiteralPath $scriptDir -Filter "*.old" -File -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
 } catch {}
-
-# Auto-reparación (Self-Healing) de launch.vbs si no existe en el directorio
-if (-not (Test-Path -LiteralPath $vbsPath)) {
-    try {
-        $vbsTemplate = @(
-            'Set WshShell = CreateObject("WScript.Shell")',
-            'Set FSO = CreateObject("Scripting.FileSystemObject")',
-            'scriptDir = FSO.GetParentFolderName(WScript.ScriptFullName)',
-            '',
-            'args = ""',
-            'For Each arg In WScript.Arguments',
-            '    cleanArg = Replace(arg, """", """""")',
-            '    args = args & " """ & cleanArg & """"',
-            'Next',
-            '',
-            'cmd = "powershell.exe -NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File """ & scriptDir & "\app.ps1""" & args',
-            'WshShell.Run cmd, 0, False'
-        ) -join [Environment]::NewLine
-        [System.IO.File]::WriteAllText($vbsPath, $vbsTemplate, [System.Text.Encoding]::ASCII)
-    } catch {}
-}
 
 # 2. Single-Instance & Activation Mechanism (Named Mutex + Event)
 $createdNew = $false
@@ -171,9 +149,59 @@ if (Test-Path -LiteralPath $configFile) {
     } catch {}
 }
 
+# Helper: Atomic file persistence to prevent file truncation on unexpected termination
+function Write-AtomicUtf8File {
+    param(
+        [Parameter(Mandatory=$true)][string]$Path,
+        [Parameter(Mandatory=$true)][string]$Content
+    )
+    $dir = Split-Path -Parent $Path
+    if ($dir -and -not (Test-Path -LiteralPath $dir)) {
+        try { New-Item -ItemType Directory -Path $dir -Force | Out-Null } catch {}
+    }
+    $tempPath = "$Path.tmp." + [System.Guid]::NewGuid().ToString("N")
+    try {
+        [System.IO.File]::WriteAllText($tempPath, $Content, [System.Text.Encoding]::UTF8)
+        Move-Item -LiteralPath $tempPath -Destination $Path -Force
+    } catch {
+        if (Test-Path -LiteralPath $tempPath) {
+            Remove-Item -LiteralPath $tempPath -Force -ErrorAction SilentlyContinue
+        }
+        [System.IO.File]::WriteAllText($Path, $Content, [System.Text.Encoding]::UTF8)
+    }
+}
+
+# Palette Centralization (Catppuccin Mocha standard palette)
+$ThemePalette = @{
+    Primary       = "#89B4FA"
+    Background    = "#1E1E2E"
+    CardBg        = "#181825"
+    Surface       = "#313244"
+    TextPrimary   = "#CDD6F4"
+    TextMuted     = "#A6ADC8"
+    Border        = "#45475A"
+    Success       = "#A6E3A1"
+    Warning       = "#F9E2AF"
+    Danger        = "#F38BA8"
+}
+
+# Helper: Resilient WPF brush parser with fallback protection against invalid color strings
+function Get-SafeBrush([string]$colorHex, [string]$fallbackHex = "#89B4FA") {
+    try {
+        if ($colorHex -and $colorHex.Trim() -match '^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$') {
+            return [System.Windows.Media.BrushConverter]::new().ConvertFromString($colorHex.Trim())
+        }
+    } catch {}
+    try {
+        $safeFallback = if ($fallbackHex -and $fallbackHex.Trim() -match '^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$') { $fallbackHex.Trim() } else { "#89B4FA" }
+        return [System.Windows.Media.BrushConverter]::new().ConvertFromString($safeFallback)
+    } catch {}
+    return [System.Windows.Media.Brushes]::CornflowerBlue
+}
+
 function Save-Config {
     try {
-        [System.IO.File]::WriteAllText($configFile, ($config | ConvertTo-Json), [System.Text.Encoding]::UTF8)
+        Write-AtomicUtf8File -Path $configFile -Content ($config | ConvertTo-Json)
     } catch {
         Write-Warning "No se pudo guardar la configuración en $($configFile): $($_.Exception.Message)"
         if ($statusLabel) { $statusLabel.Text = "⚠️ Error al guardar configuración" }
@@ -194,7 +222,24 @@ if ($config.ActivePack -and $config.ActivePack -ne "default") {
     }
 }
 
-$script:prompts = Get-Content -LiteralPath $script:activePromptsPath -Raw -Encoding UTF8 | ConvertFrom-Json
+# Resilient startup loading: fallback to default prompts.json if active pack is malformed or empty
+try {
+    $script:prompts = Get-Content -LiteralPath $script:activePromptsPath -Raw -Encoding UTF8 | ConvertFrom-Json
+    if (-not $script:prompts -or $script:prompts.Count -eq 0) { throw "Empty prompts payload" }
+} catch {
+    if ($script:activePromptsPath -ne $promptsFile -and (Test-Path -LiteralPath $promptsFile)) {
+        try {
+            $script:activePromptsPath = $promptsFile
+            $config.ActivePack = "default"
+            Save-Config
+            $script:prompts = Get-Content -LiteralPath $promptsFile -Raw -Encoding UTF8 | ConvertFrom-Json
+        } catch {
+            $script:prompts = @()
+        }
+    } else {
+        $script:prompts = @()
+    }
+}
 $prompts = $script:prompts
 
 # 8. XAML UI Definition
@@ -1208,26 +1253,58 @@ function Build-CategoryChips {
 # Tab Switching Logic
 $script:activeTab = "Prompts"
 
-function Switch-NextCategory {
-    param([bool]$Reverse = $false)
-    if (-not $script:chipsList -or $script:chipsList.Count -eq 0) { return }
-
+function Get-NextCategoryName {
+    param(
+        [string]$currentCategory,
+        [array]$categories,
+        [bool]$Reverse = $false
+    )
+    if (-not $categories -or $categories.Count -eq 0) { return $currentCategory }
     $currentIndex = -1
-    for ($i = 0; $i -lt $script:chipsList.Count; $i++) {
-        if ($script:chipsList[$i].Category -ieq $script:currentCategory) {
+    for ($i = 0; $i -lt $categories.Count; $i++) {
+        $catName = if ($categories[$i].Category) { $categories[$i].Category } else { [string]$categories[$i] }
+        if ($catName -ieq $currentCategory) {
             $currentIndex = $i
             break
         }
     }
     if ($currentIndex -lt 0) { $currentIndex = 0 }
-
     if ($Reverse) {
-        $nextIndex = ($currentIndex - 1 + $script:chipsList.Count) % $script:chipsList.Count
+        $nextIndex = ($currentIndex - 1 + $categories.Count) % $categories.Count
     } else {
-        $nextIndex = ($currentIndex + 1) % $script:chipsList.Count
+        $nextIndex = ($currentIndex + 1) % $categories.Count
     }
+    $target = $categories[$nextIndex]
+    if ($target.Category) { return $target.Category } else { return [string]$target }
+}
 
-    $targetCategory = $script:chipsList[$nextIndex].Category
+function Get-NextTabName {
+    param(
+        [string]$currentTab,
+        [array]$tabs = @("Prompts", "DevFlux", "Metrics"),
+        [bool]$Reverse = $false
+    )
+    if (-not $tabs -or $tabs.Count -eq 0) { return $currentTab }
+    $currentIndex = -1
+    for ($i = 0; $i -lt $tabs.Count; $i++) {
+        if ($tabs[$i] -ieq $currentTab) {
+            $currentIndex = $i
+            break
+        }
+    }
+    if ($currentIndex -lt 0) { $currentIndex = 0 }
+    if ($Reverse) {
+        $nextIndex = ($currentIndex - 1 + $tabs.Count) % $tabs.Count
+    } else {
+        $nextIndex = ($currentIndex + 1) % $tabs.Count
+    }
+    return [string]$tabs[$nextIndex]
+}
+
+function Switch-NextCategory {
+    param([bool]$Reverse = $false)
+    if (-not $script:chipsList -or $script:chipsList.Count -eq 0) { return }
+    $targetCategory = Get-NextCategoryName -currentCategory $script:currentCategory -categories $script:chipsList -Reverse $Reverse
     Set-CategoryFilter -targetCat $targetCategory
     $statusLabel.Text = "Filtrando por categoría: $targetCategory (Shift+Tab para siguiente)"
 }
@@ -1235,15 +1312,8 @@ function Switch-NextCategory {
 function Switch-NextTab {
     param([bool]$Reverse = $false)
     $tabs = @("Prompts", "DevFlux", "Metrics")
-    $currentIndex = $tabs.IndexOf($script:activeTab)
-    if ($currentIndex -lt 0) { $currentIndex = 0 }
-
-    if ($Reverse) {
-        $nextIndex = ($currentIndex - 1 + $tabs.Count) % $tabs.Count
-    } else {
-        $nextIndex = ($currentIndex + 1) % $tabs.Count
-    }
-    Select-Tab -tabName $tabs[$nextIndex]
+    $nextTab = Get-NextTabName -currentTab $script:activeTab -tabs $tabs -Reverse $Reverse
+    Select-Tab -tabName $nextTab
 }
 
 function Select-Tab {
@@ -1476,11 +1546,7 @@ function Restart-Application {
         }
     } catch {}
 
-    if (Test-Path -LiteralPath $vbsPath) {
-        Start-Process "wscript.exe" -ArgumentList "`"$vbsPath`""
-    } else {
-        Start-Process "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File `"$PSCommandPath`""
-    }
+    Start-Process "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File `"$PSCommandPath`""
     try { [System.Windows.Application]::Current.Shutdown() } catch {}
     [System.Environment]::Exit(0)
 }
@@ -1664,7 +1730,8 @@ function Get-GitBehindCount {
 }
 
 function Get-GitDirtyStatus {
-    $rawDirty = & git status --porcelain 2>$null
+    param($linesOverride = $null)
+    $rawDirty = if ($null -ne $linesOverride) { $linesOverride } else { & git status --porcelain 2>$null }
     $codeDirty = @($rawDirty) | Where-Object {
         $line = $_.Trim()
         if ([string]::IsNullOrWhiteSpace($line)) { return $false }
@@ -1676,27 +1743,38 @@ function Get-GitDirtyStatus {
     return ($codeDirty.Count -gt 0)
 }
 
+function Merge-UserConfig {
+    param(
+        [string]$UserBackupJson,
+        [string]$CurrentConfigJson
+    )
+    if (-not $UserBackupJson -or [string]::IsNullOrWhiteSpace($UserBackupJson)) { return $CurrentConfigJson }
+    $userSaved = $UserBackupJson | ConvertFrom-Json
+    $newSchema = if ($CurrentConfigJson -and -not [string]::IsNullOrWhiteSpace($CurrentConfigJson)) { $CurrentConfigJson | ConvertFrom-Json } else { [PSCustomObject]@{} }
+    $merged = @{}
+    if ($newSchema) {
+        foreach ($prop in $newSchema.psobject.properties) {
+            $merged[$prop.Name] = $prop.Value
+        }
+    }
+    if ($userSaved) {
+        foreach ($prop in $userSaved.psobject.properties) {
+            $merged[$prop.Name] = $prop.Value
+        }
+    }
+    return ($merged | ConvertTo-Json -Compress)
+}
+
 function Restore-MergedUserConfig {
     param($configBackupJson)
     if (-not $configBackupJson -or [string]::IsNullOrWhiteSpace($configBackupJson)) { return }
     try {
-        $userSaved = $configBackupJson | ConvertFrom-Json
-        $newSchema = if (Test-Path -LiteralPath $configFile) { Get-Content -LiteralPath $configFile -Raw -Encoding UTF8 | ConvertFrom-Json } else { [PSCustomObject]@{} }
-        $merged = @{}
-        if ($newSchema) {
-            foreach ($prop in $newSchema.psobject.properties) {
-                $merged[$prop.Name] = $prop.Value
-            }
-        }
-        if ($userSaved) {
-            foreach ($prop in $userSaved.psobject.properties) {
-                $merged[$prop.Name] = $prop.Value
-            }
-        }
-        [System.IO.File]::WriteAllText($configFile, ($merged | ConvertTo-Json), [System.Text.Encoding]::UTF8)
+        $currentConfig = if (Test-Path -LiteralPath $configFile) { Get-Content -LiteralPath $configFile -Raw -Encoding UTF8 } else { "{}" }
+        $mergedJson = Merge-UserConfig -UserBackupJson $configBackupJson -CurrentConfigJson $currentConfig
+        Write-AtomicUtf8File -Path $configFile -Content $mergedJson
     } catch {
         if (-not [string]::IsNullOrWhiteSpace($configBackupJson)) {
-            try { [System.IO.File]::WriteAllText($configFile, $configBackupJson, [System.Text.Encoding]::UTF8) } catch {}
+            try { Write-AtomicUtf8File -Path $configFile -Content $configBackupJson } catch {}
         }
     }
 }
@@ -1732,23 +1810,25 @@ function Get-RemoteUpdateInfoHttp {
                 $fullSha = [string]$apiRes.sha
                 $shortSha = if ($fullSha.Length -ge 7) { $fullSha.Substring(0, 7) } else { $fullSha }
                 return @{
-                    RemoteCommit  = $shortSha
-                    FullSha       = $fullSha
-                    RemoteVersion = "latest"
-                    Source        = "api"
+                    RemoteCommit   = $shortSha
+                    FullSha        = $fullSha
+                    RemoteVersion  = "latest"
+                    ExpectedSha256 = $null
+                    Source         = "api"
                 }
             }
         } catch {}
 
-        # 2. Fallback to raw version.json (no rate limits)
+        # 2. Fallback to raw version.json (no rate limits, includes signed sha256 checksum)
         try {
             $rawJson = Invoke-RestMethod -Uri "https://raw.githubusercontent.com/txeki-dev/AI-Dev-Prompt-Clipboard/main/version.json" -Headers $headers -UseBasicParsing -TimeoutSec 7
             if ($rawJson -and ($rawJson.commit -or $rawJson.version)) {
                 return @{
-                    RemoteCommit  = [string]$rawJson.commit
-                    RemoteVersion = [string]$rawJson.version
-                    FullSha       = [string]$rawJson.commit
-                    Source        = "raw"
+                    RemoteCommit   = [string]$rawJson.commit
+                    RemoteVersion  = [string]$rawJson.version
+                    FullSha        = [string]$rawJson.commit
+                    ExpectedSha256 = if ($rawJson.sha256) { [string]$rawJson.sha256 } else { $null }
+                    Source         = "raw"
                 }
             }
         } catch {}
@@ -1760,7 +1840,10 @@ function Get-RemoteUpdateInfoHttp {
 }
 
 function Update-FromGitHubHttp {
-    param($remoteSha = "")
+    param(
+        $remoteSha = "",
+        [string]$expectedSha256 = $null
+    )
 
     $tempZip = Join-Path ([System.IO.Path]::GetTempPath()) ("aidev_update_" + [System.Guid]::NewGuid().ToString("N") + ".zip")
     $tempDir = Join-Path ([System.IO.Path]::GetTempPath()) ("aidev_extract_" + [System.Guid]::NewGuid().ToString("N"))
@@ -1791,10 +1874,17 @@ function Update-FromGitHubHttp {
             throw "El paquete descargado no tiene una firma ZIP válida (posible respuesta de error o bloqueo de red)."
         }
 
-        # Security check: calculate and record SHA256 integrity hash
+        # Security check: calculate cryptographic SHA-256 hash of downloaded payload
         $fileHash = (Get-FileHash -LiteralPath $tempZip -Algorithm SHA256).Hash
         if (-not $fileHash) {
             throw "No se pudo calcular la firma criptográfica SHA-256 del paquete de actualización."
+        }
+
+        # Security validation: verify against authoritative expected checksum if supplied
+        if ($expectedSha256 -and -not [string]::IsNullOrWhiteSpace($expectedSha256)) {
+            if ($fileHash.Trim().ToUpperInvariant() -ne $expectedSha256.Trim().ToUpperInvariant()) {
+                throw "Alerta de seguridad: La suma de verificación SHA-256 calculada ($fileHash) no coincide con la firma autoritativa esperada ($expectedSha256)."
+            }
         }
 
         # 2. Pre-verify Zip-Slip protection: inspect all entries in memory BEFORE extracting
@@ -1874,7 +1964,7 @@ function Update-FromGitHubHttp {
             sha256    = $fileHash
             updatedAt = (Get-Date -Format "yyyy-MM-dd")
         }
-        [System.IO.File]::WriteAllText($versionFile, ($newVersionData | ConvertTo-Json), [System.Text.Encoding]::UTF8)
+        Write-AtomicUtf8File -Path $versionFile -Content ($newVersionData | ConvertTo-Json)
 
         # 7. Merge preserved user config over updated config schema
         Restore-MergedUserConfig -configBackupJson $configBackup
@@ -2141,7 +2231,7 @@ function Invoke-HttpUpdateStep {
     }
 
     try {
-        Update-FromGitHubHttp -remoteSha $remoteInfo.FullSha
+        Update-FromGitHubHttp -remoteSha $remoteInfo.FullSha -expectedSha256 $remoteInfo.ExpectedSha256
     } catch {
         [System.Windows.MessageBox]::Show(
             "Error al descargar e instalar la actualización desde GitHub:`n$($_.Exception.Message)",
@@ -2259,7 +2349,10 @@ function Get-SafeClipboardText {
     } catch {
         try {
             if ([System.Windows.Clipboard]::ContainsText()) {
-                return [System.Windows.Clipboard]::GetText()
+                $text = [System.Windows.Clipboard]::GetText()
+                if ($text -and $text.Length -le 524288) {
+                    return $text
+                }
             }
         } catch {}
     }
@@ -2562,14 +2655,28 @@ $btnCopyRawFromQuickFill.Add_Click({
     }
 })
 
+function Fill-PromptTemplate {
+    param(
+        [Parameter(Mandatory=$true)][string]$TemplateText,
+        [hashtable]$TokenValues = @{}
+    )
+    if ([string]::IsNullOrEmpty($TemplateText) -or -not $TokenValues) { return $TemplateText }
+    $filled = $TemplateText
+    foreach ($token in $TokenValues.Keys) {
+        $val = [string]$TokenValues[$token]
+        $filled = $filled.Replace("{{$token}}", $val)
+    }
+    return $filled
+}
+
 $btnApplyAndCopyQuickFill.Add_Click({
     if ($script:currentQuickFillItem) {
-        $filledPrompt = $script:currentQuickFillItem.prompt
+        $tokenMap = @{}
         foreach ($token in $script:quickFillInputMap.Keys) {
             $val = $script:quickFillInputMap[$token].Text
-            if ($null -eq $val) { $val = "" }
-            $filledPrompt = $filledPrompt.Replace("{{$token}}", $val)
+            $tokenMap[$token] = if ($null -ne $val) { $val } else { "" }
         }
+        $filledPrompt = Fill-PromptTemplate -TemplateText $script:currentQuickFillItem.prompt -TokenValues $tokenMap
         $quickFillOverlay.Visibility = [System.Windows.Visibility]::Collapsed
         Copy-PromptToClipboard -promptItem $script:currentQuickFillItem -customPromptText $filledPrompt
     }
@@ -2606,7 +2713,7 @@ function Render-PromptCards {
         # Accent color bar on left
         $accentBar = [System.Windows.Controls.Border]::new()
         $accentColor = if ($item.color) { $item.color } else { "#89B4FA" }
-        $accentBar.Background = [System.Windows.Media.BrushConverter]::new().ConvertFromString($accentColor)
+        $accentBar.Background = Get-SafeBrush -colorHex $accentColor -fallbackHex "#89B4FA"
         $accentBar.CornerRadius = [System.Windows.CornerRadius]::new(3)
         $accentBar.Margin = [System.Windows.Thickness]::new(0, 2, 10, 2)
         [System.Windows.Controls.Grid]::SetColumn($accentBar, 0)
@@ -2638,7 +2745,7 @@ function Render-PromptCards {
         $lblTag = [System.Windows.Controls.TextBlock]::new()
         $lblTag.Text = $item.tag
         $lblTag.FontSize = 11
-        $lblTag.Foreground = [System.Windows.Media.BrushConverter]::new().ConvertFromString($accentColor)
+        $lblTag.Foreground = Get-SafeBrush -colorHex $accentColor -fallbackHex "#89B4FA"
         $lblTag.FontFamily = [System.Windows.Media.FontFamily]::new("Consolas, Cascadia Code")
         $tagBorder.Child = $lblTag
         $headerWrap.Children.Add($tagBorder) | Out-Null
@@ -2886,7 +2993,7 @@ function Load-Metrics {
 function Save-Metrics {
     try {
         $json = $script:metrics | ConvertTo-Json -Depth 5
-        [System.IO.File]::WriteAllText($metricsFile, $json, [System.Text.Encoding]::UTF8)
+        Write-AtomicUtf8File -Path $metricsFile -Content $json
     } catch {
         Write-Warning "No se pudieron guardar las métricas en $($metricsFile): $($_.Exception.Message)"
     }
@@ -3275,7 +3382,7 @@ if ($btnExportPack) {
             $sfd.FileName = "custom-pack.json"
             if ($sfd.ShowDialog() -eq $true) {
                 $jsonStr = $script:prompts | ConvertTo-Json -Depth 6
-                [System.IO.File]::WriteAllText($sfd.FileName, $jsonStr, [System.Text.Encoding]::UTF8)
+                Write-AtomicUtf8File -Path $sfd.FileName -Content $jsonStr
                 Init-WorkspacesDropdown
                 $statusLabel.Text = "✅ Pack exportado a: $([System.IO.Path]::GetFileName($sfd.FileName))"
             }
@@ -3285,6 +3392,85 @@ if ($btnExportPack) {
     })
 }
 
+function Test-WorkspacePackContent {
+    param([string]$JsonContent)
+    if ([string]::IsNullOrWhiteSpace($JsonContent)) {
+        return @{ Valid = $false; Error = "El contenido JSON está vacío." }
+    }
+    try {
+        $parsed = $JsonContent | ConvertFrom-Json
+    } catch {
+        return @{ Valid = $false; Error = "Sintaxis JSON inválida: $($_.Exception.Message)" }
+    }
+    if (-not ($parsed -is [System.Collections.IEnumerable]) -or $parsed.Count -eq 0) {
+        return @{ Valid = $false; Error = "El archivo debe contener un array JSON de protocolos." }
+    }
+    foreach ($item in $parsed) {
+        if (-not $item.id -or -not $item.title -or -not $item.prompt) {
+            return @{ Valid = $false; Error = "Cada protocolo debe incluir las propiedades 'id', 'title' y 'prompt'." }
+        }
+    }
+    return @{ Valid = $true; Count = $parsed.Count; Parsed = $parsed }
+}
+
+function Import-WorkspacePackFile {
+    param(
+        [Parameter(Mandatory=$true)][string]$SourceFilePath,
+        [Parameter(Mandatory=$true)][string]$TargetPacksDir,
+        [bool]$Force = $false
+    )
+    if (-not (Test-Path -LiteralPath $SourceFilePath)) {
+        throw "El archivo de origen no existe: $SourceFilePath"
+    }
+
+    $fileInfo = Get-Item -LiteralPath $SourceFilePath
+    if ($fileInfo.Length -gt 2097152) {
+        throw "El archivo supera el tamaño máximo permitido para un pack (2MB)."
+    }
+
+    $rawContent = Get-Content -LiteralPath $SourceFilePath -Raw -Encoding UTF8
+    $validation = Test-WorkspacePackContent -JsonContent $rawContent
+    if (-not $validation.Valid) {
+        throw "Validación fallida: $($validation.Error)"
+    }
+
+    $targetName = [System.IO.Path]::GetFileName($SourceFilePath)
+    $baseName = [System.IO.Path]::GetFileNameWithoutExtension($targetName)
+
+    # Collision defense: prevent importing as 'default.json'
+    if ($baseName.ToLowerInvariant() -eq "default") {
+        $targetName = "custom-default.json"
+        $baseName = "custom-default"
+    }
+
+    # Built-in packs overwrite protection
+    $builtInPacks = @("core-engineering.json", "frontend-ui.json", "security-devops.json")
+    if ($builtInPacks -contains $targetName.ToLowerInvariant() -and -not $Force) {
+        $confirm = [System.Windows.MessageBox]::Show(
+            "El archivo '$targetName' es un pack del sistema predefinido. ¿Deseas sobrescribirlo?",
+            "Confirmar sobrescritura",
+            [System.Windows.MessageBoxButton]::YesNo,
+            [System.Windows.MessageBoxImage]::Warning
+        )
+        if ($confirm -ne [System.Windows.MessageBoxResult]::Yes) {
+            return $null
+        }
+    }
+
+    if (-not (Test-Path -LiteralPath $TargetPacksDir)) {
+        New-Item -ItemType Directory -Path $TargetPacksDir -Force | Out-Null
+    }
+    $destPath = Join-Path $TargetPacksDir $targetName
+    Write-AtomicUtf8File -Path $destPath -Content $rawContent
+
+    return @{
+        TargetName = $targetName
+        Key        = $baseName
+        Path       = $destPath
+        Count      = $validation.Count
+    }
+}
+
 if ($btnImportPack) {
     $btnImportPack.Add_Click({
         try {
@@ -3292,15 +3478,15 @@ if ($btnImportPack) {
             $ofd.Filter = "JSON Pack (*.json)|*.json"
             $ofd.InitialDirectory = $scriptDir
             if ($ofd.ShowDialog() -eq $true) {
-                $targetName = [System.IO.Path]::GetFileName($ofd.FileName)
-                $destPath = Join-Path $packsDir $targetName
-                Copy-Item -LiteralPath $ofd.FileName -Destination $destPath -Force
-                Init-WorkspacesDropdown
-                $key = [System.IO.Path]::GetFileNameWithoutExtension($targetName)
-                Switch-Workspace -targetKey $key
-                $statusLabel.Text = "✅ Pack importado y activado: $targetName"
+                $imported = Import-WorkspacePackFile -SourceFilePath $ofd.FileName -TargetPacksDir $packsDir
+                if ($imported) {
+                    Init-WorkspacesDropdown
+                    Switch-Workspace -targetKey $imported.Key
+                    $statusLabel.Text = "✅ Pack importado y activado: $($imported.TargetName)"
+                }
             }
         } catch {
+            [System.Windows.MessageBox]::Show("Error al importar pack:`n$($_.Exception.Message)", "Error de Importación", [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Error)
             $statusLabel.Text = "Error al importar pack"
         }
     })
@@ -3338,6 +3524,22 @@ function Show-PromptEditor {
     $editorTitle.Focus() | Out-Null
 }
 
+function New-PromptItemSlug {
+    param(
+        [Parameter(Mandatory=$true)][string]$Title,
+        [array]$ExistingPrompts = @()
+    )
+    $slugId = ($Title.ToLower() -replace '[^a-z0-9_]', '_').Trim('_')
+    if ([string]::IsNullOrEmpty($slugId)) { $slugId = "custom_" + [Guid]::NewGuid().ToString("N").Substring(0, 8) }
+    $suffix = 1
+    $baseSlug = $slugId
+    while ($ExistingPrompts | Where-Object { $_.id -eq $slugId }) {
+        $slugId = "${baseSlug}_$suffix"
+        $suffix++
+    }
+    return $slugId
+}
+
 function Save-CurrentPromptEditor {
     $tTitle = $editorTitle.Text.Trim()
     $tTag   = $editorTag.Text.Trim()
@@ -3349,7 +3551,8 @@ function Save-CurrentPromptEditor {
 
     $tCat   = if ($editorCategory.Text.Trim()) { $editorCategory.Text.Trim() } else { "General" }
     $tRole  = if ($editorRole.Text.Trim()) { $editorRole.Text.Trim() } else { "AI Engineer" }
-    $tColor = if ($editorColor.Text.Trim()) { $editorColor.Text.Trim() } else { "#89B4FA" }
+    $tColorRaw = if ($editorColor.Text.Trim()) { $editorColor.Text.Trim() } else { $ThemePalette.Primary }
+    $tColor = if ($tColorRaw -match '^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$') { $tColorRaw } else { $ThemePalette.Primary }
     $tDesc  = $editorDesc.Text.Trim()
 
     $targetList = [System.Collections.Generic.List[PSObject]]::new()
@@ -3373,14 +3576,7 @@ function Save-CurrentPromptEditor {
         }
     } else {
         # Create new
-        $slugId = ($tTitle.ToLower() -replace '[^a-z0-9_]', '_').Trim('_')
-        if ([string]::IsNullOrEmpty($slugId)) { $slugId = "custom_" + [Guid]::NewGuid().ToString("N").Substring(0, 8) }
-        $suffix = 1
-        $baseSlug = $slugId
-        while ($targetList | Where-Object { $_.id -eq $slugId }) {
-            $slugId = "${baseSlug}_$suffix"
-            $suffix++
-        }
+        $slugId = New-PromptItemSlug -Title $tTitle -ExistingPrompts $targetList
 
         $newObj = [PSCustomObject]@{
             id          = $slugId
@@ -3400,7 +3596,7 @@ function Save-CurrentPromptEditor {
     $prompts = $script:prompts
     try {
         $jsonStr = $script:prompts | ConvertTo-Json -Depth 6
-        [System.IO.File]::WriteAllText($script:activePromptsPath, $jsonStr, [System.Text.Encoding]::UTF8)
+        Write-AtomicUtf8File -Path $script:activePromptsPath -Content $jsonStr
     } catch {}
 
     $promptEditorOverlay.Visibility = [System.Windows.Visibility]::Collapsed
@@ -3427,7 +3623,7 @@ function Delete-CurrentPromptEditor {
     $prompts = $script:prompts
     try {
         $jsonStr = $script:prompts | ConvertTo-Json -Depth 6
-        [System.IO.File]::WriteAllText($script:activePromptsPath, $jsonStr, [System.Text.Encoding]::UTF8)
+        Write-AtomicUtf8File -Path $script:activePromptsPath -Content $jsonStr
     } catch {}
 
     $promptEditorOverlay.Visibility = [System.Windows.Visibility]::Collapsed

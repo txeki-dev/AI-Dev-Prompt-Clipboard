@@ -37,7 +37,6 @@ Name: "startupicon"; Description: "Iniciar automáticamente con Windows en segun
 
 [Files]
 Source: "app.ps1"; DestDir: "{app}"; Flags: ignoreversion
-Source: "launch.vbs"; DestDir: "{app}"; Flags: ignoreversion
 Source: "launch.bat"; DestDir: "{app}"; Flags: ignoreversion
 Source: "icon.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "version.json"; DestDir: "{app}"; Flags: ignoreversion
@@ -48,9 +47,9 @@ Source: "LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 Source: "config.json"; DestDir: "{app}"; Flags: onlyifdoesntexist
 
 [Icons]
-Name: "{autoprograms}\{#MyAppName}"; Filename: "wscript.exe"; Parameters: """{app}\launch.vbs"""; IconFilename: "{app}\icon.ico"; Comment: "AI Dev Prompt Clipboard"
-Name: "{autodesktop}\{#MyAppName}"; Filename: "wscript.exe"; Parameters: """{app}\launch.vbs"""; IconFilename: "{app}\icon.ico"; HotKey: "Ctrl+Alt+P"; Tasks: desktopicon; Comment: "AI Dev Prompt Clipboard (Ctrl+Alt+P)"
-Name: "{userstartup}\{#MyAppName}"; Filename: "wscript.exe"; Parameters: """{app}\launch.vbs"" -Startup"; IconFilename: "{app}\icon.ico"; Tasks: startupicon; Comment: "AI Dev Prompt Clipboard (Inicio en segundo plano)"
+Name: "{autoprograms}\{#MyAppName}"; Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File ""{app}\app.ps1"""; IconFilename: "{app}\icon.ico"; Comment: "AI Dev Prompt Clipboard"
+Name: "{autodesktop}\{#MyAppName}"; Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File ""{app}\app.ps1"""; IconFilename: "{app}\icon.ico"; HotKey: "Ctrl+Alt+P"; Tasks: desktopicon; Comment: "AI Dev Prompt Clipboard (Ctrl+Alt+P)"
+Name: "{userstartup}\{#MyAppName}"; Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File ""{app}\app.ps1"" -Startup"; IconFilename: "{app}\icon.ico"; Tasks: startupicon; Comment: "AI Dev Prompt Clipboard (Inicio en segundo plano)"
 
 [Run]
-Filename: "wscript.exe"; Parameters: """{app}\launch.vbs"""; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File ""{app}\app.ps1"""; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent

@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Automated Unit & Regression Test Suite for AI Dev Prompt Clipboard
     Txek Systems - QA Gate
@@ -7,6 +7,8 @@
 $ErrorActionPreference = "Stop"
 $scriptDir = Split-Path -Parent $PSScriptRoot
 if (-not $scriptDir) { $scriptDir = (Get-Location).Path }
+
+Add-Type -AssemblyName PresentationCore, PresentationFramework, WindowsBase, System.Drawing, System.Windows.Forms
 
 $appScript = Join-Path $scriptDir "app.ps1"
 $testsPassed = 0
@@ -129,21 +131,10 @@ $unknownVal = Get-SmartSuggestion -tokenName "UNKNOWN_VARIABLE"
 Assert-Test -Name "Unknown token returns empty string" -Condition ($unknownVal -eq "")
 
 # -----------------------------------------------------------------------------
-# SUITE 4: Git Dirty Status Filter (Ignore Non-Code Files)
+# SUITE 4: Git Dirty Status Filter (Ignore Non-Code Files) - Real Production Function
 # -----------------------------------------------------------------------------
 $script:currentSuite = "Git Dirty Status Filter"
 Write-Host "`nRunning Suite: $script:currentSuite" -ForegroundColor Yellow
-
-function Invoke-GitDirtyFilterTest($lines) {
-    $codeDirty = @($lines) | Where-Object {
-        $line = $_.Trim()
-        if ([string]::IsNullOrWhiteSpace($line)) { return $false }
-        if ($line -match 'config\.json|metrics\.json|diary\.md|diary_archive\.md|launch\.vbs|version\.json|\.cache|graphify') { return $false }
-        if ($line -match '^\?\?\s+') { return $false }
-        return $true
-    }
-    return ($codeDirty.Count -gt 0)
-}
 
 $ignoredOnly = @(
     " M config.json",
@@ -151,51 +142,33 @@ $ignoredOnly = @(
     " M diary.md",
     "?? new_untracked_file.txt"
 )
-Assert-Test -Name "Ignores config.json, metrics.json, diary.md, and untracked files" -Condition (-not (Invoke-GitDirtyFilterTest $ignoredOnly))
+Assert-Test -Name "Ignores config.json, metrics.json, diary.md, and untracked files" -Condition (-not (Get-GitDirtyStatus -linesOverride $ignoredOnly))
 
 $codeModified = @(
     " M config.json",
     " M app.ps1"
 )
-Assert-Test -Name "Correctly flags production code modification (app.ps1)" -Condition (Invoke-GitDirtyFilterTest $codeModified)
+Assert-Test -Name "Correctly flags production code modification (app.ps1)" -Condition (Get-GitDirtyStatus -linesOverride $codeModified)
 
 # -----------------------------------------------------------------------------
-# SUITE 5: Config Merging & Null-Protection
+# SUITE 5: Config Merging & Null-Protection - Real Production Function
 # -----------------------------------------------------------------------------
 $script:currentSuite = "Config Merging & Null-Protection"
 Write-Host "`nRunning Suite: $script:currentSuite" -ForegroundColor Yellow
 
-function Invoke-ConfigMergeTest($configBackupJson, $currentConfigJson) {
-    if (-not $configBackupJson -or [string]::IsNullOrWhiteSpace($configBackupJson)) { return $currentConfigJson }
-    $userSaved = $configBackupJson | ConvertFrom-Json
-    $newSchema = $currentConfigJson | ConvertFrom-Json
-    $merged = @{}
-    if ($newSchema) {
-        foreach ($prop in $newSchema.psobject.properties) {
-            $merged[$prop.Name] = $prop.Value
-        }
-    }
-    if ($userSaved) {
-        foreach ($prop in $userSaved.psobject.properties) {
-            $merged[$prop.Name] = $prop.Value
-        }
-    }
-    return ($merged | ConvertTo-Json -Compress)
-}
-
 $userBackup = '{"AlwaysOnTop":true,"ActivePack":"frontend-ui","CustomKey":"custom"}'
 $newSchema  = '{"AlwaysOnTop":false,"ActivePack":"default","NewFeatureFlag":true}'
-$merged = Invoke-ConfigMergeTest $userBackup $newSchema | ConvertFrom-Json
+$merged = Merge-UserConfig -UserBackupJson $userBackup -CurrentConfigJson $newSchema | ConvertFrom-Json
 
 Assert-Test -Name "Preserves user setting ActivePack" -Condition ($merged.ActivePack -eq "frontend-ui")
 Assert-Test -Name "Preserves user setting AlwaysOnTop" -Condition ($merged.AlwaysOnTop -eq $true)
 Assert-Test -Name "Ingests new schema property NewFeatureFlag" -Condition ($merged.NewFeatureFlag -eq $true)
 
-$nullProtected = Invoke-ConfigMergeTest $null $newSchema
+$nullProtected = Merge-UserConfig -UserBackupJson $null -CurrentConfigJson $newSchema
 Assert-Test -Name "Null backup returns current schema without overwriting" -Condition ($nullProtected -eq $newSchema)
 
 # -----------------------------------------------------------------------------
-# SUITE 6: Category Filter State Machine Cycling
+# SUITE 6: Category Filter State Machine Cycling - Real Production Function
 # -----------------------------------------------------------------------------
 $script:currentSuite = "Category Cycling State Machine"
 Write-Host "`nRunning Suite: $script:currentSuite" -ForegroundColor Yellow
@@ -206,49 +179,22 @@ foreach ($cat in $categories) {
     $script:chipsList.Add([PSCustomObject]@{ Category = $cat })
 }
 
-function Invoke-CategoryCycleStep($startCat, [bool]$reverse = $false) {
-    $currentIndex = -1
-    for ($i = 0; $i -lt $script:chipsList.Count; $i++) {
-        if ($script:chipsList[$i].Category -ieq $startCat) {
-            $currentIndex = $i
-            break
-        }
-    }
-    if ($currentIndex -lt 0) { $currentIndex = 0 }
-    $nextIndex = if ($reverse) {
-        ($currentIndex - 1 + $script:chipsList.Count) % $script:chipsList.Count
-    } else {
-        ($currentIndex + 1) % $script:chipsList.Count
-    }
-    return $script:chipsList[$nextIndex].Category
-}
-
-Assert-Test -Name "Cycles Todos -> Workflow" -Condition ((Invoke-CategoryCycleStep "Todos") -eq "Workflow")
-Assert-Test -Name "Cycles Estrategia -> Todos (wraps around)" -Condition ((Invoke-CategoryCycleStep "Estrategia") -eq "Todos")
-Assert-Test -Name "Cycles TDD -> Setup" -Condition ((Invoke-CategoryCycleStep "TDD") -eq "Setup")
+Assert-Test -Name "Cycles Todos -> Workflow" -Condition ((Get-NextCategoryName -currentCategory "Todos" -categories $script:chipsList) -eq "Workflow")
+Assert-Test -Name "Cycles Estrategia -> Todos (wraps around)" -Condition ((Get-NextCategoryName -currentCategory "Estrategia" -categories $script:chipsList) -eq "Todos")
+Assert-Test -Name "Cycles TDD -> Setup" -Condition ((Get-NextCategoryName -currentCategory "TDD" -categories $script:chipsList) -eq "Setup")
 
 # -----------------------------------------------------------------------------
-# SUITE 7: Tab Switching State Machine Cycling
+# SUITE 7: Tab Switching State Machine Cycling - Real Production Function
 # -----------------------------------------------------------------------------
 $script:currentSuite = "Tab Navigation State Machine"
 Write-Host "`nRunning Suite: $script:currentSuite" -ForegroundColor Yellow
 
 $tabNames = @("Prompts", "DevFlux", "Metrics")
 
-function Invoke-TabCycleStep($currentTab, $reverse = $false) {
-    $tabIdx = -1
-    for ($i = 0; $i -lt $tabNames.Count; $i++) {
-        if ($tabNames[$i] -ieq $currentTab) { $tabIdx = $i; break }
-    }
-    $step = if ($reverse) { -1 } else { 1 }
-    $nextIdx = ($tabIdx + $step + $tabNames.Count) % $tabNames.Count
-    return $tabNames[$nextIdx]
-}
-
-Assert-Test -Name "Cycles Prompts -> DevFlux" -Condition ((Invoke-TabCycleStep "Prompts" $false) -eq "DevFlux")
-Assert-Test -Name "Cycles Metrics -> Prompts (forward wrap)" -Condition ((Invoke-TabCycleStep "Metrics" $false) -eq "Prompts")
-Assert-Test -Name "Cycles Prompts -> Metrics (reverse wrap)" -Condition ((Invoke-TabCycleStep "Prompts" $true) -eq "Metrics")
-Assert-Test -Name "Cycles DevFlux -> Prompts (reverse)" -Condition ((Invoke-TabCycleStep "DevFlux" $true) -eq "Prompts")
+Assert-Test -Name "Cycles Prompts -> DevFlux" -Condition ((Get-NextTabName -currentTab "Prompts" -tabs $tabNames -Reverse $false) -eq "DevFlux")
+Assert-Test -Name "Cycles Metrics -> Prompts (forward wrap)" -Condition ((Get-NextTabName -currentTab "Metrics" -tabs $tabNames -Reverse $false) -eq "Prompts")
+Assert-Test -Name "Cycles Prompts -> Metrics (reverse wrap)" -Condition ((Get-NextTabName -currentTab "Prompts" -tabs $tabNames -Reverse $true) -eq "Metrics")
+Assert-Test -Name "Cycles DevFlux -> Prompts (reverse)" -Condition ((Get-NextTabName -currentTab "DevFlux" -tabs $tabNames -Reverse $true) -eq "Prompts")
 
 # -----------------------------------------------------------------------------
 # SUITE 8: DEV FLUX Sequence Stepper - Real Production Function & Rules
@@ -360,6 +306,129 @@ if (Test-Path -LiteralPath $issFile) {
     }
     Assert-Test -Name "All installer.iss Source files exist on disk" -Condition $allSourcesExist -Details ($missingSources -join ", ")
 }
+
+# -----------------------------------------------------------------------------
+# SUITE 12: Workspace Pack Discovery & Validation Engine
+# -----------------------------------------------------------------------------
+$script:currentSuite = "Workspace Pack Engine & Validation"
+Write-Host "`nRunning Suite: $script:currentSuite" -ForegroundColor Yellow
+
+$validPackJson = '[{"id":"test_proto","title":"Test Title","prompt":"Do something","category":"Test","tag":"<test>"}]'
+$validRes = Test-WorkspacePackContent -JsonContent $validPackJson
+Assert-Test -Name "Valid pack content passes validation" -Condition ($validRes.Valid -eq $true -and $validRes.Count -eq 1)
+
+$invalidPackJson = '[{"id":"bad_proto","title":"No prompt"}]'
+$invalidRes = Test-WorkspacePackContent -JsonContent $invalidPackJson
+Assert-Test -Name "Pack missing required 'prompt' property fails validation" -Condition ($invalidRes.Valid -eq $false)
+
+$nonArrayJson = '{"id":"single_obj","title":"Single","prompt":"P"}'
+$nonArrayRes = Test-WorkspacePackContent -JsonContent $nonArrayJson
+Assert-Test -Name "Non-array JSON fails pack validation" -Condition ($nonArrayRes.Valid -eq $false)
+
+$malformedJson = '{ bad json syntax }'
+$malformedRes = Test-WorkspacePackContent -JsonContent $malformedJson
+Assert-Test -Name "Malformed JSON syntax fails pack validation" -Condition ($malformedRes.Valid -eq $false)
+
+# Test Import-WorkspacePackFile sanitization of default.json
+$tempDir = Join-Path ([System.IO.Path]::GetTempPath()) ("aidev_test_pack_" + [Guid]::NewGuid().ToString("N"))
+New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
+$testPacksDir = Join-Path $tempDir "packs"
+New-Item -ItemType Directory -Path $testPacksDir -Force | Out-Null
+$defaultPackFile = Join-Path $tempDir "default.json"
+[System.IO.File]::WriteAllText($defaultPackFile, $validPackJson, [System.Text.Encoding]::UTF8)
+
+$importRes = Import-WorkspacePackFile -SourceFilePath $defaultPackFile -TargetPacksDir $testPacksDir -Force $true
+Assert-Test -Name "default.json is renamed to custom-default.json to prevent workspace collision" -Condition ($importRes.TargetName -eq "custom-default.json" -and $importRes.Key -eq "custom-default")
+Assert-Test -Name "Imported pack file exists in destination packs directory" -Condition (Test-Path -LiteralPath $importRes.Path)
+
+Remove-Item -LiteralPath $tempDir -Recurse -Force -ErrorAction SilentlyContinue
+
+# -----------------------------------------------------------------------------
+# SUITE 13: Visual Prompt Editor Engine & Color Sanitizer
+# -----------------------------------------------------------------------------
+$script:currentSuite = "Prompt Editor & Color Sanitizer"
+Write-Host "`nRunning Suite: $script:currentSuite" -ForegroundColor Yellow
+
+$existingFixture = @(
+    [PSCustomObject]@{ id = "my_custom_prompt"; title = "My Custom Prompt" }
+)
+$newSlug1 = New-PromptItemSlug -Title "New Feature" -ExistingPrompts $existingFixture
+Assert-Test -Name "Generates valid snake_case slug" -Condition ($newSlug1 -eq "new_feature")
+
+$collisionSlug = New-PromptItemSlug -Title "My Custom Prompt" -ExistingPrompts $existingFixture
+Assert-Test -Name "Deduplicates colliding slug with incremental suffix (_1)" -Condition ($collisionSlug -eq "my_custom_prompt_1")
+
+# Brush validation and fallback tests
+$validBrush = Get-SafeBrush -colorHex "#A6E3A1" -fallbackHex "#89B4FA"
+Assert-Test -Name "Valid 6-digit hex color converts to brush successfully" -Condition ($validBrush -ne $null)
+
+$fallbackBrush = Get-SafeBrush -colorHex "not_a_color_string" -fallbackHex "#89B4FA"
+Assert-Test -Name "Invalid color string safely returns fallback brush without throwing" -Condition ($fallbackBrush -ne $null)
+
+# -----------------------------------------------------------------------------
+# SUITE 14: Telemetry & Metrics Engine
+# -----------------------------------------------------------------------------
+$script:currentSuite = "Telemetry & Metrics Engine"
+Write-Host "`nRunning Suite: $script:currentSuite" -ForegroundColor Yellow
+
+$script:metrics = @{
+    totalCopies    = 0
+    tddCycles      = 0
+    promptUsage    = @{}
+    categoryUsage  = @{}
+    recentActivity = [System.Collections.Generic.List[object]]::new()
+}
+$script:metricsFile = Join-Path ([System.IO.Path]::GetTempPath()) ("metrics_test_" + [Guid]::NewGuid().ToString("N") + ".json")
+
+$testItem = [PSCustomObject]@{
+    id          = "feature_build"
+    title       = "Feature Build"
+    category    = "TDD"
+    tag         = "<tdd_build>"
+}
+
+Track-PromptUsage -item $testItem
+Assert-Test -Name "Track-PromptUsage increments totalCopies" -Condition ($script:metrics.totalCopies -eq 1)
+Assert-Test -Name "Track-PromptUsage increments tddCycles for TDD category" -Condition ($script:metrics.tddCycles -eq 1)
+Assert-Test -Name "Track-PromptUsage records prompt ID in promptUsage map" -Condition ($script:metrics.promptUsage["feature_build"] -eq 1)
+Assert-Test -Name "Track-PromptUsage records category in categoryUsage map" -Condition ($script:metrics.categoryUsage["TDD"] -eq 1)
+Assert-Test -Name "Track-PromptUsage inserts entry into recentActivity" -Condition ($script:metrics.recentActivity.Count -eq 1)
+
+for ($i = 2; $i -le 30; $i++) {
+    $bulkItem = [PSCustomObject]@{ id = "proto_$i"; title = "Protocol $i"; category = "General"; tag = "<tag_$i>" }
+    Track-PromptUsage -item $bulkItem
+}
+Assert-Test -Name "recentActivity queue is strictly capped at 25 items" -Condition ($script:metrics.recentActivity.Count -eq 25)
+Assert-Test -Name "recentActivity top item is the most recent (proto_30)" -Condition ($script:metrics.recentActivity[0].id -eq "proto_30")
+
+if (Test-Path -LiteralPath $script:metricsFile) { Remove-Item -LiteralPath $script:metricsFile -Force -ErrorAction SilentlyContinue }
+
+# -----------------------------------------------------------------------------
+# SUITE 15: Quick-Fill Template Substitution Engine
+# -----------------------------------------------------------------------------
+$script:currentSuite = "Quick-Fill Substitution Engine"
+Write-Host "`nRunning Suite: $script:currentSuite" -ForegroundColor Yellow
+
+$templateMulti = "Deploy {{APP}} to environment {{ENV}} for user {{USER}}."
+$tokensMulti = @{ "APP" = "PromptClipboard"; "ENV" = "Production"; "USER" = "Admin" }
+$filledMulti = Fill-PromptTemplate -TemplateText $templateMulti -TokenValues $tokensMulti
+Assert-Test -Name "Substitutes multiple distinct tokens" -Condition ($filledMulti -eq "Deploy PromptClipboard to environment Production for user Admin.")
+
+$templateRepeated = "Check {{SERVICE}} status. Ping {{SERVICE}} endpoint."
+$tokensRepeated = @{ "SERVICE" = "AuthWorker" }
+$filledRepeated = Fill-PromptTemplate -TemplateText $templateRepeated -TokenValues $tokensRepeated
+Assert-Test -Name "Substitutes repeated tokens consistently across entire text" -Condition ($filledRepeated -eq "Check AuthWorker status. Ping AuthWorker endpoint.")
+
+$templateEmpty = "Value is: [{{OPTIONAL}}]"
+$tokensEmpty = @{ "OPTIONAL" = "" }
+$filledEmpty = Fill-PromptTemplate -TemplateText $templateEmpty -TokenValues $tokensEmpty
+Assert-Test -Name "Substitutes empty token value gracefully" -Condition ($filledEmpty -eq "Value is: []")
+
+$templateSpecial = "Regex characters test: {{INPUT}}"
+$specialValue = '$100 \path\ [brackets] (parens) *asterisk* +plus+'
+$tokensSpecial = @{ "INPUT" = $specialValue }
+$filledSpecial = Fill-PromptTemplate -TemplateText $templateSpecial -TokenValues $tokensSpecial
+Assert-Test -Name "Safely handles regex and escape characters without corruption" -Condition ($filledSpecial -eq "Regex characters test: $specialValue")
 
 # -----------------------------------------------------------------------------
 # SUMMARY REPORT
