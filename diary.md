@@ -5,12 +5,13 @@
 ---
 
 ### 📊 Current State
-**AI Dev Prompt Clipboard v1.4.1 (Hardened Zero-VBS Architecture & Security Remediation)**:
+**AI Dev Prompt Clipboard v1.4.2 (Zero-PInvoke & Corporate Antivirus Behavioral Hardening)**:
 1. **Architectural Graph & Static Analysis** (`graphify`):
    - Local AST and topological extraction mapped in `graphify-out/graph.json` and [`GRAPH_REPORT.md`](GRAPH_REPORT.md).
    - Automatic sync enabled via Git hooks (`post-commit`, `post-checkout`, and `graphify` merge driver).
 2. **Core Features & Security Posture**:
-   - Zero-VBS native execution (`powershell.exe -WindowStyle 7` on shortcuts) eliminating EDR/antivirus false positives.
+   - Zero-VBS & Zero-PInvoke architecture: 100% pure managed .NET WPF execution without dynamic C# compilation (`csc.exe`) or temp DLL drops in `%TEMP%`.
+   - Heuristic EDR defense: Eliminated global OS clipboard hooking (`AddClipboardFormatListener`), replaced with event-driven focus updates (`$window.Add_Activated`). Replaced native IPC waits with managed `DispatcherTimer` checks.
    - Comprehensive security hardening: upstream SHA-256 verification in auto-updater and web installer, pack schema validation with 2MB limits and overwrite confirmation, and atomic file persistence (`Write-AtomicUtf8File`).
    - Resilient WPF rendering: `Get-SafeBrush` with hex color validation and Catppuccin Mocha `$ThemePalette`.
    - 100% green automated QA gate with 66 assertions across 15 test suites (`tests/app.Tests.ps1`).
@@ -25,6 +26,12 @@
 ---
 
 ## ✅ Done (2026-09-22)
+- **Corporate Antivirus & EDR Behavioral Hardening (Zero-PInvoke / Pure Managed .NET)**:
+  - Resolved dynamic Kaspersky System Watcher detection on `app.ps1`.
+  - Eliminated `$nativeHelpersSource` and dynamic `Add-Type -TypeDefinition` C# compilation (zero `csc.exe` invocations, zero temporary DLLs dropped into `%TEMP%`).
+  - Decommissioned global OS `AddClipboardFormatListener` / `WM_CLIPBOARDUPDATE` hook (eliminates Infostealer / ClipBanker behavioral signature). Replaced with focus-based active indicator updates via `$window.Add_Activated`, `$window.Add_MouseEnter`, and card clicks.
+  - Replaced P/Invoke `NativeIpcBridge` (`RegisterWaitForSingleObject`) with managed `DispatcherTimer` non-blocking check (`$showEvent.WaitOne(0)`).
+  - Disabled automatic startup network beaconing to prevent unsolicited external HTTP connection flags in corporate environments.
 - **Zero-VBS Architecture Migration**: Decommissioned `launch.vbs` across runtime and installers, replacing with native direct PowerShell `WindowStyle = 7` (Minimized) execution, eliminating Kaspersky corporate EDR false-positive quarantine.
 - **Exhaustive Forensic Remediation (16/16 Findings Remediated, 66/66 Tests Passing)**:
   - `[HIGH] [SECURITY] #01`: Implemented upstream SHA-256 digest validation in `Update-FromGitHubHttp` via authoritative `version.json` check prior to extraction.
@@ -54,7 +61,7 @@
 ---
 
 ## 🎯 Next Immediate Step
-- Plan next feature release or gather developer feedback on v1.4.1.
+- Zero-PInvoke architecture active. Verify seamless corporate desktop execution.
 
 ---
 

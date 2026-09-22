@@ -80,48 +80,8 @@ $showEvent = New-Object System.Threading.EventWaitHandle($false, [System.Threadi
 # 3. Load Assemblies
 Add-Type -AssemblyName PresentationFramework, PresentationCore, WindowsBase, System.Windows.Forms, System.Drawing
 
-# 4. Native Helpers (AppUserModelID, Zero-Polling IPC Bridge, and Win32 Clipboard Hook)
-$nativeHelpersSource = @'
-using System;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Windows.Threading;
-
-public class ShellHelper {
-    [DllImport("shell32.dll", SetLastError = true)]
-    public static extern void SetCurrentProcessExplicitAppUserModelID([MarshalAs(UnmanagedType.LPWStr)] string AppID);
-}
-
-public class NativeIpcBridge {
-    public static RegisteredWaitHandle Register(WaitHandle handle, Dispatcher dispatcher, Action callback) {
-        return ThreadPool.RegisterWaitForSingleObject(handle, (state, timedOut) => {
-            if (!timedOut && callback != null) {
-                try {
-                    dispatcher.BeginInvoke(callback);
-                } catch {}
-            }
-        }, null, -1, false);
-    }
-}
-
-public class NativeClipboardHelper {
-    [DllImport("user32.dll", SetLastError = true)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool AddClipboardFormatListener(IntPtr hwnd);
-
-    [DllImport("user32.dll", SetLastError = true)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool RemoveClipboardFormatListener(IntPtr hwnd);
-
-    public const int WM_CLIPBOARDUPDATE = 0x031D;
-}
-'@
-try {
-    Add-Type -ReferencedAssemblies "WindowsBase" -TypeDefinition $nativeHelpersSource -ErrorAction SilentlyContinue
-} catch {}
-try {
-    [ShellHelper]::SetCurrentProcessExplicitAppUserModelID("TxekSystems.AIDevPromptClipboard.App.1")
-} catch {}
+# 4. Managed Runtime Environment (Zero-PInvoke / Zero-CSC Compilation - Corporate Antivirus Safe)
+# Pure managed .NET execution: eliminates csc.exe compiler invocations and temporary DLL drops in %TEMP%
 
 # 5. Initialize WPF Application with Explicit Shutdown (to live in System Tray)
 $app = [System.Windows.Application]::Current
@@ -1414,13 +1374,9 @@ $chkIncludeHeader.Add_Click({
     Save-Config
 })
 
-$script:lastUpdateCheck = [DateTime]::MinValue
 function Trigger-BackgroundUpdateCheck {
-    # Throttled to check at most once every 60 seconds when opening/restoring window
-    if ((Get-Date) - $script:lastUpdateCheck -gt [TimeSpan]::FromSeconds(60)) {
-        $script:lastUpdateCheck = Get-Date
-        Check-ForUpdatesAsync
-    }
+    # Automatic background network calls are disabled in corporate environments to prevent EDR false positives.
+    # Users can check for updates on-demand via the System Tray menu.
 }
 
 # Show / Hide / Exit Window Helpers
@@ -1469,22 +1425,10 @@ function Exit-Application {
         }
     } catch {}
     try {
-        if ($script:ipcRegistration) {
-            $script:ipcRegistration.Unregister($null) | Out-Null
-            $script:ipcRegistration = $null
+        if ($script:ipcTimer) {
+            $script:ipcTimer.Stop()
+            $script:ipcTimer = $null
         }
-    } catch {}
-    try {
-        if ($script:hwnd -and $script:hwnd -ne [IntPtr]::Zero) {
-            [NativeClipboardHelper]::RemoveClipboardFormatListener($script:hwnd) | Out-Null
-        }
-        if ($script:hwndSource -and $script:clipHook) {
-            try { $script:hwndSource.RemoveHook($script:clipHook) } catch {}
-            try { $script:hwndSource.Dispose() } catch {}
-            $script:hwndSource = $null
-            $script:clipHook = $null
-        }
-        $script:hwnd = [IntPtr]::Zero
     } catch {}
     try {
         if ($script:bgPollTimer) { $script:bgPollTimer.Stop() }
@@ -1520,22 +1464,10 @@ function Restart-Application {
         }
     } catch {}
     try {
-        if ($script:ipcRegistration) {
-            $script:ipcRegistration.Unregister($null) | Out-Null
-            $script:ipcRegistration = $null
+        if ($script:ipcTimer) {
+            $script:ipcTimer.Stop()
+            $script:ipcTimer = $null
         }
-    } catch {}
-    try {
-        if ($script:hwnd -and $script:hwnd -ne [IntPtr]::Zero) {
-            [NativeClipboardHelper]::RemoveClipboardFormatListener($script:hwnd) | Out-Null
-        }
-        if ($script:hwndSource -and $script:clipHook) {
-            try { $script:hwndSource.RemoveHook($script:clipHook) } catch {}
-            try { $script:hwndSource.Dispose() } catch {}
-            $script:hwndSource = $null
-            $script:clipHook = $null
-        }
-        $script:hwnd = [IntPtr]::Zero
     } catch {}
     try {
         if ($script:bgPollTimer) { $script:bgPollTimer.Stop() }
@@ -1569,28 +1501,6 @@ $window.add_MouseEnter({
     Update-ActiveClipboardIndicator
 })
 
-# Native Win32 Clipboard Listener registration via HwndSource
-$script:hwnd = [IntPtr]::Zero
-$script:hwndSource = $null
-$script:clipHook = $null
-
-$window.Add_SourceInitialized({
-    try {
-        $helper = [System.Windows.Interop.WindowInteropHelper]::new($window)
-        $script:hwnd = $helper.Handle
-        $script:hwndSource = [System.Windows.Interop.HwndSource]::FromHwnd($script:hwnd)
-        $script:clipHook = [System.Windows.Interop.HwndSourceHook]{
-            param($h, $msg, $wParam, $lParam, [ref]$handled)
-            if ($msg -eq [NativeClipboardHelper]::WM_CLIPBOARDUPDATE) {
-                Update-ActiveClipboardIndicator
-            }
-            return [IntPtr]::Zero
-        }
-        $script:hwndSource.AddHook($script:clipHook)
-        [NativeClipboardHelper]::AddClipboardFormatListener($script:hwnd) | Out-Null
-    } catch {}
-})
-
 $script:isExplicitExit = $false
 
 $window.Add_Closing({
@@ -1599,21 +1509,6 @@ $window.Add_Closing({
         $e.Cancel = $true
         Hide-MainWindow
     }
-})
-
-$window.Add_Closed({
-    try {
-        if ($script:hwnd -and $script:hwnd -ne [IntPtr]::Zero) {
-            [NativeClipboardHelper]::RemoveClipboardFormatListener($script:hwnd) | Out-Null
-        }
-        if ($script:hwndSource -and $script:clipHook) {
-            try { $script:hwndSource.RemoveHook($script:clipHook) } catch {}
-            try { $script:hwndSource.Dispose() } catch {}
-            $script:hwndSource = $null
-            $script:clipHook = $null
-        }
-        $script:hwnd = [IntPtr]::Zero
-    } catch {}
 })
 
 # PreviewKeyDown: intercept Tab navigation before WPF eats it
@@ -2329,10 +2224,15 @@ $notifyIcon.add_MouseClick({
     }
 })
 
-# 12. Event-Driven IPC Listener (Zero-Polling via ThreadPool kernel wait)
-$script:ipcRegistration = [NativeIpcBridge]::Register($showEvent, $window.Dispatcher, [Action]{
-    Show-MainWindow
+# 12. Managed IPC Listener via DispatcherTimer (Zero-PInvoke)
+$script:ipcTimer = [System.Windows.Threading.DispatcherTimer]::new([System.Windows.Threading.DispatcherPriority]::Background)
+$script:ipcTimer.Interval = [TimeSpan]::FromMilliseconds(250)
+$script:ipcTimer.Add_Tick({
+    if ($showEvent -and $showEvent.WaitOne(0)) {
+        Show-MainWindow
+    }
 })
+$script:ipcTimer.Start()
 
 # 13. Active Clipboard Tracking & Card Indicators
 $cardsList = [System.Collections.Generic.List[PSObject]]::new()
@@ -3743,14 +3643,9 @@ $btnClearSearch.Add_Click({
     $searchBox.Focus()
 })
 
-# 15. Auto-check for updates after 1 second (Silent asynchronous check)
-$updateCheckTimer = [System.Windows.Threading.DispatcherTimer]::new([System.Windows.Threading.DispatcherPriority]::Background)
-$updateCheckTimer.Interval = [TimeSpan]::FromSeconds(1)
-$updateCheckTimer.Add_Tick({
-    $this.Stop()
-    Check-ForUpdatesAsync
-})
-$updateCheckTimer.Start()
+# 15. Auto-check for updates (Silent asynchronous check)
+# Automatic background network calls are disabled in corporate environments to prevent EDR false positives.
+# Users can check for updates on-demand via the System Tray menu.
 
 # 16. Launch or Start Minimized
 if ($Startup) {
