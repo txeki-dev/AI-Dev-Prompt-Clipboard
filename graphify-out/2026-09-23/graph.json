@@ -36,7 +36,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83d\udccb active / pending tasks",
       "source_file": "diary.md",
-      "source_location": "L65"
+      "source_location": "L56"
     },
     {
       "id": "diary_ai_dev_prompt_clipboard_developer_diary",
@@ -72,19 +72,31 @@
       "node_kind": "heading",
       "norm_label": "\u2705 done (2026-09-22)",
       "source_file": "diary.md",
-      "source_location": "L52"
+      "source_location": "L28"
     },
     {
-      "id": "diary_done_2026_09_23",
-      "label": "\u2705 Done (2026-09-23)",
+      "id": "diary_forensic_audit_findings_2026_09_22",
+      "label": "\ud83d\udd2c Forensic Audit Findings - 2026-09-22",
       "_origin": "ast",
       "community": 11,
       "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-23)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "\u2705 done (2026-09-23)",
+      "norm_label": "\ud83d\udd2c forensic audit findings - 2026-09-22",
       "source_file": "diary.md",
-      "source_location": "L29"
+      "source_location": "L78"
+    },
+    {
+      "id": "diary_forensic_remediation_zero_vbs_architecture_2026_09_22",
+      "label": "\ud83d\udd2c Forensic Remediation: Zero-VBS Architecture (2026-09-22)",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-23)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "\ud83d\udd2c forensic remediation: zero-vbs architecture (2026-09-22)",
+      "source_file": "diary.md",
+      "source_location": "L68"
     },
     {
       "id": "diary_next_immediate_step",
@@ -96,7 +108,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83c\udfaf next immediate step",
       "source_file": "diary.md",
-      "source_location": "L72"
+      "source_location": "L63"
     },
     {
       "id": "diary_weekly_summary_week_ending_2026_09_13",
@@ -108,7 +120,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83d\udcc5 weekly summary (week ending 2026-09-13)",
       "source_file": "diary.md",
-      "source_location": "L22"
+      "source_location": "L21"
     },
     {
       "id": "graph_report",
@@ -454,7 +466,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83d\udee0\ufe0f estructura del proyecto",
       "source_file": "README.md",
-      "source_location": "L131"
+      "source_location": "L130"
     },
     {
       "id": "readme_instalaci\u00f3n_y_configuraci\u00f3n_de_atajo",
@@ -466,7 +478,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83d\udcbb instalacion y configuracion de atajo",
       "source_file": "README.md",
-      "source_location": "L150"
+      "source_location": "L149"
     },
     {
       "id": "readme_licencia",
@@ -478,7 +490,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83d\udcc4 licencia",
       "source_file": "README.md",
-      "source_location": "L197"
+      "source_location": "L196"
     },
     {
       "id": "readme_m\u00e9todo_1_instalador_autom\u00e1tico_de_1_l\u00ednea_recomendado_para_usuarios_no_t\u00e9cnicos_sin_git",
@@ -490,7 +502,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83c\udf1f metodo 1: instalador automatico de 1 linea (recomendado para usuarios no tecnicos / sin git)",
       "source_file": "README.md",
-      "source_location": "L154"
+      "source_location": "L153"
     },
     {
       "id": "readme_m\u00e9todo_2_instalador_de_windows_exe_cl\u00e1sico",
@@ -502,7 +514,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83d\udce6 metodo 2: instalador de windows `.exe` (clasico)",
       "source_file": "README.md",
-      "source_location": "L169"
+      "source_location": "L168"
     },
     {
       "id": "readme_m\u00e9todo_3_descarga_en_zip_manual_en_1_clic",
@@ -514,7 +526,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83d\udcc2 metodo 3: descarga en zip (manual en 1 clic)",
       "source_file": "README.md",
-      "source_location": "L179"
+      "source_location": "L178"
     },
     {
       "id": "readme_m\u00e9todo_4_para_desarrolladores_git_clone",
@@ -526,7 +538,7 @@
       "node_kind": "heading",
       "norm_label": "\ud83d\udc68\u200d\ud83d\udcbb metodo 4: para desarrolladores (git clone)",
       "source_file": "README.md",
-      "source_location": "L186"
+      "source_location": "L185"
     },
     {
       "id": "readme_pesta\u00f1a_dev_flux_metodolog\u00eda_de_desarrollo_h\u00edbrido",
@@ -2912,18 +2924,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "diary.md",
-      "source_location": "L22",
-      "weight": 1.0
-    },
-    {
-      "source": "diary_ai_dev_prompt_clipboard_developer_diary",
-      "target": "diary_done_2026_09_23",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "diary.md",
-      "source_location": "L29",
+      "source_location": "L21",
       "weight": 1.0
     },
     {
@@ -2934,7 +2935,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "diary.md",
-      "source_location": "L52",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -2945,7 +2946,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "diary.md",
-      "source_location": "L65",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "diary_ai_dev_prompt_clipboard_developer_diary",
+      "target": "diary_next_immediate_step",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "diary_ai_dev_prompt_clipboard_developer_diary",
+      "target": "diary_forensic_remediation_zero_vbs_architecture_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "diary.md",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
@@ -2961,13 +2984,13 @@
     },
     {
       "source": "diary_ai_dev_prompt_clipboard_developer_diary",
-      "target": "diary_next_immediate_step",
+      "target": "diary_forensic_audit_findings_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "diary.md",
-      "source_location": "L72",
+      "source_location": "L78",
       "weight": 1.0
     },
     {
@@ -3363,7 +3386,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L131",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
@@ -3374,7 +3397,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L150",
+      "source_location": "L149",
       "weight": 1.0
     },
     {
@@ -3385,7 +3408,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L197",
+      "source_location": "L196",
       "weight": 1.0
     },
     {
@@ -3440,7 +3463,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L154",
+      "source_location": "L153",
       "weight": 1.0
     },
     {
@@ -3451,7 +3474,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L169",
+      "source_location": "L168",
       "weight": 1.0
     },
     {
@@ -3462,7 +3485,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L179",
+      "source_location": "L178",
       "weight": 1.0
     },
     {
@@ -3473,7 +3496,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L186",
+      "source_location": "L185",
       "weight": 1.0
     },
     {

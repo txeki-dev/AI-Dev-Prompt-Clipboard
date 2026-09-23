@@ -6,7 +6,14 @@
     Txek Systems
 #>
 
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+try {
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12 -bor 12288
+    [System.Net.WebRequest]::DefaultWebProxy = [System.Net.WebRequest]::GetSystemWebProxy()
+    [System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultNetworkCredentials
+} catch {
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
+}
+$headers = @{ 'User-Agent' = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AI-Dev-Prompt-Clipboard-Setup' }
 
 $installRoot = Join-Path $env:LOCALAPPDATA "Programs"
 $installDir  = Join-Path $installRoot "AI-Dev-Prompt-Clipboard"
@@ -23,7 +30,7 @@ Write-Host ""
 try {
     # 1. Descarga del paquete oficial desde GitHub
     Write-Host "[1/5] Descargando última versión desde GitHub..." -ForegroundColor Yellow
-    Invoke-WebRequest -Uri $zipUrl -OutFile $tempZip -UseBasicParsing -TimeoutSec 60
+    Invoke-WebRequest -Uri $zipUrl -OutFile $tempZip -Headers $headers -UseBasicParsing -TimeoutSec 60
 
     if (-not (Test-Path -LiteralPath $tempZip)) {
         throw "No se pudo descargar el archivo de instalación desde GitHub."
@@ -43,7 +50,7 @@ try {
     # Verificación criptográfica de integridad SHA-256
     $calcHash = (Get-FileHash -LiteralPath $tempZip -Algorithm SHA256).Hash
     try {
-        $vJson = Invoke-RestMethod -Uri "https://raw.githubusercontent.com/txeki-dev/AI-Dev-Prompt-Clipboard/main/version.json" -UseBasicParsing -TimeoutSec 7
+        $vJson = Invoke-RestMethod -Uri "https://raw.githubusercontent.com/txeki-dev/AI-Dev-Prompt-Clipboard/main/version.json" -Headers $headers -UseBasicParsing -TimeoutSec 7
         if ($vJson -and $vJson.sha256 -and -not [string]::IsNullOrWhiteSpace($vJson.sha256)) {
             if ($calcHash.Trim().ToUpperInvariant() -ne $vJson.sha256.Trim().ToUpperInvariant()) {
                 throw "Alerta de seguridad: La firma SHA-256 del paquete ($calcHash) no coincide con la versión oficial registrada ($($vJson.sha256))."
@@ -174,8 +181,20 @@ try {
 
     # 5. Iniciar la aplicación en modo residente
     Write-Host "[5/5] Iniciando AI Dev Prompt Clipboard..." -ForegroundColor Green
-    $appPath = Join-Path $installDir "app.ps1"
-    Start-Process "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File `"$appPath`""
+    $pwshPath = Join-Path $PSHOME "powershell.exe"
+    if (-not (Test-Path -LiteralPath $pwshPath)) { $pwshPath = "powershell.exe" }
+
+    $psi = [System.Diagnostics.ProcessStartInfo]::new()
+    $psi.FileName = $pwshPath
+    $psi.Arguments = "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File `"$appPath`""
+    $psi.WorkingDirectory = $installDir
+    $psi.UseShellExecute = $true
+    $psi.WindowStyle = [System.Diagnostics.ProcessWindowStyle]::Hidden
+    try {
+        [System.Diagnostics.Process]::Start($psi) | Out-Null
+    } catch {
+        Start-Process $pwshPath -ArgumentList $psi.Arguments
+    }
 
     Write-Host ""
     Write-Host "=======================================================" -ForegroundColor Green

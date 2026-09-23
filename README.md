@@ -27,7 +27,7 @@ La aplicación cuenta con un motor de actualización automática híbrido y segu
 
 ---
 
-## ⚡ Prompts y Protocolos Incluidos (11 Protocolos)
+## ⚡ Prompts y Protocolos Incluidos (12 Protocolos)
 
 | # | Protocolo | Tag / Protocolo | Rol | Propósito |
 |---|---|---|---|---|
@@ -40,8 +40,9 @@ La aplicación cuenta con un motor de actualización automática híbrido y segu
 | 7 | **AUDIT** | `<codebase_audit_hybrid>` | Principal Cybersecurity Auditor, Lead QA Engineer & Code Architect | Auditoría forense exhaustiva de ciberseguridad, cobertura QA y calidad de código con AST de Graphify |
 | 8 | **REMEDIATE** | `<remediate_all_audit_findings>` | Principal Staff Engineer & Remediation Specialist | Resolución sistemática en cola de todos los hallazgos de auditoría (HIGH -> LOW) sin regresiones |
 | 9 | **OUTRO** | `<session_end_hybrid>` | Consolidación & Git | QA gate de tests, consolidación de `diary.md`, archivo semanal, actualización de README y git push |
-| 10 | **PRODUCT STRATEGY** | `<product_strategy_discovery>` | Chief Product Officer (CPO), Lead UX Strategist & SaaS Business Architect | Análisis proactivo de UX, flujos de usuario y capacidades de negocio viables para el backlog |
+| 10 | **PRODUCT STRATEGY** | `<product_quality_ux_protocol>` | Head of Product Design, Lead UX Architect & Usability Specialist | Auditoría de flujos UX, estados de UI y feedback para proponer mejoras ergonómicas independientes del modelo de negocio |
 | 11 | **BUSINESS STRATEGY** | `<business_strategy_advisory>` | SaaS/B2B Tech Founder, Venture Strategist & Commercial Operations Advisor | Consultoría estratégica de negocio, monetización SaaS/B2B, licencias IP, GTM y marco operativo/fiscal |
+| 12 | **RECOVER** | `<crash_recovery_protocol>` | Site Reliability Engineer & Forensic Recovery Specialist | Reconstrucción forense de contexto tras caída/reinicio, auditoría git, diagnóstico de tests y reconciliación de `diary.md` |
 
 ---
 
@@ -50,52 +51,56 @@ La aplicación cuenta con un motor de actualización automática híbrido y segu
 La aplicación incorpora una pestaña dedicada **⚡ DEV FLUX** que visualiza el ciclo de vida completo de ingeniería entre herramientas de IA (Claude Code y Google Antigravity CLI):
 
 ```text
-[ INICIO DEL PROYECTO ]
-                     1. INITIAL (Nuevo)  /  2. MIGRATE (Legacy)
-                     (Claude: Crea Grafo AST + 5 archivos de memoria)
-                                       │
-                                       ▼
-                       ┌───────────────────────────────┐
-                       │           3. INTRO            │
-                       │ (Lectura silenciosa de estado)│
-                       └───────────────┬───────────────┘
-                                       │
-       ┌───────────────────────────────┼───────────────────────────────┐
-       ▼                               ▼                               ▼
-[ INNOVACIÓN TÉCNICA ]      [ ESTRATEGIA DE PRODUCTO ]     [ NEGOCIO & LICENCIAS ]
-       4. RDi                   10. PRODUCT_STRATEGY        11. BUSINESS_STRATEGY
-(CTO: Perf / Concurrencia)     (CPO: UX / Capabilities)     (CEO: Monetización / GTM)
-       │                               │                               │
-       │                               │                   ┌───────────┴───────────┐
-       │                               │                   ▼                       ▼
-       │                               │             [ BUSINESS.md ]               │
-       │                               │             (Modelo & Pricing)            │
-       └───────────────────────┬───────┴───────────────────────────────────────────┘
-                               ▼
-                        [ backlog.md ] ◄────────────────── [ 7. AUDIT ]
-                 (Cola de Tareas Priorizadas)          (Diagnóstico Read-Only)
-                               │                                   │
-                               ▼                                   ▼
-                 [ 5. FEATURE_PLAN (TDD Red) ]             [ 8. REMEDIATE ]
-                  (Claude: Diseña & Rompe Tests)          (Cirugía en Cascada)
-                               │                                   │
-                     (Relevo en Filesystem)                        │
-                               ▼                                   │
-                 [ 6. FEATURE_BUILD (TDD Green) ]                  │
-                  (Gemini: Pica código & Pone Verde)               │
-                               │                                   │
-                               └─────────────────┬─────────────────┘
-                                                 ▼
-                                  ┌───────────────────────────────┐
-                                  │           9. OUTRO            │
-                                  │    - QA Gate (Tests 100%)     │
-                                  │    - Archivo de tareas        │
-                                  │    - git commit & push        │
-                                  │    - Hook actualiza Graphify  │
-                                  └───────────────────────────────┘
+[ ACCESO AL SISTEMA ]
+                ┌───────────────────────────┼───────────────────────────┐
+                ▼                           ▼                           ▼
+       1. INITIAL (Nuevo)          2. MIGRATE (Legacy)          12. RECOVER (Post-Crash)
+       (Setup de 0 + Grafo)      (Migración context.md)     (Forense: Git + Tests + Diary)
+                │                           │                           │
+                └─────────────┬─────────────┘                           │
+                              ▼                                         │
+                   ┌─────────────────────┐                              │
+                   │      3. INTRO       │                              │
+                   │ (Sesión Ordinaria)  │                              │
+                   └──────────┬──────────┘                              │
+                              │                                         │
+        ┌─────────────────────┼─────────────────────┐                   │
+        ▼                     ▼                     ▼                   │
+    [ CTO / TECH ]       [ CPO / UX ]         [ CEO / BIZ ]             │
+        4. RDi        10. PRODUCT_STRATEGY 11. BUSINESS_STRATEGY        │
+    (Arquitectura/     (Ergonomía, Calidad,  (Monetización,             │
+     Concurrencia)      Feedback visual)      Pricing, GTM)             │
+        │                     │                     │                   │
+        │                     │            ┌────────┴────────┐          │
+        │                     │            ▼                 ▼          │
+        │                     │     [ BUSINESS.md ]          │          │
+        │                     │     (Modelo & Licencias)     │          │
+        └──────────────┬──────┴──────────────────────────────┘          │
+                       ▼                                                │
+                [ backlog.md ] ◄────────────────── [ 7. AUDIT ]         │
+         (Cola de Tareas Priorizadas)          (Diagnóstico Read-Only)  │
+                       │                                   │            │
+                       ▼                                   ▼            │
+         [ 5. FEATURE_PLAN (TDD Red) ]             [ 8. REMEDIATE ]     │
+          (Claude: Diseña & Rompe Tests)          (Cirugía en Cascada)  │
+                       │                                   │            │
+             (Relevo en Filesystem)                        │            │
+                       ▼                                   │            │
+         [ 6. FEATURE_BUILD (TDD Green) ]                  │            │
+          (Gemini: Pica código & Pone Verde)               │            │
+                       │                                   │            │
+                       │ ◄─────────────────────────────────┴────────────┘ (Reconcilia &
+                       ▼                                                   reinyecta aquí)
+            ┌─────────────────────┐
+            │      9. OUTRO       │
+            │ - QA Gate (Tests)   │
+            │ - Archivo tareas    │
+            │ - git commit & push │
+            │ - Hook Graphify AST │
+            └─────────────────────┘
 ```
 
-- **Diagrama de Flujo Oficial en 5 Fases**: Mapeo visual monoespaciado integral desde el inicio (`INITIAL` / `MIGRATE`), sesión (`INTRO`), bifurcación estratégica (`RDi`, `PRODUCT_STRATEGY`, `BUSINESS_STRATEGY`), auditoría y TDD (`AUDIT`, `REMEDIATE`, `FEATURE_PLAN`, `FEATURE_BUILD`) hasta la consolidación (`OUTRO`).
+- **Diagrama de Flujo Oficial en 5 Fases**: Mapeo visual monoespaciado integral desde el acceso (`INITIAL` / `MIGRATE` / `RECOVER`), sesión (`INTRO`), bifurcación estratégica (`RDi`, `PRODUCT_STRATEGY`, `BUSINESS_STRATEGY`), auditoría y TDD (`AUDIT`, `REMEDIATE`, `FEATURE_PLAN`, `FEATURE_BUILD`) hasta la consolidación (`OUTRO`).
 - **Accesos Rápidos Interactivos por Fase**: Botones dedicados para las 5 fases. Un clic izquierdo copia el protocolo al portapapeles (con QuickFill si tiene variables); un clic derecho salta directamente a la pestaña `📋 Protocolos` filtrando la categoría correspondiente.
 - **Vínculo Directo al Catálogo**: Botón `📋 Ver Catálogo Completo` para navegar fluidamente entre el mapa de flujo y la lista completa de prompts.
 
@@ -107,17 +112,18 @@ La aplicación incorpora una pestaña dedicada **⚡ DEV FLUX** que visualiza el
 - **Editor Visual Integrado (`+ Nuevo` / `✏️`)**: Crea, edita y elimina protocolos en caliente desde la propia interfaz con soporte de variables `{{variables}}`, color hexadecimal y recarga en memoria instantánea sin reiniciar.
 - **Motor de Workspaces & Packs Modulares (`packs/`)**: Selector de perfiles de trabajo (`Core Engineering`, `Frontend UI`, `Security & DevOps`) con importación (`📥`) y exportación (`📤`) de packs JSON para compartir entre equipos.
 - **Panel de Métricas y Telemetría (`📊 Métricas`)**: Indicadores KPI en tiempo real (total invocaciones, ciclos TDD, ratio de disciplina, protocolo #1, distribución por categoría e historial) y botón `📋 Copiar Resumen Markdown` para standups y reportes de sesión.
-- **DEV FLUX Smart Sequence Stepper**: Píldora interactiva en la barra inferior y atajo de teclado **`Ctrl + Alt + N`** para avanzar automáticamente a la siguiente fase del ciclo recomendada (`initial -> intro -> feature_plan -> feature_build -> audit -> remediate -> outro`).
+- **DEV FLUX Smart Sequence Stepper**: Píldora interactiva en la barra inferior y atajo de teclado **`Ctrl + Alt + N`** para avanzar automáticamente a la siguiente fase del ciclo recomendada (`initial -> intro -> feature_plan -> feature_build -> audit -> remediate -> outro` y `recover -> feature_build`).
 - **Icono Propio de Aplicación**: Mediante `AppUserModelID`, Windows reconoce la aplicación como un proceso independiente en la barra de tareas y bandeja, mostrando su icono exclusivo en lugar del terminal de PowerShell.
 - **Instancia Única con Activación IPC**: Solo se ejecuta un proceso en segundo plano (vía `Mutex` y `EventWaitHandle`). Pulsar `Ctrl + Alt + P` o abrir el acceso directo despierta la ventana residente al instante con 0ms de retardo.
 - **Indicador de Prompt Activo en el Portapapeles**: Resalta automáticamente con borde verde esmeralda y la insignia `📋 En portapapeles` cuál de los protocolos reside actualmente en el portapapeles de Windows, sincronizado en tiempo real.
 - **Copia instantánea protegida**: Algoritmo con reintentos contra bloqueos transitorios del portapapeles de Windows (`CLIPBRD_E_CANT_OPEN`) y feedback en la barra inferior en verde (`✓ ¡Copiado al portapapeles!`).
 - **Vista Previa (`👁️`)**: Visualiza el texto íntegro en fuente monoespaciada antes de copiarlo.
-- **Buscador y Filtros Dinámicos por Categoría**: Píldoras interactivas con conteo en tiempo real (`Todos (11)`, `Workflow (2)`, `TDD (2)`, `Setup (2)`, `Auditoría (2)`, `R&D (1)`, `Estrategia (2)`). Navega rápidamente entre ellas con **`Shift + Tab`** en la pestaña de Protocolos.
+- **Buscador y Filtros Dinámicos por Categoría**: Píldoras interactivas con conteo en tiempo real (`Todos (12)`, `Workflow (3)`, `TDD (2)`, `Setup (2)`, `Auditoría (2)`, `R&D (1)`, `Estrategia (2)`). Navega rápidamente entre ellas con **`Shift + Tab`** en la pestaña de Protocolos.
 - **Fijar ventana (`📌 Always on Top`)**: Mantenla flotando sobre tu editor de código o chat de IA.
 - **Opciones persistentes** (guardadas en `config.json`):
   - `Ocultar al copiar`: Si está marcado, la ventana se oculta a la bandeja tras copiar un prompt.
   - `Cabecera [ TITULO ]`: Permite decidir si copiar únicamente el cuerpo del protocolo (`Execute the ...`) o incluir la cabecera.
+- **Insignia de Versión Interactiva**: Píldora de versión visible en la cabecera junto al contador de protocolos (`[ 12 protocolos ] [ v1.4.3 ]`), con tooltip informativo y comprobación de actualizaciones en 1 solo clic.
 - **Personalización sencilla (`⚙️`)**: Haz clic en el engranaje para abrir el archivo JSON en el Bloc de Notas.
 
 ---

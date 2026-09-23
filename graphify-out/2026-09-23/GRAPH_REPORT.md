@@ -1,11 +1,11 @@
 # Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-23)
 
 ## Corpus Check
-- 15 files · ~39,404 words
+- 15 files · ~39,848 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 122 nodes · 190 edges · 11 communities
+- 123 nodes · 191 edges · 11 communities
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
@@ -31,10 +31,10 @@
 4. `AI Dev Prompt Clipboard 📋` - 9 edges
 5. `AI Dev Prompt Clipboard: Diary Archive` - 9 edges
 6. `Write-AtomicUtf8File()` - 8 edges
-7. `Copy-PromptToClipboard()` - 7 edges
-8. `Update-NextPhaseIndicator()` - 7 edges
-9. `Switch-Workspace()` - 7 edges
-10. `Save-CurrentPromptEditor()` - 7 edges
+7. `AI Dev Prompt Clipboard: Developer Diary` - 8 edges
+8. `Copy-PromptToClipboard()` - 7 edges
+9. `Update-NextPhaseIndicator()` - 7 edges
+10. `Switch-Workspace()` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Delete-CurrentPromptEditor()` --calls--> `Write-AtomicUtf8File()`  [EXTRACTED]
@@ -74,26 +74,26 @@ Cohesion: 0.24
 Nodes (13): Build-CategoryChips(), Delete-CurrentPromptEditor(), Get-NextCategoryName(), Get-NextPhasePrompt(), New-PromptItemSlug(), Reload-ActivePromptsIfModified(), Save-Config(), Save-CurrentPromptEditor() (+5 more)
 
 ### Community 11 - "Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-23)"
-Cohesion: 0.11
-Nodes (17): 📋 Active / Pending Tasks, AI Dev Prompt Clipboard: Developer Diary, 📊 Current State, ✅ Done (2026-09-22), ✅ Done (2026-09-23), 🎯 Next Immediate Step, 📅 Weekly Summary (Week ending 2026-09-13), Community Hubs (Navigation) (+9 more)
+Cohesion: 0.10
+Nodes (18): 📋 Active / Pending Tasks, AI Dev Prompt Clipboard: Developer Diary, 📊 Current State, ✅ Done (2026-09-22), 🔬 Forensic Audit Findings - 2026-09-22, 🔬 Forensic Remediation: Zero-VBS Architecture (2026-09-22), 🎯 Next Immediate Step, 📅 Weekly Summary (Week ending 2026-09-13) (+10 more)
 
 ### Community 12 - "AI Dev Prompt Clipboard: Diary Archive"
 Cohesion: 0.20
 Nodes (9): AI Dev Prompt Clipboard: Diary Archive, 📅 Archived Sprint: Week ending 2026-09-12, 📅 Archived Sprint: Week ending 2026-09-13, ✅ Done (2026-09-10 — System Tray, Windows Startup, App Identity, Auto-Updater & Finding #2), ✅ Done (2026-09-13 — Product Strategy Initiatives v1.4.0), 🔬 Forensic Audit Findings - 2026-09-10, 🔬 Forensic Audit Findings - Remediated (2026-09-13 Session 2), 🔬 Historical Forensic Audit Findings - Remediated (2026-09-13 Session 1) (+1 more)
 
 ## Knowledge Gaps
-- **49 isolated node(s):** `Corpus Check`, `Summary`, `Graph Freshness`, `Community Hubs (Navigation)`, `God Nodes (most connected - your core abstractions)` (+44 more)
+- **50 isolated node(s):** `Corpus Check`, `Summary`, `Graph Freshness`, `Community Hubs (Navigation)`, `God Nodes (most connected - your core abstractions)` (+45 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-23)` connect `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-23)` to `Communities (16 total, 0 thin omitted)`?**
-  _High betweenness centrality (0.051) - this node is a cross-community bridge._
+  _High betweenness centrality (0.053) - this node is a cross-community bridge._
 - **Why does `Communities (16 total, 0 thin omitted)` connect `Communities (16 total, 0 thin omitted)` to `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-23)`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
+  _High betweenness centrality (0.046) - this node is a cross-community bridge._
 - **What connects `Corpus Check`, `Summary`, `Graph Freshness` to the rest of the system?**
-  _49 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _50 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `AI Dev Prompt Clipboard 📋` be split into smaller, more focused modules?**
   _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
 - **Should `Communities (16 total, 0 thin omitted)` be split into smaller, more focused modules?**
@@ -101,4 +101,4 @@ _Questions this graph is uniquely positioned to answer:_
 - **Should `app.ps1` be split into smaller, more focused modules?**
   _Cohesion score 0.1330049261083744 - nodes in this community are weakly interconnected._
 - **Should `Graph Report - AI-Assisted-Dev-Prompt-Clipboard  (2026-09-23)` be split into smaller, more focused modules?**
-  _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.1 - nodes in this community are weakly interconnected._

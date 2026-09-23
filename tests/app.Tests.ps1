@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Automated Unit & Regression Test Suite for AI Dev Prompt Clipboard
     Txek Systems - QA Gate
@@ -93,7 +93,8 @@ $script:fluxSequence = @(
     @{ Id = "rdi";               Next = "product_strategy" },
     @{ Id = "product_strategy";  Next = "business_strategy" },
     @{ Id = "business_strategy"; Next = "feature_plan" },
-    @{ Id = "migrate";           Next = "intro" }
+    @{ Id = "migrate";           Next = "intro" },
+    @{ Id = "recover";           Next = "feature_build" }
 )
 
 # -----------------------------------------------------------------------------
@@ -232,6 +233,9 @@ Assert-Test -Name "product_strategy bridges to business_strategy" -Condition ((G
 $script:lastCopiedPromptId = "business_strategy"
 Assert-Test -Name "business_strategy transitions to feature_plan" -Condition ((Get-NextPhasePrompt).id -eq "feature_plan")
 
+$script:lastCopiedPromptId = "recover"
+Assert-Test -Name "recover steps to feature_build" -Condition ((Get-NextPhasePrompt).id -eq "feature_build")
+
 # -----------------------------------------------------------------------------
 # SUITE 9: Workspace Pack Discovery
 # -----------------------------------------------------------------------------
@@ -251,7 +255,7 @@ $securityPack = Join-Path $packsDir "security-devops.json"
 Assert-Test -Name "security-devops.json exists" -Condition (Test-Path -LiteralPath $securityPack)
 
 $coreContent = Get-Content -LiteralPath $corePack -Raw -Encoding UTF8 | ConvertFrom-Json
-Assert-Test -Name "Core pack contains at least 10 protocols" -Condition ($coreContent.Count -ge 10)
+Assert-Test -Name "Core pack contains at least 12 protocols" -Condition ($coreContent.Count -ge 12)
 
 # -----------------------------------------------------------------------------
 # SUITE 10: Telemetry & Metrics Aggregator (Canonical app.ps1 Formula)
@@ -429,6 +433,36 @@ $specialValue = '$100 \path\ [brackets] (parens) *asterisk* +plus+'
 $tokensSpecial = @{ "INPUT" = $specialValue }
 $filledSpecial = Fill-PromptTemplate -TemplateText $templateSpecial -TokenValues $tokensSpecial
 Assert-Test -Name "Safely handles regex and escape characters without corruption" -Condition ($filledSpecial -eq "Regex characters test: $specialValue")
+
+# -----------------------------------------------------------------------------
+# SUITE 16: Antivirus & Corporate Firewall Hardening (Kaspersky / Zero-PInvoke)
+# -----------------------------------------------------------------------------
+$script:currentSuite = "Antivirus & Corporate Firewall Hardening"
+Write-Host "`nRunning Suite: $script:currentSuite" -ForegroundColor Yellow
+
+$appContent = Get-Content -LiteralPath (Join-Path $scriptDir "app.ps1") -Raw
+$setupContent = Get-Content -LiteralPath (Join-Path $scriptDir "setup.ps1") -Raw
+$versionJson = Get-Content -LiteralPath (Join-Path $scriptDir "version.json") -Raw | ConvertFrom-Json
+
+# 1. Zero-PInvoke: No dynamic C# compilation (Add-Type -TypeDefinition invokes csc.exe)
+Assert-Test -Name "app.ps1 has zero dynamic compilation (Zero Add-Type -TypeDefinition)" -Condition ($appContent -notmatch 'Add-Type\s+-TypeDefinition')
+Assert-Test -Name "setup.ps1 has zero dynamic compilation (Zero Add-Type -TypeDefinition)" -Condition ($setupContent -notmatch 'Add-Type\s+-TypeDefinition')
+
+# 2. No dangerous remote download execution primitives (Invoke-Expression / iex)
+Assert-Test -Name "Zero Invoke-Expression / IEX execution cradles in codebase" -Condition ($appContent -notmatch 'Invoke-Expression|\biex\b' -and $setupContent -notmatch 'Invoke-Expression|\biex\b')
+
+# 3. Enterprise proxy credential integration & TLS 1.3
+Assert-Test -Name "app.ps1 configures default network proxy credentials" -Condition ($appContent -match 'DefaultNetworkCredentials')
+Assert-Test -Name "setup.ps1 configures default network proxy credentials" -Condition ($setupContent -match 'DefaultNetworkCredentials')
+
+# 4. Version badge display in TitleBar
+Assert-Test -Name "app.ps1 UI defines AppVersionBadge in TitleBar" -Condition ($appContent -match 'x:Name="AppVersionBadge"')
+Assert-Test -Name "app.ps1 UI defines PromptCountBadge in TitleBar" -Condition ($appContent -match 'x:Name="PromptCountBadge"')
+
+# 5. Version consistency across manifests
+$issContent = Get-Content -LiteralPath (Join-Path $scriptDir "installer.iss") -Raw
+Assert-Test -Name "installer.iss MyAppVersion matches version.json" -Condition ($issContent -match "#define MyAppVersion `"$($versionJson.version)`"")
+Assert-Test -Name "app.ps1 AppVersion matches version.json" -Condition ($appContent -match "\`$Script:AppVersion\s*=\s*`"$($versionJson.version)`"")
 
 # -----------------------------------------------------------------------------
 # SUMMARY REPORT

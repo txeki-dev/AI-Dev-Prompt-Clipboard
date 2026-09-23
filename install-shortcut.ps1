@@ -64,7 +64,8 @@ try {
 } catch {}
 
 # 3. Configurar ejecutor nativo: PowerShell directo (Zero-VBS / Corporate-Safe)
-$targetPath  = "powershell.exe"
+$targetPath  = Join-Path $PSHOME "powershell.exe"
+if (-not (Test-Path -LiteralPath $targetPath)) { $targetPath = "powershell.exe" }
 $desktopArgs = "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File `"$appPath`""
 $startupArgs = "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File `"$appPath`" -Startup"
 Write-Host "  [i] Configurado modo nativo de PowerShell (Zero-VBS / Corporate-Safe)." -ForegroundColor Cyan

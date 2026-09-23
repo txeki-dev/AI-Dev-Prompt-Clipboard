@@ -18,7 +18,7 @@ if (-not $scriptDir) {
     }
 }
 
-$Script:AppVersion = "1.4.0"
+$Script:AppVersion = "1.4.3"
 $promptsFile = Join-Path $scriptDir "prompts.json"
 $configFile  = Join-Path $scriptDir "config.json"
 $iconFile    = Join-Path $scriptDir "icon.ico"
@@ -26,6 +26,7 @@ $versionFile = Join-Path $scriptDir "version.json"
 $packsDir    = Join-Path $scriptDir "packs"
 $metricsFile = Join-Path $scriptDir "metrics.json"
 $script:activePromptsPath = $promptsFile
+$script:lastPromptsLoadTime = if (Test-Path -LiteralPath $promptsFile) { (Get-Item -LiteralPath $promptsFile).LastWriteTimeUtc } else { $null }
 $script:scriptFile = Join-Path $scriptDir "app.ps1"
 $script:startupScriptWriteTime = if (Test-Path -LiteralPath $script:scriptFile) { (Get-Item -LiteralPath $script:scriptFile).LastWriteTimeUtc } else { $null }
 
@@ -190,6 +191,7 @@ try {
     if ($script:activePromptsPath -ne $promptsFile -and (Test-Path -LiteralPath $promptsFile)) {
         try {
             $script:activePromptsPath = $promptsFile
+$script:lastPromptsLoadTime = if (Test-Path -LiteralPath $promptsFile) { (Get-Item -LiteralPath $promptsFile).LastWriteTimeUtc } else { $null }
             $config.ActivePack = "default"
             Save-Config
             $script:prompts = Get-Content -LiteralPath $promptsFile -Raw -Encoding UTF8 | ConvertFrom-Json
@@ -268,6 +270,9 @@ $xaml = @"
                             <TextBlock Text="AI Dev Prompt Clipboard" FontSize="15" FontWeight="SemiBold" Foreground="#CDD6F4" VerticalAlignment="Center"/>
                             <Border Background="#313244" CornerRadius="10" Margin="10,0,0,0" Padding="8,2" VerticalAlignment="Center">
                                 <TextBlock x:Name="PromptCountBadge" Text="Cargando..." FontSize="11" Foreground="#BAC2DE"/>
+                            </Border>
+                            <Border x:Name="AppVersionContainer" Background="#1E1E2E" BorderBrush="#45475A" BorderThickness="1" CornerRadius="10" Margin="6,0,0,0" Padding="8,2" VerticalAlignment="Center" ToolTip="Versión de la aplicación (Clic para comprobar actualizaciones)" Cursor="Hand">
+                                <TextBlock x:Name="AppVersionBadge" Text="v$Script:AppVersion" FontSize="11" FontWeight="Bold" Foreground="#89B4FA"/>
                             </Border>
                         </StackPanel>
 
@@ -470,49 +475,53 @@ $xaml = @"
                                 <Border Background="#11111B" BorderBrush="#313244" BorderThickness="1.5" CornerRadius="10" Padding="14,12" Margin="0,0,0,12">
                                     <ScrollViewer x:Name="AsciiDiagramScrollViewer" Background="Transparent" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                                         <TextBlock xml:space="preserve" FontFamily="Consolas, Cascadia Code, Courier New" FontSize="10" Foreground="#CDD6F4" LineHeight="14" TextWrapping="NoWrap">
-[ INICIO DEL PROYECTO ]
-                     1. INITIAL (Nuevo)  /  2. MIGRATE (Legacy)
-                     (Claude: Crea Grafo AST + 5 archivos de memoria)
-                                       │
-                                       ▼
-                       ┌───────────────────────────────┐
-                       │           3. INTRO            │
-                       │ (Lectura silenciosa de estado)│
-                       └───────────────┬───────────────┘
-                                       │
-       ┌───────────────────────────────┼───────────────────────────────┐
-       ▼                               ▼                               ▼
-[ INNOVACIÓN TÉCNICA ]      [ ESTRATEGIA DE PRODUCTO ]     [ NEGOCIO &amp; LICENCIAS ]
-       4. RDi                   10. PRODUCT_STRATEGY        11. BUSINESS_STRATEGY
-(CTO: Perf / Concurrencia)     (CPO: UX / Capabilities)     (CEO: Monetización / GTM)
-       │                               │                               │
-       │                               │                   ┌───────────┴───────────┐
-       │                               │                   ▼                       ▼
-       │                               │             [ BUSINESS.md ]               │
-       │                               │             (Modelo &amp; Pricing)            │
-       └───────────────────────┬───────┴───────────────────────────────────────────┘
-                               ▼
-                        [ backlog.md ] ◄────────────────── [ 7. AUDIT ]
-                 (Cola de Tareas Priorizadas)          (Diagnóstico Read-Only)
-                               │                                   │
-                               ▼                                   ▼
-                 [ 5. FEATURE_PLAN (TDD Red) ]             [ 8. REMEDIATE ]
-                  (Claude: Diseña &amp; Rompe Tests)          (Cirugía en Cascada)
-                               │                                   │
-                     (Relevo en Filesystem)                        │
-                               ▼                                   │
-                 [ 6. FEATURE_BUILD (TDD Green) ]                  │
-                  (Gemini: Pica código &amp; Pone Verde)               │
-                               │                                   │
-                               └─────────────────┬─────────────────┘
-                                                 ▼
-                                  ┌───────────────────────────────┐
-                                  │           9. OUTRO            │
-                                  │    - QA Gate (Tests 100%)     │
-                                  │    - Archivo de tareas        │
-                                  │    - git commit &amp; push        │
-                                  │    - Hook actualiza Graphify  │
-                                  └───────────────────────────────┘</TextBlock>
+[ ACCESO AL SISTEMA ]
+                ┌───────────────────────────┼───────────────────────────┐
+                ▼                           ▼                           ▼
+       1. INITIAL (Nuevo)          2. MIGRATE (Legacy)          12. RECOVER (Post-Crash)
+       (Setup de 0 + Grafo)      (Migración context.md)     (Forense: Git + Tests + Diary)
+                │                           │                           │
+                └─────────────┬─────────────┘                           │
+                              ▼                                         │
+                   ┌─────────────────────┐                              │
+                   │      3. INTRO       │                              │
+                   │ (Sesión Ordinaria)  │                              │
+                   └──────────┬──────────┘                              │
+                              │                                         │
+        ┌─────────────────────┼─────────────────────┐                   │
+        ▼                     ▼                     ▼                   │
+    [ CTO / TECH ]       [ CPO / UX ]         [ CEO / BIZ ]             │
+        4. RDi        10. PRODUCT_STRATEGY 11. BUSINESS_STRATEGY        │
+    (Arquitectura/     (Ergonomía, Calidad,  (Monetización,             │
+     Concurrencia)      Feedback visual)      Pricing, GTM)             │
+        │                     │                     │                   │
+        │                     │            ┌────────┴────────┐          │
+        │                     │            ▼                 ▼          │
+        │                     │     [ BUSINESS.md ]          │          │
+        │                     │     (Modelo &amp; Licencias)     │          │
+        └──────────────┬──────┴──────────────────────────────┘          │
+                       ▼                                                │
+                [ backlog.md ] ◄────────────────── [ 7. AUDIT ]         │
+         (Cola de Tareas Priorizadas)          (Diagnóstico Read-Only)  │
+                       │                                   │            │
+                       ▼                                   ▼            │
+         [ 5. FEATURE_PLAN (TDD Red) ]             [ 8. REMEDIATE ]     │
+          (Claude: Diseña &amp; Rompe Tests)          (Cirugía en Cascada)  │
+                       │                                   │            │
+             (Relevo en Filesystem)                        │            │
+                       ▼                                   │            │
+         [ 6. FEATURE_BUILD (TDD Green) ]                  │            │
+          (Gemini: Pica código &amp; Pone Verde)               │            │
+                       │                                   │            │
+                       │ ◄─────────────────────────────────┴────────────┘ (Reconcilia &amp;
+                       ▼                                                   reinyecta aquí)
+            ┌─────────────────────┐
+            │      9. OUTRO       │
+            │ - QA Gate (Tests)   │
+            │ - Archivo tareas    │
+            │ - git commit &amp; push │
+            │ - Hook Graphify AST │
+            └─────────────────────┘</TextBlock>
                                     </ScrollViewer>
                                 </Border>
 
@@ -527,12 +536,13 @@ $xaml = @"
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="1. INICIO PROYECTO" FontSize="11" FontWeight="Bold" Foreground="#A78BFA"/>
-                                            <TextBlock Text="Setup &amp; Migración AST" FontSize="10" Foreground="#6C7086"/>
+                                            <TextBlock Text="1. ACCESO AL SISTEMA" FontSize="11" FontWeight="Bold" Foreground="#A78BFA"/>
+                                            <TextBlock Text="Setup, Migración &amp; Recover" FontSize="10" Foreground="#6C7086"/>
                                         </StackPanel>
                                         <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                                             <Button x:Name="BtnFluxInitial" Style="{StaticResource FluxButtonStyle}" Content="1. INITIAL" Background="#26233A" BorderBrush="#A78BFA" BorderThickness="1"/>
                                             <Button x:Name="BtnFluxMigrate" Style="{StaticResource FluxButtonStyle}" Content="2. MIGRATE" Background="#26233A" BorderBrush="#C084FC" BorderThickness="1"/>
+                                            <Button x:Name="BtnFluxRecover" Style="{StaticResource FluxButtonStyle}" Content="12. RECOVER" Background="#2E1924" BorderBrush="#F38BA8" BorderThickness="1"/>
                                         </WrapPanel>
                                     </Grid>
                                 </Border>
@@ -567,7 +577,7 @@ $xaml = @"
                                         </StackPanel>
                                         <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                                             <Button x:Name="BtnFluxRDi" Style="{StaticResource FluxButtonStyle}" Content="4. RDi (CTO)" Background="#2D1B2D" BorderBrush="#EC4899" BorderThickness="1"/>
-                                            <Button x:Name="BtnFluxStrategy" Style="{StaticResource FluxButtonStyle}" Content="10. PRODUCT_STRATEGY (CPO)" Background="#2D1822" BorderBrush="#F43F5E" BorderThickness="1"/>
+                                            <Button x:Name="BtnFluxStrategy" Style="{StaticResource FluxButtonStyle}" Content="10. PRODUCT_STRATEGY (UX)" Background="#2D1822" BorderBrush="#F43F5E" BorderThickness="1"/>
                                             <Button x:Name="BtnFluxBiz" Style="{StaticResource FluxButtonStyle}" Content="11. BUSINESS_STRATEGY (CEO)" Background="#2E1C24" BorderBrush="#EBA0AC" BorderThickness="1"/>
                                         </WrapPanel>
                                     </Grid>
@@ -941,7 +951,7 @@ $xaml = @"
                             </StackPanel>
 
                             <TextBlock x:Name="StatusLabel" Text="Haz clic en cualquier tarjeta para copiar al portapapeles" FontSize="11" Foreground="#A6ADC8"/>
-                            <TextBlock Text="Atajo global: Ctrl + Alt + P   Activo en bandeja" FontSize="10" Foreground="#585B70" Margin="0,1,0,0"/>
+                            <TextBlock Text="Atajo global: Ctrl + Alt + P   •   v$Script:AppVersion   •   Activo en bandeja" FontSize="10" Foreground="#585B70" Margin="0,1,0,0"/>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
@@ -980,7 +990,19 @@ $promptContainer    = $window.FindName("PromptContainer")
 $statusLabel        = $window.FindName("StatusLabel")
 $chkCloseOnCopy     = $window.FindName("ChkCloseOnCopy")
 $chkIncludeHeader   = $window.FindName("ChkIncludeHeader")
-$promptCountBadge   = $window.FindName("PromptCountBadge")
+$promptCountBadge    = $window.FindName("PromptCountBadge")
+$appVersionBadge     = $window.FindName("AppVersionBadge")
+$appVersionContainer = $window.FindName("AppVersionContainer")
+
+if ($appVersionBadge) {
+    $appVersionBadge.Text = "v$Script:AppVersion"
+}
+if ($appVersionContainer) {
+    $appVersionContainer.ToolTip = "AI Dev Prompt Clipboard v$Script:AppVersion`nClic para comprobar actualizaciones"
+    $appVersionContainer.Add_MouseLeftButtonUp({
+        Check-ForUpdates -Silent $false
+    })
+}
 if ($promptCountBadge) {
     $initCount = if ($prompts) { $prompts.Count } else { 0 }
     $promptCountBadge.Text = if ($initCount -eq 1) { "1 protocolo" } else { "$initCount protocolos" }
@@ -1381,6 +1403,7 @@ function Trigger-BackgroundUpdateCheck {
 
 # Show / Hide / Exit Window Helpers
 function Show-MainWindow {
+    Reload-ActivePromptsIfModified
     $window.Show()
     if ($window.WindowState -eq [System.Windows.WindowState]::Minimized) {
         $window.WindowState = [System.Windows.WindowState]::Normal
@@ -1478,7 +1501,20 @@ function Restart-Application {
         }
     } catch {}
 
-    Start-Process "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File `"$PSCommandPath`""
+    $pwshPath = Join-Path $PSHOME "powershell.exe"
+    if (-not (Test-Path -LiteralPath $pwshPath)) { $pwshPath = "powershell.exe" }
+
+    $psi = [System.Diagnostics.ProcessStartInfo]::new()
+    $psi.FileName = $pwshPath
+    $psi.Arguments = "-NoProfile -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File `"$PSCommandPath`""
+    $psi.WorkingDirectory = $scriptDir
+    $psi.UseShellExecute = $true
+    $psi.WindowStyle = [System.Diagnostics.ProcessWindowStyle]::Hidden
+    try {
+        [System.Diagnostics.Process]::Start($psi) | Out-Null
+    } catch {
+        Start-Process $pwshPath -ArgumentList $psi.Arguments
+    }
     try { [System.Windows.Application]::Current.Shutdown() } catch {}
     [System.Environment]::Exit(0)
 }
@@ -1494,6 +1530,7 @@ $titleBar.Add_MouseLeftButtonDown({
 })
 
 $window.add_Activated({
+    Reload-ActivePromptsIfModified
     Update-ActiveClipboardIndicator
 })
 
@@ -1695,8 +1732,14 @@ function Get-LocalVersionInfo {
 
 function Get-RemoteUpdateInfoHttp {
     try {
-        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-        $headers = @{ 'User-Agent' = 'AI-Dev-Prompt-Clipboard-Updater' }
+        try {
+            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12 -bor 12288
+            [System.Net.WebRequest]::DefaultWebProxy = [System.Net.WebRequest]::GetSystemWebProxy()
+            [System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultNetworkCredentials
+        } catch {
+            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
+        }
+        $headers = @{ 'User-Agent' = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AI-Dev-Prompt-Clipboard/$Script:AppVersion" }
 
         # 1. Check GitHub API for latest commit SHA on main
         try {
@@ -1744,7 +1787,14 @@ function Update-FromGitHubHttp {
     $tempDir = Join-Path ([System.IO.Path]::GetTempPath()) ("aidev_extract_" + [System.Guid]::NewGuid().ToString("N"))
 
     try {
-        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        try {
+            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12 -bor 12288
+            [System.Net.WebRequest]::DefaultWebProxy = [System.Net.WebRequest]::GetSystemWebProxy()
+            [System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultNetworkCredentials
+        } catch {
+            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
+        }
+        $headers = @{ 'User-Agent' = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AI-Dev-Prompt-Clipboard/$Script:AppVersion" }
         $zipUrl = if ($remoteSha -and $remoteSha -ne "latest" -and $remoteSha.Length -ge 7) {
             "https://github.com/txeki-dev/AI-Dev-Prompt-Clipboard/archive/$remoteSha.zip"
         } else {
@@ -1752,7 +1802,7 @@ function Update-FromGitHubHttp {
         }
 
         # 1. Download zip payload
-        Invoke-WebRequest -Uri $zipUrl -OutFile $tempZip -UseBasicParsing -TimeoutSec 45
+        Invoke-WebRequest -Uri $zipUrl -OutFile $tempZip -Headers $headers -UseBasicParsing -TimeoutSec 45
 
         # Security check: verify downloaded payload exists and is non-trivial size (> 1KB)
         if (-not (Test-Path -LiteralPath $tempZip)) {
@@ -1844,6 +1894,11 @@ function Update-FromGitHubHttp {
             }
         }
 
+        # Clean Mark-of-the-Web to prevent Windows SmartScreen / AV heuristic quarantine
+        Get-ChildItem -LiteralPath $scriptDir -File | ForEach-Object {
+            Unblock-File -LiteralPath $_.FullName -ErrorAction SilentlyContinue
+        }
+
         # 6. Save or update local version.json with the new remote commit and SHA256
         $newCommit = if ($remoteSha) { $remoteSha } else { "latest" }
         $currentVersion = $Script:AppVersion
@@ -1912,8 +1967,14 @@ function Check-ForUpdatesAsync {
                     return 0
                 } else {
                     # Standalone / Non-Git HTTP check
-                    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-                    $headers = @{ 'User-Agent' = 'AI-Dev-Prompt-Clipboard-Updater' }
+                    try {
+                        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12 -bor 12288
+                        [System.Net.WebRequest]::DefaultWebProxy = [System.Net.WebRequest]::GetSystemWebProxy()
+                        [System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultNetworkCredentials
+                    } catch {
+                        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
+                    }
+                    $headers = @{ 'User-Agent' = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AI-Dev-Prompt-Clipboard-Updater' }
 
                     $localCommit = ""
                     $vPath = Join-Path $targetDir "version.json"
@@ -2151,6 +2212,35 @@ function Invoke-HttpUpdateStep {
 function Check-ForUpdates {
     param([bool]$Silent = $true)
 
+    # 1. Local disk update check (e.g. app.ps1 modified locally on disk)
+    if (Test-Path -LiteralPath $script:scriptFile) {
+        $currentWriteTime = (Get-Item -LiteralPath $script:scriptFile).LastWriteTimeUtc
+        if ($script:startupScriptWriteTime -and ($currentWriteTime -gt $script:startupScriptWriteTime.AddSeconds(2))) {
+            if (-not $Silent) {
+                $confirm = [System.Windows.MessageBox]::Show(
+                    "Se han detectado cambios locales en la aplicación (app.ps1 ha sido modificado en disco).`n`n¿Deseas reiniciar la aplicación ahora para aplicar la nueva versión?",
+                    "Actualización local detectada",
+                    [System.Windows.MessageBoxButton]::YesNo,
+                    [System.Windows.MessageBoxImage]::Question
+                )
+                if ($confirm -eq [System.Windows.MessageBoxResult]::Yes) {
+                    Restart-Application
+                    return
+                }
+            } else {
+                if ($notifyIcon) {
+                    $notifyIcon.ShowBalloonTip(
+                        6000,
+                        "Actualización lista - AI Prompt Clipboard",
+                        "Los archivos de la aplicación se han actualizado en disco. Haz clic para reiniciar.",
+                        [System.Windows.Forms.ToolTipIcon]::Info
+                    )
+                }
+            }
+        }
+    }
+
+    # 2. Remote check (Git or HTTP)
     try {
         if (Test-IsGitRepo) {
             Invoke-GitUpdateStep -Silent $Silent
@@ -2182,6 +2272,13 @@ if (Test-Path -LiteralPath $iconFile) {
 
 $notifyIcon.Text = "AI Dev Prompt Clipboard"
 $notifyIcon.Visible = $true
+$notifyIcon.add_BalloonTipClicked({
+    if ($script:pendingUpdateAvailable) {
+        Restart-Application
+    } else {
+        Show-MainWindow
+    }
+})
 
 # System Tray Context Menu
 $trayMenu = New-Object System.Windows.Forms.ContextMenuStrip
@@ -2195,6 +2292,11 @@ $menuOpen.add_Click({
 $menuUpdate = $trayMenu.Items.Add("🔄 Buscar actualizaciones...")
 $menuUpdate.add_Click({
     Check-ForUpdates -Silent $false
+})
+
+$menuRestart = $trayMenu.Items.Add("⚡ Reiniciar aplicación")
+$menuRestart.add_Click({
+    Restart-Application
 })
 
 $menuEdit = $trayMenu.Items.Add("⚙️ Editar prompts.json")
@@ -3133,7 +3235,8 @@ $script:fluxSequence = @(
     @{ Id = "rdi";               Next = "product_strategy" },
     @{ Id = "product_strategy";  Next = "business_strategy" },
     @{ Id = "business_strategy"; Next = "feature_plan" },
-    @{ Id = "migrate";           Next = "intro" }
+    @{ Id = "migrate";           Next = "intro" },
+    @{ Id = "recover";           Next = "feature_build" }
 )
 
 function Get-NextPhasePrompt {
@@ -3252,6 +3355,30 @@ function Switch-Workspace {
     } catch {
         $statusLabel.Text = "Error al cargar el pack: $($targetWs.Name)"
     }
+}
+
+function Reload-ActivePromptsIfModified {
+    try {
+        if (-not $script:activePromptsPath -or -not (Test-Path -LiteralPath $script:activePromptsPath)) { return }
+        $currentWriteTime = (Get-Item -LiteralPath $script:activePromptsPath).LastWriteTimeUtc
+        if ($script:lastPromptsLoadTime -and $currentWriteTime -le $script:lastPromptsLoadTime) { return }
+
+        $loaded = Get-Content -LiteralPath $script:activePromptsPath -Raw -Encoding UTF8 | ConvertFrom-Json
+        if ($loaded -and $loaded.Count -gt 0) {
+            $script:prompts = $loaded
+            $global:prompts = $script:prompts
+            $prompts = $script:prompts
+            $script:lastPromptsLoadTime = $currentWriteTime
+            Render-PromptCards
+            Build-CategoryChips
+            Update-Filter
+            Update-NextPhaseIndicator
+            if ($promptCountBadge) {
+                $wsCount = if ($script:prompts) { $script:prompts.Count } else { 0 }
+                $promptCountBadge.Text = if ($wsCount -eq 1) { "1 protocolo" } else { "$wsCount protocolos" }
+            }
+        }
+    } catch {}
 }
 
 if ($cmbWorkspace) {
@@ -3559,6 +3686,7 @@ foreach ($p in $script:prompts) {
 $fluxButtons = @(
     @{ Name = "BtnFluxInitial";        Id = "initial" },
     @{ Name = "BtnFluxMigrate";        Id = "migrate" },
+    @{ Name = "BtnFluxRecover";        Id = "recover" },
     @{ Name = "BtnFluxIntro";          Id = "intro" },
     @{ Name = "BtnFluxRDi";            Id = "rdi" },
     @{ Name = "BtnFluxStrategy";       Id = "product_strategy" },

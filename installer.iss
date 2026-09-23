@@ -2,7 +2,7 @@
 ; Txek Systems
 
 #define MyAppName "AI Dev Prompt Clipboard"
-#define MyAppVersion "1.4.0"
+#define MyAppVersion "1.4.3"
 #define MyAppPublisher "Txek Systems"
 #define MyAppURL "https://github.com/txeki-dev/AI-Dev-Prompt-Clipboard"
 
